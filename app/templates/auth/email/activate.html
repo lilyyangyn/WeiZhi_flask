@@ -1,0 +1,11 @@
+<div style="font-size:14px;">
+	<p>Dear {{user.name}}:</p>
+
+	<p>Please click the activate button to activate your CDS account.</p><br>
+
+
+	<a href="{{ url_for('auth.confirm', token=token, _external=True) }}" style="display:block; margin:1.5em auto; background-color:#2196F3;-webkit-border-radius: 6px;-moz-border-radius: 6px;border-radius: 6px;padding:10px;text-align:center;width: 50%;margin: auto;text-decoration:none; color:white;font-weight:bold; fon-size:16px;">click here</a><br>
+
+	<p>Yours Sincerely,</p>
+	<p>CDS Team</p>
+</div>

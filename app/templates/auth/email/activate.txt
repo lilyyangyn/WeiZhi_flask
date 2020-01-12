@@ -1,0 +1,9 @@
+Dear {{ user.name }}:
+
+Please click the link below to activate your CDS account.
+
+{{ url_for('auth.confirm', token=token, _external=True) }}
+
+Yours Sincerely,
+
+CDS Team

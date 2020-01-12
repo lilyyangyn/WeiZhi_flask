@@ -9,7 +9,7 @@ class CreateDishForm(FlaskForm):
 	def restaurant_query():
 		return Restaurant.query.filter_by(in_cooperation=True)
 
-	restaurant_id = QuerySelectField('Restaurant', query_factory=restaurant_query, get_label='name')
+	restaurant = QuerySelectField('Restaurant', query_factory=restaurant_query, get_label='name')
 	name = StringField('Chinese Name', validators=[DataRequired(), Length(1, 64)])
 	english_name = StringField('English Name', validators=[Length(1, 64)])
 	spiciness = SelectField('Spiciness', 
@@ -40,6 +40,39 @@ class CreateDishForm(FlaskForm):
 		if Dish.query.filter_by(english_name=field.data).first():
 			raise ValidationError('Dish already exists.')
 
+class EditDishForm(FlaskForm):
+	def restaurant_query():
+		return Restaurant.query.filter_by(in_cooperation=True)
+
+	restaurant = QuerySelectField('Restaurant', query_factory=restaurant_query, get_label='name')
+	name = StringField('Chinese Name', validators=[DataRequired(), Length(1, 64)])
+	english_name = StringField('English Name', validators=[Length(1, 64)])
+	spiciness = SelectField('Spiciness', 
+		choices={(Spiciness.NotSpicy, 'Not Spicy'), 
+						(Spiciness.LittleSpicy, 'Little Spicy'), 
+						(Spiciness.MediumSpicy, 'Medium Spicy'), 
+						(Spiciness.Spicy, 'Spicy'), 
+						(Spiciness.VerySpicy, 'Very Spicy'), 
+						(Spiciness.ExtraSpicy, 'Extra Spicy')}, coerce=int)
+	price = IntegerField ('Price', validators=[Optional()])
+	original_price = IntegerField ('Original Price', validators=[DataRequired()])
+	large_img_url = StringField('Image URL', validators=[Length(0, 80)])
+	submit = SubmitField('Edit Dish')
+
+	def __init__(self, dish, *args, **kwargs):
+		super(EditDishForm, self).__init__(*args, **kwargs)
+		self.dish = dish
+
+	def validate_name(self, field):
+		if field.data != self.dish.name and Dish.query.filter_by(name=field.data).first():
+			raise ValidationError('Dish already exists.')
+
+	def validate_english_name(self, field):
+		if self.dish.english_name is None or field.data != self.dish.english_name:
+			if Dish.query.filter_by(english_name=field.data).first():
+				raise ValidationError('Dish already exists.')
+
+
 class CreateRestaurantForm(FlaskForm):
 	name = StringField('Name', validators=[DataRequired(), Length(1, 64)])
 	img_url = StringField('Image URL', validators=[Length(0, 80)])
@@ -50,4 +83,17 @@ class CreateRestaurantForm(FlaskForm):
 		if Restaurant.query.filter_by(name=field.data).first():
 			raise ValidationError('Restaurant already exists.')
 
+class EditRestaurantForm(FlaskForm):
+	name = StringField('Name', validators=[DataRequired(), Length(1, 64)])
+	img_url = StringField('Image URL', validators=[Length(0, 80)])
+	info = TextAreaField('Information')
+	submit = SubmitField('Edit Dish')
+
+	def __init__(self, restaurant, *args, **kwargs):
+		super(EditRestaurantForm, self).__init__(*args, **kwargs)
+		self.restaurant = restaurant
+
+	def validate_name(self, field):
+		if field.data != self.restaurant.name and Restaurant.query.filter_by(name=field.data).first():
+			raise ValidationError('Restaurant already exists.')
 	

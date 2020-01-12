@@ -5,7 +5,7 @@ from .. import db
 from ..models import Dish
 from ..email import send_email
 from ..decorators import moderator_required
-from .forms import CreateDishForm
+from .forms import CreateDishForm, EditDishForm
 
 import sys
 reload(sys)
@@ -56,11 +56,11 @@ def reset_available_days():
 	flash('Successfully reset the weekly menu!')
 	return redirect(url_for('supply.dishes'))
 
-@supply.route('/supply-dish/<dish_id>')
+@supply.route('/supply-dish/<int:id>')
 @login_required
 @moderator_required
-def supply_dish(dish_id):
-	dish = Dish.query.filter_by(id=dish_id).first()
+def supply_dish(id):
+	dish = Dish.query.get(id)
 	if dish is not None:
 		dish.to_supply = True
 		db.session.add(dish)
@@ -82,7 +82,7 @@ def new_dish():
 	if form.validate_on_submit():
 		if form.in_supply.data:
 			# if dish is to be supplied immediately, should choose the days it is in supply
-			dish = Dish(restaurant_id=form.restaurant_id.data.id, 
+			dish = Dish(restaurant_id=form.restaurant.data.id, 
 									name=form.name.data.encode('utf8'), 
 									english_name=form.english_name.data.encode('utf8'), 
 									spiciness=form.spiciness.data, 
@@ -112,7 +112,32 @@ def new_dish():
 	return render_template('supply/dishes/create_dish.html', form=form)
 
 # TODO: update dish info
-
+@supply.route('/edit-dish/<int:id>', methods=['GET', 'POST'])
+@login_required
+@moderator_required
+def edit_dish(id):
+	dish = Dish.query.get_or_404(id)
+	form = EditDishForm(dish=dish)
+	if form.validate_on_submit():
+		current_user.restaurant_id = form.restaurant.data.id
+		current_user.name = form.name.data.encode('utf8')
+		current_user.english_name = form.english_name.data.encode('utf8')
+		current_user.spiciness = form.spiciness.data
+		current_user.price = form.price.data
+		current_user.original_price = form.original_price.data
+		current_user.large_img_url = form.large_img_url.data.encode('utf8')
+		db.session.add(dish)
+		db.session.commit()
+		flash('Dish info has been updated ^_^')
+		return redirect(url_for('.dishes'))
+	form.restaurant.data = dish.restaurant
+	form.name.data = dish.name
+	form.english_name.data = dish.english_name
+	form.spiciness.data = dish.spiciness
+	form.price.data = dish.price
+	form.original_price.data = dish.original_price
+	form.large_img_url.data = dish.large_img_url
+	return render_template('supply/dishes/edit_dish.html', form=form)
 
 
 

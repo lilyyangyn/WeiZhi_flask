@@ -5,7 +5,7 @@ from . import supply
 from .. import db
 from ..decorators import moderator_required
 from ..models import Restaurant
-from .forms import CreateRestaurantForm
+from .forms import CreateRestaurantForm, EditRestaurantForm
 
 @supply.route('/restaurants')
 @login_required
@@ -32,12 +32,12 @@ def new_restaurant():
 	return render_template('supply/restaurants/create_restaurant.html', form=form)
 
 
-@supply.route('/stop-cooperation/<restaurant_id>')
+@supply.route('/stop-cooperation/<int:id>')
 @login_required
 @moderator_required
-def stop_cooperation(restaurant_id):
+def stop_cooperation(id):
 	# stop to cooperate with this restaurant
-	restaurant = Restaurant.query.filter_by(id=restaurant_id).first()
+	restaurant = Restaurant.query.get(id)
 	if restaurant is not None:
 		# stop serving all dishes from this restaurant
 		for dish in restaurant.dishes.all():
@@ -50,3 +50,26 @@ def stop_cooperation(restaurant_id):
 	else:
 		flash("No such restaurant, hope to coorperate with it one day.")
 	return redirect(url_for('supply.restaurants'))
+
+@supply.route('/edit-restaurant/<int:id>', methods=['GET', 'POST'])
+@login_required
+@moderator_required
+def edit_restaurant(id):
+	restaurant = Restaurant.query.get_or_404(id)
+	form = EditRestaurantForm(restaurant=restaurant)
+	if form.validate_on_submit():
+		current_user.name = form.name.data.encode('utf8')
+		current_user.img_url = form.img_url.data.encode('utf8')
+		current_user.info = form.info.data.encode('utf8')
+		db.session.add(restaurant)
+		db.session.commit()
+		flash('Restaurant info has been updated ^_^')
+		return redirect(url_for('.restaurants'))
+	form.name.data = restaurant.name
+	form.img_url.data = restaurant.img_url
+	form.info.data = restaurant.info
+	return render_template('supply/restaurants/edit_restaurant.html', form=form)
+
+
+
+

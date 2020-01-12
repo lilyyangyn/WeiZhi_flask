@@ -19,7 +19,7 @@ def faculties():
   ('牙醫學院', 'Faculty of Dentistry 牙醫學院'),\
   ('教育學院', 'Faculty of Education 教育學院'),\
   ('工程學院', 'Faculty of Engineering 工程學院'),\
-  ('工程學院', 'Faculty of Architecture 建築學院'),\
+  ('建築學院', 'Faculty of Architecture 建築學院'),\
   ('香港大學專業進修學院', 'HKU SPACE 香港大學專業進修學院'),\
   ('社會科學學院', 'Faculty of Social Sciences 社會科學學院'),\
   ('李嘉誠醫學院', 'Li Ka Shing Faculty of Medicine 李嘉誠醫學院'),\
@@ -74,6 +74,19 @@ class ChangeEmailForm(FlaskForm):
 		if User.query.filter_by(email=field.data.lower()).first():
 			raise ValidationError('Email already registered.')
 
+class EditProfileForm(FlaskForm):
+	phone = StringField('Phone', validators=[DataRequired()], render_kw={'placeholder': 'HK telephone number (8 digits)'})
+	gender = SelectField('Gender', validators=[DataRequired()], choices=[('M', 'Male'), ('F', 'Female'), ('Other', 'Other')], render_kw={'placeholder': 'Please select your gender'})
+	identity = SelectField('Identity', validators=[DataRequired()], choices=[('student', 'Student'), ('staff', 'Staff')], render_kw={'placeholder': 'Please select your identity'})
+	faculty = SelectField('Faculty', validators=[DataRequired()], choices=faculties(), render_kw={'placeholder': 'Please select your faculty'})
+	submit = SubmitField('Submit')
 
+	def __init__(self, user, *args, **kwargs):
+		super(EditProfileForm, self).__init__(*args, **kwargs)
+		self.user = user
 
-
+	def validate_phone(self, field):
+		if len(field.data.encode('utf8') ) != 8:
+			raise ValidationError('Phone should have exactly 8 digits.')
+		if field.data != self.user.phone and User.query.filter_by(phone=field.data).first():
+			raise ValidationError('Phone already registered.')

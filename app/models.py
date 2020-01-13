@@ -358,7 +358,7 @@ class Order(db.Model):
 	spot_id = db.Column(db.Integer, db.ForeignKey('spots.id'))
 	to_be_paid = db.Column(db.Integer, nullable=False)
 	today_id = db.Column(db.String(16))
-	status = db.Column(db.Boolean, default=Order_Status.ToPay)
+	status = db.Column(db.Integer, default=Order_Status.ToPay)
 	price_sold = db.Column(db.Integer, nullable=False)
 	original_price = db.Column(db.Integer, nullable=False)
 	created_at = db.Column(db.DateTime(), default=datetime.now())

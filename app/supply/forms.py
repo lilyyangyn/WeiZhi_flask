@@ -3,7 +3,7 @@ from wtforms import StringField, SelectField, IntegerField, BooleanField, TextAr
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import DataRequired, Length, Optional 
 from wtforms import ValidationError
-from ..models import Dish, Restaurant, Spiciness
+from ..models import Dish, Restaurant, Spiciness, Spot
 
 class CreateDishForm(FlaskForm):
 	def restaurant_query():
@@ -96,4 +96,27 @@ class EditRestaurantForm(FlaskForm):
 	def validate_name(self, field):
 		if field.data != self.restaurant.name and Restaurant.query.filter_by(name=field.data).first():
 			raise ValidationError('Restaurant already exists.')
-	
+
+class CreateSpotForm(FlaskForm):
+	name = StringField('Name', validators=[DataRequired(), Length(1, 64)])
+	img_url = StringField('Image URL', validators=[Length(0, 80)])
+	description = TextAreaField('Description')
+	submit = SubmitField('Create Spot')
+
+	def validate_name(self, field):
+		if Spot.query.filter_by(name=field.data).first():
+			raise ValidationError('Spot already exists.')
+
+class EditSpotForm(FlaskForm):
+	name = StringField('Name', validators=[DataRequired(), Length(1, 64)])
+	img_url = StringField('Image URL', validators=[Length(0, 80)])
+	description = TextAreaField('Description')
+	submit = SubmitField('Edit Spot')
+
+	def __init__(self, spot, *args, **kwargs):
+		super(EditSpotForm, self).__init__(*args, **kwargs)
+		self.spot = spot
+
+	def validate_name(self, field):
+		if field.data != self.spot.name and Spot.query.filter_by(name=field.data).first():
+			raise ValidationError('Spot already exists.')

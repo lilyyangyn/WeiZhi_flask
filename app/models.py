@@ -288,6 +288,7 @@ class Spot(db.Model):
 	name = db.Column(db.String(64), nullable=False, unique=True)
 	img_url = db.Column(db.String(80))
 	description = db.Column(db.Text())
+	in_use = db.Column(db.Boolean, default=True)
 	orders = db.relationship('Order', backref='spot', lazy='dynamic')
 
 

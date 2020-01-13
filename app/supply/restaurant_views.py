@@ -36,7 +36,7 @@ def new_restaurant():
 @login_required
 @moderator_required
 def stop_cooperation(id):
-	# stop to cooperate with this restaurant
+	# stop cooperating with this restaurant
 	restaurant = Restaurant.query.get(id)
 	if restaurant is not None:
 		# stop serving all dishes from this restaurant
@@ -58,9 +58,9 @@ def edit_restaurant(id):
 	restaurant = Restaurant.query.get_or_404(id)
 	form = EditRestaurantForm(restaurant=restaurant)
 	if form.validate_on_submit():
-		current_user.name = form.name.data.encode('utf8')
-		current_user.img_url = form.img_url.data.encode('utf8')
-		current_user.info = form.info.data.encode('utf8')
+		restaurant.name = form.name.data.encode('utf8')
+		restaurant.img_url = form.img_url.data.encode('utf8')
+		restaurant.info = form.info.data.encode('utf8')
 		db.session.add(restaurant)
 		db.session.commit()
 		flash('Restaurant info has been updated ^_^')

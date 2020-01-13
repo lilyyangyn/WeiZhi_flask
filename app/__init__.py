@@ -31,4 +31,7 @@ def create_app(config_name):
 	from .supply import supply as supply_blueprint
 	app.register_blueprint(supply_blueprint)
 
+	from .ordering import ordering as ordering_blueprint
+	app.register_blueprint(ordering_blueprint)
+
 	return app

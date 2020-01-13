@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-from flask import render_template, redirect, url_for, request, flash
+from flask import render_template, redirect, url_for, flash
 from flask_login import current_user, login_required
 from . import supply
 from .. import db

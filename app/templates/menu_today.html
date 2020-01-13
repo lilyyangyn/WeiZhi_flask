@@ -1,1 +1,10 @@
-this is menu today
+{% extends "base.html" %}
+
+{% block title %}CDS{% endblock %}
+
+{% block content %}
+{{ super() }}
+<div class="page-header">
+	<h1>this is menu today</h1>
+</div>
+{% endblock %}

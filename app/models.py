@@ -133,6 +133,7 @@ class User(UserMixin, db.Model):
 		db.session.add(self)
 		return True
 
+	@property
 	def is_VIP(self):
 		return self.balance > 0
 
@@ -191,6 +192,48 @@ class Dish(db.Model):
 
 	def set_stock(self, amount):
 		self.stock += amount
+
+	def is_available(self, day, hour, is_vip=False):
+		if not self.in_supply:
+			return False;
+		if hour < 12:
+			# before 11 am
+			if day == 1:
+				return self.Monday
+			elif day == 2:
+				return self.Tuesday
+			elif day == 3:
+				return self.Wednesday
+			elif day == 4:
+				return self.Thursday
+			elif day == 5:
+				return self.Friday
+			elif day == 6:
+				return self.Saturday
+			elif day == 7:
+				return self.Sunday
+		elif hour > 20:
+			# after 9 pm
+			if is_vip:
+				# available only to vip
+				if day == 7:
+					return self.Monday
+				elif day == 1:
+					return self.Tuesday
+				elif day == 2:
+					return self.Wednesday
+				elif day == 3:
+					return self.Thursday
+				elif day == 4:
+					return self.Friday
+				elif day == 5:
+					return self.Saturday
+				elif day == 6:
+					return self.Sunday
+			else:
+				return False
+		else:
+			return False
 
 	def add_available_day(self, day):
 		if day == 1:
@@ -302,7 +345,7 @@ class Deposit(db.Model):
 
 
 
-class Oder_Status:
+class Order_Status:
 	PaidOff = 0
 	ToPay = 1
 	Cancelled = 2
@@ -311,19 +354,18 @@ class Order(db.Model):
 	__tablename__ = 'orders'
 	id = db.Column(db.Integer, primary_key=True)
 	dish_id = db.Column(db.Integer, db.ForeignKey('dishes.id'), nullable=False)
-	user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+	user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
 	spot_id = db.Column(db.Integer, db.ForeignKey('spots.id'))
 	to_be_paid = db.Column(db.Integer, nullable=False)
-	price_sold = db.Column(db.Integer)
-	today_id = db.Column(db.String(16), nullable=False)
-	status = db.Column(db.Boolean, default=Oder_Status.ToPay)
-	time = db.Column(db.DateTime())
+	today_id = db.Column(db.String(16))
+	status = db.Column(db.Boolean, default=Order_Status.ToPay)
+	price_sold = db.Column(db.Integer, nullable=False)
+	original_price = db.Column(db.Integer, nullable=False)
 	created_at = db.Column(db.DateTime(), default=datetime.now())
 
 	@staticmethod
 	def __init__(self, **kwargs):
 		super(Order, self).__init__(**kwargs)
-		price_sold = self.dish.price
 
 
 

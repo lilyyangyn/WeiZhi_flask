@@ -28,7 +28,7 @@ def faculties():
 class SignupFrom(FlaskForm):
 	name = StringField('Name', validators=[DataRequired(), Length(1, 16)], render_kw={'placeholder': 'Username'})
 	phone = StringField('Phone', validators=[DataRequired()], render_kw={'placeholder': 'HK telephone number (8 digits)'})
-	email = StringField('Email', validators=[DataRequired(), Length(1, 64), Email()], render_kw={'placeholder': 'e.g. u3502870'})
+	email = StringField('Email', validators=[DataRequired(), Email(), Length(1, 64)], render_kw={'placeholder': 'e.g. u3502870'})
 	password = PasswordField('Password', validators=[DataRequired(), Length(8, 20)], render_kw={'placeholder': 'Password (8-20 digits/characters)'})
 	password2 = PasswordField('Confirm password', validators=[DataRequired(), EqualTo('password', message='Passwords must match')], render_kw={'placeholder': 'Confirm password'})
 	gender = SelectField('Gender', validators=[DataRequired()], choices=[('M', 'Male'), ('F', 'Female'), ('Other', 'Other')], render_kw={'placeholder': 'Please select your gender'})
@@ -47,7 +47,12 @@ class SignupFrom(FlaskForm):
 			raise ValidationError('Phone already registered.')
 
 	def validate_email(self, field):
-		if User.query.filter_by(email=field.data.lower()).first():
+		strs = field.data.lower().split("@")
+		email1 = strs[0] + "@connect.hku.hk"
+		email2 = strs[0] + "@hku.hk"
+		if User.query.filter_by(email=email1).first():
+			raise ValidationError('Email already registered.')
+		if User.query.filter_by(email=email2).first():
 			raise ValidationError('Email already registered.')
 
 class ChangePasswordForm(FlaskForm):
@@ -71,7 +76,12 @@ class ChangeEmailForm(FlaskForm):
 	submit = SubmitField('Update Email Address')
 
 	def validate_email(self, field):
-		if User.query.filter_by(email=field.data.lower()).first():
+		strs = field.data.lower().split("@")
+		email1 = strs[0] + "@connect.hku.hk"
+		email2 = strs[0] + "@hku.hk"
+		if User.query.filter_by(email=email1).first():
+			raise ValidationError('Email already registered.')
+		if User.query.filter_by(email=email2).first():
 			raise ValidationError('Email already registered.')
 
 class EditProfileForm(FlaskForm):

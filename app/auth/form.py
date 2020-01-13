@@ -48,12 +48,15 @@ class SignupFrom(FlaskForm):
 
 	def validate_email(self, field):
 		strs = field.data.lower().split("@")
-		email1 = strs[0] + "@connect.hku.hk"
-		email2 = strs[0] + "@hku.hk"
-		if User.query.filter_by(email=email1).first():
-			raise ValidationError('Email already registered.')
-		if User.query.filter_by(email=email2).first():
-			raise ValidationError('Email already registered.')
+		if len(strs) == 2:
+			if strs[1] != "connect.hku.hk" and strs[1] != "hku.hk":
+				raise ValidationError('You must be a HKUer ! Please register with a HKU email ^_^')
+			email1 = strs[0] + "@connect.hku.hk"
+			email2 = strs[0] + "@hku.hk"
+			if User.query.filter_by(email=email1).first():
+				raise ValidationError('Email already registered.')
+			if User.query.filter_by(email=email2).first():
+				raise ValidationError('Email already registered.')
 
 class ChangePasswordForm(FlaskForm):
 	old_psw = PasswordField('Old password', validators=[DataRequired()], render_kw={'placeholder': 'Old password'})

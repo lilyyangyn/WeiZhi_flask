@@ -28,8 +28,19 @@ class DevelopmentConfig(Config):
 	SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
                 'postgresql://yuening:@localhost:5432/cds_development' 
 
+class TestingConfig(Config):
+	TESTING = True
+	SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
+                'postgresql://yuening:@localhost:5432/cds_testing' 
+
+class ProductionConfig(Config):
+	PRODUCE = True
+	#SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or '' 
+
 config = {
 	'development': DevelopmentConfig,
+	'testing': TestingConfig,
+	'production': ProductionConfig,
 
 	'default': DevelopmentConfig
 }

@@ -373,8 +373,11 @@ class Order(db.Model):
 			self.status = Order_Status.PaidOff
 		else:
 			self.status = Order_Status.ToPay
+
+	def set_today_id(self, dish_name):
 		# set today id
-		# TODO
+		YesterdayMaxID = 0
+		self.today_id = "{num}{name}".format(num=self.id - YesterdayMaxID, name=dish_name[:2])
 
 	@property
 	def is_valid(self):

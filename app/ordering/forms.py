@@ -8,7 +8,7 @@ class CreateOrderForm(FlaskForm):
 		return Spot.query.filter_by(in_use=True)
 
 	spot = QuerySelectField('Pickup Spot', query_factory=spot_query, get_label='name')
-	balance_pay = RadioField('Payment', default=False)
+	balance_pay = RadioField('Payment', default=False, coerce=bool)
 	submit = SubmitField('Confirm Order')
 
 	def __init__(self, userBalance, *args, **kwargs):

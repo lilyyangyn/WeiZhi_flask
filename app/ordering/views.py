@@ -14,17 +14,18 @@ from ..email import send_email
 def create_order(dish_id):
 	# order a dish
 	dish = Dish.query.get_or_404(dish_id)
-	if dish.is_available(current_user.is_VIP):
+	#if dish.is_available(current_user.is_VIP):
+	if True:
 		form = CreateOrderForm(current_user.balance)
 		if request.method == 'POST':
 			# time check
 			if not dish.is_available(current_user.is_VIP):
 				flash("Sorry, reservation time ends today~ This dish is not available now ┬＿┬")
-				return redirect(url_for('main.menu'))
+				#return redirect(url_for('main.menu'))
 			# stock check
 			if dish.stock < 1:
 				flash("Sold Out ┬＿┬")
-				return redirect(url_for('main.menu'))
+				#return redirect(url_for('main.menu'))
 
 			if form.balance_pay.data == True:
 				# if user want to pay by balance
@@ -49,6 +50,8 @@ def create_order(dish_id):
 										original_price=dish.original_price)
 			db.session.add(order)
 			db.session.commit()
+			order.set_today_id(dish.name)
+			db.session.add(order)
 			# send confirmation email
 			send_email(current_user.email, 'Order Confirmation', 'ordering/email/confirmation', order=order, user=current_user, dish=dish)
 			if pay_status == 0:

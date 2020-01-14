@@ -4,8 +4,9 @@ from . import supply
 from .. import db
 from ..models import Dish
 from ..email import send_email
-from ..decorators import moderator_required
+from ..decorators import moderator_required, admin_required
 from .forms import CreateDishForm, EditDishForm
+from ..schedulerjobs import update_to_next_working_day
 
 import sys
 reload(sys)
@@ -19,16 +20,6 @@ def dishes():
 	# show all the dishes CDS has, ordered by their stock
 	dishes = Dish.query.order_by(Dish.stock.desc()).order_by(Dish.in_supply).all()
 	return render_template('supply/dishes/dishes.html', dishes=dishes)
-
-@supply.route('/dishes/next-day-dishes')
-@login_required
-@moderator_required
-def next_day_dishes():
-	# update menu to next (working) day
-	Dish.update_to_next_day()
-	db.session.commit()
-	flash("Successfully update to tomorrow's dishes!")
-	return redirect(url_for('supply.dishes'))
 
 @supply.route('/dishes/clear-all-stocks')
 @login_required
@@ -139,8 +130,14 @@ def edit_dish(id):
 	form.large_img_url.data = dish.large_img_url
 	return render_template('supply/dishes/edit_dish.html', form=form)
 
-
-
+@supply.route('/update-to-next-working-day')
+@login_required
+@moderator_required
+def next_day_dishes():
+	# update menu to next (working) day
+	update_to_next_working_day()
+	flash("Successfully update to tomorrow's dishes!")
+	return redirect(url_for('supply.dishes'))
 
 
 

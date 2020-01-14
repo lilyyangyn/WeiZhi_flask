@@ -23,7 +23,7 @@ def create_order(dish_id):
 				flash("Sorry, reservation time ends today~ This dish is not available now ┬＿┬")
 				#return redirect(url_for('main.menu'))
 			# stock check
-			if dish.stock < 1:
+			if dish.sold_out:
 				flash("Sold Out ┬＿┬")
 				#return redirect(url_for('main.menu'))
 

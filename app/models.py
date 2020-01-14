@@ -6,7 +6,6 @@ from flask_login import UserMixin, AnonymousUserMixin
 from flask import current_app
 from . import db, login_manager
 
-
 class Role:
 	Customer = "customer"
 	Moderator = "moderator"
@@ -198,7 +197,7 @@ class Dish(db.Model):
 			return False;
 		today = datetime.now().isoweekday()
 		hour = datetime.now().hour
-		if hour < 12:
+		if hour < 11:
 			# before 11 am
 			if today == 1:
 				return self.Monday
@@ -374,10 +373,21 @@ class Order(db.Model):
 		else:
 			self.status = Order_Status.ToPay
 
+	@staticmethod 
+	def YesterdayMaxID():
+		today = datetime.now().date()
+		hour_now = datetime.now().hour
+		hour_stop_yesterday = time(11)
+		if hour_now < 11:
+			datetime_stop_yesterday = datetime.combine(today, hour_stop_yesterday) + timedelta(-1)
+		else:
+			datetime_stop_yesterday = datetime.combine(today, hour_stop_yesterday)
+		last_order = Order.query.filter(Order.created_at<datetime_stop_yesterday).order_by(Order.created_at.desc()).first()
+		return last_order.id
+
 	def set_today_id(self, dish_name):
 		# set today id
-		YesterdayMaxID = 0
-		self.today_id = "{num}{name}".format(num=self.id - YesterdayMaxID, name=dish_name[:2])
+		self.today_id = "{num}{name}".format(num=self.id - Order.YesterdayMaxID(), name=dish_name[:2])
 
 	@property
 	def is_valid(self):
@@ -396,11 +406,5 @@ class Order(db.Model):
 			return self.created_at >= datetime_available
 		else:
 			return False
-
-
-
-
-
-
 
 

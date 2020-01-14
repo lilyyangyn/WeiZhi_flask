@@ -14,15 +14,11 @@ from ..email import send_email
 def create_order(dish_id):
 	# order a dish
 	dish = Dish.query.get_or_404(dish_id)
-	today = datetime.now().isoweekday()
-	hour = datetime.now().hour
-	if dish.is_available(today, hour, current_user.is_VIP):
+	if dish.is_available(current_user.is_VIP):
 		form = CreateOrderForm(current_user.balance)
 		if request.method == 'POST':
 			# time check
-			today = datetime.now().isoweekday()
-			hour = datetime.now().hour
-			if not dish.is_available(today, hour, current_user.is_VIP):
+			if not dish.is_available(current_user.is_VIP):
 				flash("Sorry, reservation time ends today~ This dish is not available now ┬＿┬")
 				return redirect(url_for('main.menu'))
 			# stock check

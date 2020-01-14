@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-     
-from datetime import datetime
+from datetime import datetime, time, timedelta
 from bcrypt import hashpw, gensalt, checkpw
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask_login import UserMixin, AnonymousUserMixin
@@ -193,42 +193,44 @@ class Dish(db.Model):
 	def set_stock(self, amount):
 		self.stock += amount
 
-	def is_available(self, day, hour, is_vip=False):
+	def is_available(self, is_vip=False):
 		if not self.in_supply:
 			return False;
+		today = datetime.now().isoweekday()
+		hour = datetime.now().hour
 		if hour < 12:
 			# before 11 am
-			if day == 1:
+			if today == 1:
 				return self.Monday
-			elif day == 2:
+			elif today == 2:
 				return self.Tuesday
-			elif day == 3:
+			elif today == 3:
 				return self.Wednesday
-			elif day == 4:
+			elif today == 4:
 				return self.Thursday
-			elif day == 5:
+			elif today == 5:
 				return self.Friday
-			elif day == 6:
+			elif today == 6:
 				return self.Saturday
-			elif day == 7:
+			elif today == 7:
 				return self.Sunday
 		elif hour > 20:
 			# after 9 pm
 			if is_vip:
 				# available only to vip
-				if day == 7:
+				if today == 7:
 					return self.Monday
-				elif day == 1:
+				elif today == 1:
 					return self.Tuesday
-				elif day == 2:
+				elif today == 2:
 					return self.Wednesday
-				elif day == 3:
+				elif today == 3:
 					return self.Thursday
-				elif day == 4:
+				elif today == 4:
 					return self.Friday
-				elif day == 5:
+				elif today == 5:
 					return self.Saturday
-				elif day == 6:
+				elif today == 6:
 					return self.Sunday
 			else:
 				return False
@@ -366,6 +368,34 @@ class Order(db.Model):
 	@staticmethod
 	def __init__(self, **kwargs):
 		super(Order, self).__init__(**kwargs)
+		# set order status
+		if self.to_be_paid == 0:
+			self.status = Order_Status.PaidOff
+		else:
+			self.status = Order_Status.ToPay
+		# set today id
+		# TODO
+
+	@property
+	def is_valid(self):
+		if self.status == Order_Status.Cancelled:
+			return False
+		today = datetime.now().date()
+		hour_now = datetime.now().hour
+		hour_available = time(21)
+		if hour_now < 15:
+			# invoice available to collect meals before 15pm
+			datetime_available = datetime.combine(today, hour_available) + timedelta(-1)
+			return self.created_at >= datetime_available
+		elif hour_now > 20:
+			# invoice available after 9pm
+			datetime_available = datetime.combine(today, hour_available) 
+			return self.created_at >= datetime_available
+		else:
+			return False
+
+
+
 
 
 

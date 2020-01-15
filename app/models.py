@@ -4,6 +4,7 @@ from bcrypt import hashpw, gensalt, checkpw
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask_login import UserMixin, AnonymousUserMixin
 from flask import current_app
+from sqlalchemy import and_
 from . import db, login_manager
 
 class Role:
@@ -53,10 +54,12 @@ class User(UserMixin, db.Model):
 	def varify_password(self, password):
 		return checkpw(password.encode('utf'), self.password_hash.encode('utf'))
 
+	@property
 	def can_admin(self):
 		# has admin privilege
 		return self.role == Role.Admin
 
+	@property
 	def can_moderate(self):
 		# has moderator/admin privilege
 		return self.role == Role.Admin or self.role == Role.Moderator
@@ -138,11 +141,13 @@ class User(UserMixin, db.Model):
 
 
 class AnonymousUser(AnonymousUserMixin):
+	@property
 	def can_admin(self):
-		return false
+		return False
 
+	@property
 	def can_moderate(self):
-		return false
+		return False
 
 login_manager.anonymous_user = AnonymousUser
 
@@ -362,7 +367,7 @@ class Order(db.Model):
 	status = db.Column(db.Integer, default=Order_Status.ToPay)
 	price_sold = db.Column(db.Integer, nullable=False)
 	original_price = db.Column(db.Integer, nullable=False)
-	created_at = db.Column(db.DateTime(), default=datetime.now())
+	created_at = db.Column(db.DateTime(), default=datetime.now(), index=True)
 
 	@staticmethod
 	def __init__(self, **kwargs):
@@ -373,16 +378,35 @@ class Order(db.Model):
 		else:
 			self.status = Order_Status.ToPay
 
-	@staticmethod 
-	def YesterdayMaxID():
+	@staticmethod
+	def today():
 		today = datetime.now().date()
 		hour_now = datetime.now().hour
-		hour_stop_yesterday = time(11)
-		if hour_now < 11:
-			datetime_stop_yesterday = datetime.combine(today, hour_stop_yesterday) + timedelta(-1)
+		hour_boundary = time(21)
+		if hour_now < 21:
+			datetime_start = datetime.combine(today, hour_boundary) + timedelta(-1)
+			datetime_end = datetime.combine(today, hour_boundary)
 		else:
-			datetime_stop_yesterday = datetime.combine(today, hour_stop_yesterday)
-		last_order = Order.query.filter(Order.created_at<datetime_stop_yesterday).order_by(Order.created_at.desc()).first()
+			datetime_start = datetime.combine(today, hour_available) 
+			datetime_start = datetime.combine(today, hour_boundary) + timedelta(1)
+		return Order.query.filter(and_(Order.created_at >= datetime_start, Order.created_at < datetime_end))
+
+	@staticmethod
+	def yesterday():
+		today = datetime.now().date()
+		hour_now = datetime.now().hour
+		hour_boundary = time(21)
+		if hour_now < 21:
+			datetime_start = datetime.combine(today, hour_boundary) + timedelta(-2)
+			datetime_end = datetime.combine(today, hour_boundary) + + timedelta(-1)
+		else:
+			datetime_start = datetime.combine(today, hour_available) + + timedelta(-1)
+			datetime_start = datetime.combine(today, hour_boundary)
+		return Order.query.filter(and_(Order.created_at >= datetime_start, Order.created_at < datetime_end))
+
+	@staticmethod 
+	def YesterdayMaxID():
+		last_order = Order.yesterday().order_by(Order.created_at.desc()).first()
 		return last_order.id
 
 	def set_today_id(self, dish_name):

@@ -6,7 +6,7 @@ from .models import Role
 def admin_required(f):
 	@wraps(f)
 	def decorated_function(*args, **kwargs):
-		if not current_user.can_admin():
+		if not current_user.can_admin:
 			abort(403)
 		return f(*args, **kwargs)
 	return decorated_function
@@ -14,7 +14,7 @@ def admin_required(f):
 def moderator_required(f):
 	@wraps(f)
 	def decorated_function(*args, **kwargs):
-		if not current_user.can_moderate():
+		if not current_user.can_moderate:
 			abort(403)
 		return f(*args, **kwargs)
 	return decorated_function

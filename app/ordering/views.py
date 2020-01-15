@@ -5,7 +5,7 @@ from flask_login import current_user, login_required
 from . import ordering
 from .. import db
 from ..decorators import moderator_required
-from ..models import Order, Order_Status, Dish
+from ..models import Order, Order_Status, Dish, Restaurant
 from .forms import CreateOrderForm
 from ..email import send_email
 
@@ -14,18 +14,17 @@ from ..email import send_email
 def create_order(dish_id):
 	# order a dish
 	dish = Dish.query.get_or_404(dish_id)
-	#if dish.is_available(current_user.is_VIP):
-	if True:
+	if dish.is_available(current_user.is_VIP):
 		form = CreateOrderForm(current_user.balance)
 		if request.method == 'POST':
 			# time check
 			if not dish.is_available(current_user.is_VIP):
 				flash("Sorry, reservation time ends today~ This dish is not available now ┬＿┬")
-				#return redirect(url_for('main.menu'))
+				return redirect(url_for('main.menu'))
 			# stock check
 			if dish.sold_out:
 				flash("Sold Out ┬＿┬")
-				#return redirect(url_for('main.menu'))
+				return redirect(url_for('main.menu'))
 
 			if form.balance_pay.data == True:
 				# if user want to pay by balance
@@ -110,3 +109,20 @@ def cancel_order(order_id):
 			return redirect(url_for('.orders'))
 		else:
 			abort(403)
+
+@ordering.route('/daily-orders-statistics')
+@login_required
+@moderator_required
+def daily_orders_statistics():
+	# Notice here restaurants and orders are both queries!
+	restaurants = Restaurant.query.order_by(Restaurant.id)
+	orders = Order.today()
+	return render_template('ordering/daily_orders_statics.html', restaurants=restaurants, orders=orders)
+
+@ordering.route('/daily-orders-printing')
+@login_required
+@moderator_required
+def daily_orders_printing():
+	# Notice here orders is a query!
+	orders = Order.today()
+	return render_template('ordering/daily_orders_printing.html')

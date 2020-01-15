@@ -1,0 +1,15 @@
+<div style="font-size: 16px">
+
+Dear {{ user.name }},
+
+<p>You have successfully topped up your CDS account. Details are shown as follows: </p>
+<br>
+
+<strong>Top up date:</strong> <%= Time.now %><br>
+<strong>Top up amount:</strong> {{ deposit.amount }} HKD<br>
+<strong>Account balance:</strong> {{ user.balance }} HKD<br><br>
+
+<p>If you have any inquiries please email <a href="mailto:cds.hk@gmail.com?Subject=Top up inquiry" target="_top">cds.hk@gmail.com</a>.</p><br>
+
+<p>Yours Sincerely,</p>
+<p>CDS Team</p>

@@ -3,7 +3,7 @@ from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from . import auth
 from .. import db
-from .form import LoginForm, SignupFrom, ChangePasswordForm, PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm, EditProfileForm
+from .forms import LoginForm, SignupFrom, ChangePasswordForm, PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm
 from ..models import User
 from ..email import send_email
 
@@ -117,7 +117,7 @@ def change_password():
 			db.session.add(current_user)
 			db.session.commit()
 			flash('Your password has been updated.')
-			return redirect(url_for('auth.profile'))
+			return redirect(url_for('main.menu'))
 		else:
 			flash('Invalid old password.')
 	return render_template('auth/change_password.html', form=form)
@@ -155,9 +155,9 @@ def password_reset(token):
 			return redirect(url_for('main.menu'))
 	return render_template('auth/reset_password.html', form=form)
 
-@auth.route('/change-phone', methods=['GET', 'POST'])
+@auth.route('/change-email', methods=['GET', 'POST'])
 @login_required
-def change_phone_request():
+def change_email_request():
 	form = ChangeEmailForm()
 	if form.validate_on_submit():
 		if current_user.verify_password(form.password.data):
@@ -165,7 +165,7 @@ def change_phone_request():
 			token = current_user.generate_email_change_token(email)
 			send_email(new_email, 'Confirm New Email', 'auth/email/change_email', user=current_user, token=token)
 			flash('A confirmation email has been sent to your new email address. The new email address will not be used until you have confirmed it')
-			return redirect(url_for('auth.profile'))
+			return redirect(url_for('main.menu'))
 		else:
 			flash('Invalid password')
 	return render_template('auth/change_email.html', form=form)
@@ -178,32 +178,8 @@ def change_email(token):
 		flash('Your email has been updated.')
 	else:
 		flash("Sorry. The activation link is invalid or has expired, or the email has been already registered.")
-	redirect(url_for('auth.profile'))
+	redirect(url_for('main.menu'))
 
-
-@auth.route('/profile')
-@login_required
-def profile():
-	return render_template('auth/profile.html', user=current_user)
-
-@auth.route('/edit-profile', methods=['GET', 'POST'])
-@login_required
-def edit_profile():
-	form = EditProfileForm(user=current_user)
-	if form.validate_on_submit():
-		current_user.phone = form.phone.data.encode('utf8')
-		current_user.gender = form.gender.data.encode('utf8')
-		current_user.identity = form.identity.data.encode('utf8')
-		current_user.faculty = form.faculty.data.encode('utf8')
-		db.session.add(current_user._get_current_object())
-		db.session.commit()
-		flash('Your profile has been updated ^_^')
-		return redirect(url_for('.profile'))
-	form.phone.data = current_user.phone
-	form.gender.data = current_user.gender
-	form.identity.data = current_user.identity
-	form.faculty.data = current_user.faculty
-	return render_template('auth/edit_profile.html', form=form)
 
 
 

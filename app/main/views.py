@@ -1,7 +1,18 @@
 from datetime import datetime
-from flask import render_template
-from flask_login import login_required, current_user
+from flask import render_template, redirect, url_for, request
+from flask_login import current_user
 from . import main 
+
+@main.before_app_request
+def before_request():
+	if current_user.is_authenticated:
+		# is user is not activated, he is only allow to visit sited under 'auth' and 'main', and also static sites
+		if current_user.balance < 0 \
+						and request.endpoint \
+						and request.blueprint != 'auth' \
+						and request.blueprint != 'main' \
+						and request.endpoint != 'static':
+				return redirect(url_for('.in_debt'))
 
 @main.route('/')
 def menu():
@@ -19,3 +30,7 @@ def weekly_menu():
 @main.route('/about')
 def about():
 	return render_template('about.html')
+
+@main.route('/in-debt')
+def in_debt():
+	return render_template('in_debt.html')

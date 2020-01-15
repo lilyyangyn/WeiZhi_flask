@@ -11,7 +11,7 @@ class CreateDishForm(FlaskForm):
 
 	restaurant = QuerySelectField('Restaurant', query_factory=restaurant_query, get_label='name')
 	name = StringField('Chinese Name', validators=[DataRequired(), Length(1, 64)])
-	english_name = StringField('English Name', validators=[Length(1, 64)])
+	english_name = StringField('English Name', validators=[Length(0, 64)])
 	spiciness = SelectField('Spiciness', 
 		choices={(Spiciness.NotSpicy, 'Not Spicy'), 
 						(Spiciness.LittleSpicy, 'Little Spicy'), 

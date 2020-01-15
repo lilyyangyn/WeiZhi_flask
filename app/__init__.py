@@ -46,4 +46,7 @@ def create_app(config_name):
 	from .ordering import ordering as ordering_blueprint
 	app.register_blueprint(ordering_blueprint)
 
+	from .client import client as client_blueprint
+	app.register_blueprint(client_blueprint)
+
 	return app

@@ -1,0 +1,33 @@
+<div style="font-size: 16px">
+
+<p>Dear {{ user.name }},</p>
+
+<p>
+Your order information is listed as follows:<br><br>
+
+Order No.: <b style="color: #FF5722">{{ order.today_id }} </b> <br>
+Dish: {{ dish.name }} <br>
+Price: {{ dish.price }} HKD<br>
+To be paid: <span  style="color: #FF5722">{{ order.to_be_paid }} HKD</span><br>
+Account balance: {{ user.balance }} HKD<br>
+Pickup time: 12:20 - 12:40 p.m.<br>
+Pickup spot: <a href="https://c1.staticflickr.com/1/345/31556166353_d625fbd2e1_c.jpg">near the pillar outside SU canteen</a><br>
+
+<%if false%>
+余额支付： {{ dish.price - order.to_be_paid % }} HKD<br>
+账户余额： {{ user.balance }} HKD<br>
+<%end%>
+
+</p>
+<p>If you have any inquiries please contact Rosheen @<a href="tel:66428675">(852) 66428675</a>.</p>
+
+<p>Welcome to scan the QR code to follow our WeChat account: <strong>campus_dining</strong>. You can also ask our attendant to invite you to join our WeChat user group.</p>
+
+<img src="https://c1.staticflickr.com/1/656/32129682191_e97ac66a1c_m.jpg" style="display: block;margin: 2em auto; width: 240px;">
+
+<p>Have a nice day ^_^</p>
+<br>
+<p>Yours Sincerely,</p>
+<p>CDS Team</p>
+
+</div>

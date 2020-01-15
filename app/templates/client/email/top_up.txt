@@ -1,0 +1,15 @@
+Dear {{ user.name }},
+
+You have successfully topped up your CDS account. The details are shown as follows:
+
+
+Top up date: {{ deposit.create_at }}
+Top up amount: {{ deposit.amount }} HKD
+Account balance: {{ user.balance }} HKD
+
+
+If you have any inquiries please email: cds.hk@gmail.com
+
+
+Yours Sincerely,
+CDS Team

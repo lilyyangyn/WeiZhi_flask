@@ -90,7 +90,7 @@ def new_dish():
 									Sunday=form.sunday.data)
 		else:
 			# if dishi is not to be in supply, set all days to False by default
-			dish = Dish(restaurant_id=form.restaurant_id.data.id, 
+			dish = Dish(restaurant_id=form.restaurant.data.id, 
 									name=form.name.data.encode('utf8'), 
 									english_name=form.english_name.data.encode('utf8'), 
 									spiciness=form.spiciness.data, 

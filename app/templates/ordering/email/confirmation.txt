@@ -1,0 +1,21 @@
+Dear {{ user.name }},
+
+Your order information is listed as follows:
+
+Order No.: {{ order.today_id }}
+Dish: {{ dish.name }}
+Price: {{ dish.price }} HKD
+To be paid: {{order.to_be_paid}}  HKD
+Account balance: {{ user.balance }} HKD
+Pickup time: 12:20 - 12:40 p.m.
+Pickup spot: near the pillar outside SU canteen
+
+If you have any inquiries please contact Rosheen (852) 66428675.
+
+Welcome to follow our WeChat account: campus_dining. You can also ask our attendant to invite you to join our WeChat user group.
+
+Have a nice day^_^
+
+
+Yours Sincerely,
+CDS Team

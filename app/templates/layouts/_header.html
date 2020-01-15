@@ -1,0 +1,69 @@
+<header class="navbar navbar-static-top navbar-inverse " role="navigation">
+	<div class="container-fluid">
+
+    	<div class="navbar-header">
+    		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand">
+                <img alt="Brand" style="height:49px;width=50px;margin-top:-7px; margin-left:15px;" src="{{ url_for('static', filename='assets/images/logo.png') }}" >
+            </a>
+        </div>
+
+        <div class="navbar-collapse collapse pull-right">
+        	<ul class="nav navbar-nav">
+
+        		{% if current_user.can_moderate %}
+        		<li class="dropdown">
+        			<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        				Console <b class="caret"></b>
+        			</a>
+        			<ul class="dropdown-menu" role="menu">
+        				<li><a href="{{ url_for('supply.dishes') }}">Dishes</li>
+        				<li><a href="{{ url_for('supply.spots') }}">Spots</li>
+        				{% if current_user.can_admin %}
+        				<li><a href="{{ url_for('client.users') }}">Users</li>
+        				<li><a href="{{ url_for('client.deposits') }}">Deposits</li>
+        				{% endif %}
+        				<li class="divider"></li>
+        				<<li><a href="{{ url_for('ordering.daily_orders_statistics') }}">Daily Orders Statistics</li>
+        				<li><a href="{{ url_for('ordering.daily_orders_printing') }}">Daily Orders Printing</li>
+        			</ul>
+        		</li>
+    		    {% endif %}
+
+        		<li class="navList">
+        			<a href="{{ url_for('main.menu') }}">Order Now
+        		</li>
+        		<li class="navList">
+        			<a href="{{ url_for('main.weekly_menu') }}">Weekly Menu
+        		</li>
+        		<li class="navList">
+        			<a href="{{ url_for('main.about') }}">About Us
+        		</li>
+        		{% if current_user.is_authenticated %}
+        		<li class="navList">
+        			<a href="{{ url_for('ordering.orders') }}">Order History
+        		</li>
+        		<li class="dropdown">
+        			<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        				 {{ current_user.name }} 
+        			</a>
+        			<ul class="dropdown-menu pull-right">
+        				<li><a href="{{ url_for('client.profile') }}">Profile</li>
+        				<li><a href="{{ url_for('auth.change_password') }}">Change Password</li>
+        				<li><a href="{{ url_for('auth.logout') }}">Log Out</li>
+        			</ul>
+        		</li>
+        		{% else %}
+        		<li><a href="{{ url_for('auth.login') }}"><span class="glyphicon glyphicon-log-in"></span>&nbspLogin</a></li>
+        		{% endif %}
+            </ul>
+        </div>
+
+    </div>
+</header>

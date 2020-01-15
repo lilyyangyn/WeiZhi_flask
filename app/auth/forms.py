@@ -68,21 +68,17 @@ class PasswordResetRequestForm(FlaskForm):
 	email = StringField('Email', validators=[DataRequired(), Length(1, 64), Email()], render_kw={'placeholder': 'Registered Email e.g. u3502870@(connect.)hku.hk'})
 	submit = SubmitField('Submit')
 
+	def validate_email(self, field):
+		strs = field.data.lower().split("@")
+		if len(strs) == 2:
+			if strs[1] != "connect.hku.hk" and strs[1] != "hku.hk":
+				raise ValidationError('You must be a HKUer !')
+			email1 = strs[0] + "@connect.hku.hk"
+			email2 = strs[0] + "@hku.hk"
+			if not User.query.filter_by(email=email1).first() and not User.query.filter_by(email=email2).first():
+				raise ValidationError('mail is not registered.')	
+
 class PasswordResetForm(FlaskForm):
 	password = PasswordField('New Password', validators=[DataRequired(), Length(8, 20)], render_kw={'placeholder': 'New password (8-20 digits/characters)'})
 	password2 = PasswordField('Confirm new password', validators=[DataRequired(), EqualTo('password', message='Passwords must match')], render_kw={'placeholder': 'Confirm new password'})
 	submit = SubmitField('Reset Password')
-
-class ChangeEmailForm(FlaskForm):
-	password = PasswordField('Password', validators=[DataRequired()])
-	email = StringField('New Email', validators=[DataRequired(), Length(1, 64), Email()])
-	submit = SubmitField('Update Email Address')
-
-	def validate_email(self, field):
-		strs = field.data.lower().split("@")
-		email1 = strs[0] + "@connect.hku.hk"
-		email2 = strs[0] + "@hku.hk"
-		if User.query.filter_by(email=email1).first():
-			raise ValidationError('Email already registered.')
-		if User.query.filter_by(email=email2).first():
-			raise ValidationError('Email already registered.')

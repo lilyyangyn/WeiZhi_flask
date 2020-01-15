@@ -68,8 +68,11 @@ def create_deposit():
 		# create new deposit
 		deposit = Deposit(user_id=user.id, amount=amount)
 		db.session.add(deposit)
+		# must commit here to get created time
+		db.session.commit()
 		# send top up confirmation email
 		send_email(user.email, 'Top Up Confirmation', 'client/email/top_up', user=user, deposit=deposit)
 		flash("Successful create the deposit.")
 		return redirect(url_for('.deposits'))
 	return render_template('client/create_deposit.html', form=form)
+

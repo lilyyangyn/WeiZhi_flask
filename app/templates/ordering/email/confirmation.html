@@ -13,10 +13,10 @@ Account balance: {{ user.balance }} HKD<br>
 Pickup time: 12:20 - 12:40 p.m.<br>
 Pickup spot: <a href="https://c1.staticflickr.com/1/345/31556166353_d625fbd2e1_c.jpg">near the pillar outside SU canteen</a><br>
 
-<%if false%>
-余额支付： {{ dish.price - order.to_be_paid % }} HKD<br>
+{% if False %}
+余额支付： {{ dish.price - order.to_be_paid }} HKD<br>
 账户余额： {{ user.balance }} HKD<br>
-<%end%>
+{% endif %}
 
 </p>
 <p>If you have any inquiries please contact Rosheen @<a href="tel:66428675">(852) 66428675</a>.</p>

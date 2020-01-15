@@ -5,7 +5,7 @@ Dear {{ user.name }},
 <p>You have successfully topped up your CDS account. Details are shown as follows: </p>
 <br>
 
-<strong>Top up date:</strong> <%= Time.now %><br>
+<strong>Top up date:</strong> {{ deposit.created_at.strftime('%Y-%m-%d %H:%M:%S') }}<br>
 <strong>Top up amount:</strong> {{ deposit.amount }} HKD<br>
 <strong>Account balance:</strong> {{ user.balance }} HKD<br><br>
 

@@ -71,7 +71,7 @@ class User(UserMixin, db.Model):
 		# Generates an encrypted signature, and serializes data and signature
 		return s.dumps({'confirm': self.id}).decode('utf-8')
 
-	def confirm(self, tokem):
+	def confirm(self, token):
 		s = Serializer(current_app.config['SECRET_KEY'])
 		try:
 			# will first check the signature and expiration time
@@ -101,38 +101,13 @@ class User(UserMixin, db.Model):
 			data = s.loads(token.encode('utf8'))
 		except:
 			return False
-		user = User.query.filter_by(data.get('reset'))
+		user = User.query.filter_by(id=data.get('reset')).first()
 		# update password
 		if user is None:
 			return False
 		user.password = new_password
 		user.updated_at = datetime.now()
 		db.session.add(user)
-		return True
-
-	def generate_email_change_token(self, new_email, expiration=3600):
-		s = Serializer(current_app.config['SECRET_KEY'], expiration)
-		return s.dumps({'change_email': self.id, 'new_email': new_email}).decode('utf-8')
-
-	def change_email(self, token):
-		s = Serializer(current_app.config['SECRET_KEY'])
-		try:
-			data = s.loads(token.encode('utf-8'))
-		except:
-			return False
-		# logged-in user can only confirm the account of himself
-		if data.get('change_email') != self.id:
-			return False
-		new_email = data.get('new_email')
-		if new_email is None:
-			return False
-		# fail if new_email already registered
-		if User.query.filter_by(email=new_email).first() is not None:
-			return False
-		# update email
-		self.email = new_email
-		self.updated_at = datetime.now()
-		db.session.add(self)
 		return True
 
 	@property

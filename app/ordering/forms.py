@@ -8,12 +8,12 @@ class CreateOrderForm(FlaskForm):
 		return Spot.query.filter_by(in_use=True)
 
 	spot = QuerySelectField('Pickup Spot', query_factory=spot_query, get_label='name')
-	balance_pay = RadioField('Payment', default=False, coerce=bool)
+	balance_pay = RadioField('Payment', default=0, coerce=int)
 	submit = SubmitField('Confirm Order')
 
 	def __init__(self, userBalance, *args, **kwargs):
 		super(CreateOrderForm, self).__init__(*args, **kwargs)
 		if userBalance > 0:
-			self.balance_pay.choices = [(True, 'balance'), (False, 'cash')]
+			self.balance_pay.choices = [(1, 'balance'), (0, 'cash')]
 		else:
-			self.balance_pay.choices = [(False, 'cash')]
+			self.balance_pay.choices = [(0, 'cash')]

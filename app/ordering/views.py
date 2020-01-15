@@ -26,7 +26,7 @@ def create_order(dish_id):
 				flash("Sold Out ┬＿┬")
 				return redirect(url_for('main.menu'))
 
-			if form.balance_pay.data == True:
+			if form.balance_pay.data == 1:
 				# if user want to pay by balance
 				if current_user.balance < dish.price:
 					to_be_paid = dish.price - current_user.balance

@@ -24,14 +24,25 @@ def create_app(config_name):
 	bootstrap.init_app(app)
 	mail.init_app(app)
 	db.init_app(app)
+	db.app = app
 	login_manager.init_app(app)
+
+	if config_name == 'development' or 'default':
+		# logger 
+		import logging
+		log = logging.getLogger('apscheduler.executors.default')
+		log.setLevel(logging.INFO)  # DEBUG
+		fmt = logging.Formatter('%(levelname)s:%(name)s:%(message)s')
+		h = logging.StreamHandler()
+		h.setFormatter(fmt)
+		log.addHandler(h)
 
 	scheduler.init_app(app)
 	# job run at 11am every CDS working day (Monday - Friday)
 	from .schedulerjobs import update_to_next_working_day
 	scheduler.add_job(func=update_to_next_working_day, 
 										id='to_next_working_day', 
-										trigger='cron', day_of_week="mon-fri", hour=11)
+										trigger='cron', day_of_week="1-5", hour=11)
 	scheduler.start()
 
 	from .main import main as main_blueprint

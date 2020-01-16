@@ -45,6 +45,20 @@ def stop_use(id):
 		flash("No such spot, please add it first")
 	return redirect(url_for('.spots'))
 
+@supply.route('/start-use/<int:id>')
+@login_required
+@moderator_required
+def start_use(id):
+	# stop using this spot
+	spot = Spot.query.get(id)
+	if spot is not None:
+		spot.in_use = True
+		db.session.add(spot)
+		flash("Start using spot spot {} !".format(spot.name))
+	else:
+		flash("No such spot, please add it first")
+	return redirect(url_for('.spots'))
+
 @supply.route('/edit-spot/<int:id>', methods=['GET', 'POST'])
 @login_required
 @moderator_required

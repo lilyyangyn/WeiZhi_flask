@@ -4,14 +4,15 @@
 
 {% block head %}
 {{ super() }}
-<meta name="google-site-varification" content="T3ZR5YKgJ5m4bkojEgWD_PunRqqbimrIsiXcW9E-YZA" />
+<meta name="google-site-varification" content="" />
 {% endblock %}
 
 {% block navbar %}
+{% include 'layouts/_header.html' %} 
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container-fluid">
 	{% for message in get_flashed_messages() %}
   <div class="alert alert-warning">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -22,4 +23,5 @@
 {% endblock %}
 
 {% block footer %}
+{% include 'layouts/_footer.html' %}
 {% endblock %}

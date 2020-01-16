@@ -38,10 +38,10 @@ def edit_profile():
 def users():
 	# display users data, ordered by account balance
 	users = User.query.order_by(User.balance.desc()).all()
-	total_students = session.query(func.count(User.id)).filter(User.identity == 'student').scalar()
-	total_staffs = session.query(func.count(User.id)).filter(User.identity == 'staff').scalar()
-	total_balance = session.query(func.sum(User.balance)).first()
-	return render_template('client/users.html', user=user, total_students=total_students, total_staffs=total_staffs, total_balance=total_balance)
+	total_students = db.session.query(func.count(User.id)).filter(User.identity == 'student').scalar()
+	total_staffs = db.session.query(func.count(User.id)).filter(User.identity == 'staff').scalar()
+	total_balance = db.session.query(func.sum(User.balance)).scalar()
+	return render_template('client/users.html', users=users, total_students=total_students, total_staffs=total_staffs, total_balance=total_balance)
 
 @client.route('/deposits')
 @login_required
@@ -49,7 +49,7 @@ def users():
 def deposits():
 	# display all deposits, ordered by id (created time)
 	# notice here deposists are query
-	deposits = Deposit.query
+	deposits = Deposit.query.all()
 	return render_template('client/deposits.html', deposits=deposits)
 
 @client.route('/deposits/new', methods=['GET', 'POST'])

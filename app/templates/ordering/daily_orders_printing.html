@@ -1,9 +1,20 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
 
 {% block title %}CDS{% endblock %}
 
 {% block content %}
 <div class="page-header">
 	<h1>this is order printing</h1>
+</div>
+<div>
+	{% for order in orders %}
+	<ul>
+		<ul>Order#: {{ order.today_id }}</ul>
+		<ul>CashToBePaid: {{ order.to_be_paid }}</ul>
+		<ul>Dish: {{ order.dish.name }}</ul>
+		<ul>Username: {{ order.user.name }}</ul>
+		<ul>Phone: {{ order.user.phone }}</ul>
+	</ul>
+	{% endfor %}
 </div>
 {% endblock %}

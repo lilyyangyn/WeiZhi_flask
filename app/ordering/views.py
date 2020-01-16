@@ -1,7 +1,9 @@
 # -*- coding: UTF-8 -*-
-from datetime import datetime
+from datetime import datetime, time, timedelta
 from flask import render_template, redirect, url_for, flash, request, abort
 from flask_login import current_user, login_required
+from sqlalchemy import and_
+from sqlalchemy.sql import func
 from . import ordering
 from .. import db
 from ..decorators import moderator_required
@@ -114,15 +116,22 @@ def cancel_order(order_id):
 @login_required
 @moderator_required
 def daily_orders_statistics():
-	# Notice here restaurants and orders are both queries!
-	restaurants = Restaurant.query.order_by(Restaurant.id)
-	orders = Order.today()
-	return render_template('ordering/daily_orders_statics.html', restaurants=restaurants, orders=orders)
+	today = datetime.now().date()
+	hour_now = datetime.now().hour
+	hour_boundary = time(21)
+	if hour_now < 21:
+		datetime_start = datetime.combine(today, hour_boundary) + timedelta(-1)
+		datetime_end = datetime.combine(today, hour_boundary)
+	else:
+		datetime_start = datetime.combine(today, hour_boundary) 
+		datetime_end = datetime.combine(today, hour_boundary) + timedelta(1)
+	# may need some improvement for the way to make query
+	statistics=db.session.query(Restaurant.name.label("restaurant_name"), Dish.name.label("dish_name"), db.func.count(Dish.id).label("amount")).join(Order, Order.dish_id == Dish.id).join(Restaurant, Restaurant.id == Dish.restaurant_id).filter(and_(Order.created_at >= datetime_start, Order.created_at < datetime_end)).order_by(Restaurant.name.desc()).group_by(Dish.name, Restaurant.name).all()
+	return render_template('ordering/daily_orders_statics.html', statistics=statistics, temp=None)
 
 @ordering.route('/daily-orders-printing')
 @login_required
 @moderator_required
 def daily_orders_printing():
-	# Notice here orders is a query!
-	orders = Order.today()
-	return render_template('ordering/daily_orders_printing.html')
+	orders = Order.today().all()
+	return render_template('ordering/daily_orders_printing.html', orders=orders)

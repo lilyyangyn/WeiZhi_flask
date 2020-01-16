@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
 
 {% block title %}CDS{% endblock %}
 
@@ -6,5 +6,23 @@
 {{ super() }}
 <div class="page-header">
 	<h1>this is restaurants</h1>
+</div>
+<div>
+	{% for restaurant in restaurants %}
+	<ul>Name: {{ restaurant.name }}</ul>
+	<ul>Image: <img src="{{ restaurant.img_url }}"></ul>
+	<ul>Info: {{ restaurant.info }}</ul>
+	<ul>
+		{% if restaurant.in_cooperation %}
+		<a href="{{ url_for('supply.stop_cooperation', id=restaurant.id) }}">Stop Cooperation</a>
+		{% else %}
+		<a href="{{ url_for('supply.start_cooperation', id=restaurant.id) }}">Start Cooperation</a>
+		{% endif %}
+	</ul>
+	<ul><a href="{{ url_for('supply.edit_restaurant', id=restaurant.id) }}">Edit</a></ul>
+	{% endfor %}
+<br>
+<div>
+	<ul><a href="{{ url_for('supply.new_restaurant') }}">Create New Restaurant</a></ul>
 </div>
 {% endblock %}

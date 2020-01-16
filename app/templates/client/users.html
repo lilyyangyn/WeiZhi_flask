@@ -1,10 +1,29 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
 
 {% block title %}CDS{% endblock %}
 
 {% block content %}
 {{ super() }}
 <div class="page-header">
-	<h1>this is order_history</h1>
+	<h1>this is users</h1>
 </div>
+<div>
+	<ul><h5>Total Balance: {{ total_balance }}</h5></ul>
+	<ul><h5>Total Students: {{ total_students }}</h5></ul>
+	<ul><h5>Total Staffs: {{ total_staffs }}</h5></ul>
+<div>
+<div>
+	{% for user in users %}
+	<ul>
+		<ul>Balance: {{ user.balance }}</ul>
+		<ul>Name: {{ user.name }}</ul>
+		<ul>Gender: {{ user.gender }}</ul>
+		<ul>Phone: {{ user.phone }}</ul>
+		<ul>Email: {{ user.email }}</ul>
+		<ul>Faculty: {{ user.faculty }}</ul>
+		<ul>Identity: {{ user.identity }}</ul>
+		<ul>Register At: {{ user.created_at.strftime('%Y-%m-%d') }}</ul>
+	</ul>
+	{% endfor %}
+</div>	
 {% endblock %}

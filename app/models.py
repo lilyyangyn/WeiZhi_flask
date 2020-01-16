@@ -250,13 +250,6 @@ class Dish(db.Model):
 
 	def stop_serving(self):
 		self.stock = 0
-		self.Monday = False
-		self.Tuesday = False
-		self.Wednesday = False
-		self.Thursday = False
-		self.Friday = False
-		self.Saturday = False
-		self.Sunday = False
 		self.in_supply = False
 
 	@staticmethod
@@ -276,8 +269,41 @@ class Dish(db.Model):
 			db.session.add(dish)
 
 	@staticmethod
+	def today():
+		today = datetime.now().isoweekday()
+		hour = datetime.now().hour
+		if today == 6 or today == 7:
+			# weekend
+			return Dish.query.filter_by(Monday=True)
+		if hour < 11:
+			# before 11 am
+			if today == 1:
+				return Dish.query.filter_by(Monday=True)
+			elif today == 2:
+				return Dish.query.filter_by(Tuesday=True)
+			elif today == 3:
+				return Dish.query.filter_by(Wednesday=True)
+			elif today == 4:
+				return Dish.query.filter_by(Thursday=True)
+			elif today == 5:
+				return Dish.query.filter_by(Friday=True)
+		else:
+			# after 11 am
+			if today == 1:
+				return Dish.query.filter_by(Tuesday=True)
+			elif today == 2:
+				return Dish.query.filter_by(Wednesday=True)
+			elif today == 3:
+				return Dish.query.filter_by(Thursday=True)
+			elif today == 4:
+				return Dish.query.filter_by(Friday=True)
+			elif today == 5:
+				return Dish.query.filter_by(Monday=True)
+
+	@staticmethod
 	def update_to_next_day():
 		# update the menu to next day
+		# only call this method at 11am by the scheduler
 		Dish.clear_all_stocks()
 		today = datetime.now().isoweekday()
 		if today == 1:
@@ -362,8 +388,8 @@ class Order(db.Model):
 			datetime_start = datetime.combine(today, hour_boundary) + timedelta(-1)
 			datetime_end = datetime.combine(today, hour_boundary)
 		else:
-			datetime_start = datetime.combine(today, hour_available) 
-			datetime_start = datetime.combine(today, hour_boundary) + timedelta(1)
+			datetime_start = datetime.combine(today, hour_boundary) 
+			datetime_end = datetime.combine(today, hour_boundary) + timedelta(1)
 		return Order.query.filter(and_(Order.created_at >= datetime_start, Order.created_at < datetime_end))
 
 	@staticmethod
@@ -375,8 +401,8 @@ class Order(db.Model):
 			datetime_start = datetime.combine(today, hour_boundary) + timedelta(-2)
 			datetime_end = datetime.combine(today, hour_boundary) + + timedelta(-1)
 		else:
-			datetime_start = datetime.combine(today, hour_available) + + timedelta(-1)
-			datetime_start = datetime.combine(today, hour_boundary)
+			datetime_start = datetime.combine(today, hour_boundary) + + timedelta(-1)
+			datetime_end = datetime.combine(today, hour_boundary)
 		return Order.query.filter(and_(Order.created_at >= datetime_start, Order.created_at < datetime_end))
 
 	@staticmethod 

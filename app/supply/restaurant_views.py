@@ -12,8 +12,8 @@ from .forms import CreateRestaurantForm, EditRestaurantForm
 @moderator_required
 def restaurants():
 	# show all restaurants CDS coorperate with
-	restaurant = Restaurant.query.order_by(Restaurant.name.desc()).all()
-	return render_template('supply/restaurants/restaurants.html', restaurant=restaurant)
+	restaurants = Restaurant.query.order_by(Restaurant.name.desc()).all()
+	return render_template('supply/restaurants/restaurants.html', restaurants=restaurants)
 
 @supply.route('/restaurants/new', methods=['GET', 'POST'])
 @login_required
@@ -47,6 +47,25 @@ def stop_cooperation(id):
 		restaurant.in_cooperation = False
 		db.session.add(restaurant)
 		flash("Stop coorperating with {} ┬＿┬".format(restaurant.name))
+	else:
+		flash("No such restaurant, hope to coorperate with it one day.")
+	return redirect(url_for('supply.restaurants'))
+
+@supply.route('/start-cooperation/<int:id>')
+@login_required
+@moderator_required
+def start_cooperation(id):
+	# stop cooperating with this restaurant
+	restaurant = Restaurant.query.get(id)
+	if restaurant is not None:
+		# stop serving all dishes from this restaurant
+		for dish in restaurant.dishes.all():
+			dish.in_supply = True
+			db.session.add(dish)
+		# stop coorperate with the restaurant
+		restaurant.in_cooperation = True
+		db.session.add(restaurant)
+		flash("Start coorperating with {} !".format(restaurant.name))
 	else:
 		flash("No such restaurant, hope to coorperate with it one day.")
 	return redirect(url_for('supply.restaurants'))

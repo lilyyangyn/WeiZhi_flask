@@ -1,10 +1,24 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
 
 {% block title %}CDS{% endblock %}
 
 {% block content %}
 {{ super() }}
 <div class="page-header">
-	<h1>this is order_history</h1>
+	<h1>this is deposits</h1>
+</div>
+<div>
+	<ul><a href="{{ url_for('client.create_deposit') }}">Create New Deposit</a></ul>
+</div>
+<div>
+	{% for deposit in deposits %}
+	<ul>
+		<ul>Balance: {{ deposit.amount }}</ul>
+		<ul>Created At: {{ deposit.user.created_at.strftime('%Y-%m-%d') }}</ul>
+		<ul>User: {{ deposit.user.name }}</ul>
+		<ul>Phone: {{ deposit.user.phone }}</ul>
+		<ul>Email: {{ deposit.user.email }}</ul>
+	</ul>
+	{% endfor %}
 </div>
 {% endblock %}

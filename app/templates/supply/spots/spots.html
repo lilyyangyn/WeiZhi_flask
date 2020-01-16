@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
 
 {% block title %}CDS{% endblock %}
 
@@ -6,5 +6,23 @@
 {{ super() }}
 <div class="page-header">
 	<h1>this is spots</h1>
+</div>
+<div>
+	{% for spot in spots %}
+	<ul>Name: {{ spot.name }}</ul>
+	<ul>Image: <img src="{{ spot.img_url }}"></ul>
+	<ul>Description: {{ spot.description }}</ul>
+	<ul>
+		{% if spot.in_use %}
+		<a href="{{ url_for('supply.stop_use', id=spot.id) }}">Stop Use</a>
+		{% else %}
+		<a href="{{ url_for('supply.start_use', id=spot.id) }}">Start Use</a>
+		{% endif %}
+	</ul>
+	<ul><a href="{{ url_for('supply.edit_spot', id=spot.id) }}">Edit</a></ul>
+	{% endfor %}
+<br>
+<div>
+	<ul><a href="{{ url_for('supply.new_spot') }}">Create New Spot</a></ul>
 </div>
 {% endblock %}

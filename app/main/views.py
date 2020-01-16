@@ -2,6 +2,7 @@ from datetime import datetime
 from flask import render_template, redirect, url_for, request
 from flask_login import current_user
 from . import main 
+from ..models import Dish
 
 @main.before_app_request
 def before_request():
@@ -21,11 +22,19 @@ def menu():
 		 (datetime.now().isoweekday() == 7 and datetime.now().hour < 21):
 		 return render_template('weekend.html')
 	# if not weekend, show today's menu
-	return render_template('menu_today.html')
+	dishes_today = Dish.today().all()
+	return render_template('menu_today.html', dishes_today=dishes_today)
 
 @main.route('/weekly_menu')
 def weekly_menu():
-	return render_template('weekly_menu.html')
+	dishes_in_supply = Dish.query.filter_by(in_supply=True)
+	dishes = []
+	dishes.append(dishes_in_supply.filter_by(Monday=True).all())
+	dishes.append(dishes_in_supply.filter_by(Tuesday=True).all())
+	dishes.append(dishes_in_supply.filter_by(Wednesday=True).all())
+	dishes.append(dishes_in_supply.filter_by(Thursday=True).all())
+	dishes.append(dishes_in_supply.filter_by(Friday=True).all())
+	return render_template('weekly_menu.html', dishes=dishes)
 
 @main.route('/about')
 def about():

@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, IntegerField, BooleanField, TextAreaField, SubmitField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from wtforms.validators import DataRequired, Length, Optional 
+from wtforms.validators import DataRequired, Length, Optional, NumberRange 
 from wtforms import ValidationError
 from ..models import Dish, Restaurant, Spiciness, Spot
 
@@ -40,6 +40,10 @@ class CreateDishForm(FlaskForm):
 		if Dish.query.filter_by(english_name=field.data).first():
 			raise ValidationError('Dish already exists.')
 
+class ChangeStockForm(FlaskForm):
+	amount = IntegerField('Amount', validators=[NumberRange(1, 4)])
+	submit = SubmitField('Submit')
+	
 class EditDishForm(FlaskForm):
 	def restaurant_query():
 		return Restaurant.query.filter_by(in_cooperation=True)

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
 
 {% block title %}CDS{% endblock %}
 
@@ -6,5 +6,30 @@
 {{ super() }}
 <div class="page-header">
 	<h1>this is dishes</h1>
+</div>
+<div>
+	{% for dish in dishes %}
+	<ul>Restaurant: {{ dish.restaurant.name }}</ul>
+	<ul>Dish: {{ dish.name }}</ul>
+	<ul>Price: {{ dish.price }}</ul>
+	<ul>Stock: {{ dish.stock }}
+		<a href="{{ url_for('supply.increase_stock', id=dish.id) }}">Increase</a>
+		<a href="{{ url_for('supply.decrease_stock', id=dish.id) }}">Decrease</a>
+	</ul>
+	<ul><a href="{{ url_for('supply.edit_dish', id=dish.id) }}">Edit</a></ul>
+	<ul>
+		{% if dish.in_supply %}
+		<a href="{{ url_for('supply.stop_supply_dish', id=dish.id) }}">Stop Supply</a>
+		{% else %}
+		<a href="{{ url_for('supply.supply_dish', id=dish.id) }}">Start Supply</a>
+		{% endif %}
+	</ul>
+	{% endfor %}
+</div>
+<br>
+<div>
+	<ul><a href="{{ url_for('supply.new_dish') }}">Create New Dish</a></ul>
+	<ul><a href="{{ url_for('supply.clear_all_stocks') }}">Clear All Stock</a></ul>
+	<ul><a href="{{ url_for('supply.reset_available_days') }}">Reset Weekly Menu</a></ul>
 </div>
 {% endblock %}

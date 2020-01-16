@@ -1,4 +1,6 @@
-<header class="navbar navbar-static-top navbar-inverse " role="navigation">
+<header class="navbar navbar-static-top navbar-inverse" role="navigation">
+</header>
+<header class="navbar navbar-static-top navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="container-fluid">
 
     	<div class="navbar-header">
@@ -23,40 +25,41 @@
         				Console <b class="caret"></b>
         			</a>
         			<ul class="dropdown-menu" role="menu">
-        				<li><a href="{{ url_for('supply.dishes') }}">Dishes</li>
-        				<li><a href="{{ url_for('supply.spots') }}">Spots</li>
+        				<li><a href="{{ url_for('supply.dishes') }}">Dishes</a></li>
+                        <li><a href="{{ url_for('supply.restaurants') }}">Restaurants</a></li>
+        				<li><a href="{{ url_for('supply.spots') }}">Spots</a></li>
         				{% if current_user.can_admin %}
-        				<li><a href="{{ url_for('client.users') }}">Users</li>
-        				<li><a href="{{ url_for('client.deposits') }}">Deposits</li>
+        				<li><a href="{{ url_for('client.users') }}">Users</a></li>
+        				<li><a href="{{ url_for('client.deposits') }}">Deposits</a></li>
         				{% endif %}
         				<li class="divider"></li>
-        				<<li><a href="{{ url_for('ordering.daily_orders_statistics') }}">Daily Orders Statistics</li>
-        				<li><a href="{{ url_for('ordering.daily_orders_printing') }}">Daily Orders Printing</li>
+        				<li><a href="{{ url_for('ordering.daily_orders_statistics') }}">Daily Orders Statistics</a></li>
+        				<li><a href="{{ url_for('ordering.daily_orders_printing') }}">Daily Orders Printing</a></li>
         			</ul>
         		</li>
     		    {% endif %}
 
         		<li class="navList">
-        			<a href="{{ url_for('main.menu') }}">Order Now
+        			<a href="{{ url_for('main.menu') }}">Order Now</a>
         		</li>
         		<li class="navList">
-        			<a href="{{ url_for('main.weekly_menu') }}">Weekly Menu
+        			<a href="{{ url_for('main.weekly_menu') }}">Weekly Menu</a>
         		</li>
         		<li class="navList">
-        			<a href="{{ url_for('main.about') }}">About Us
+        			<a href="{{ url_for('main.about') }}">About Us</a>
         		</li>
         		{% if current_user.is_authenticated %}
         		<li class="navList">
-        			<a href="{{ url_for('ordering.orders') }}">Order History
+        			<a href="{{ url_for('ordering.orders') }}">Order History</a>
         		</li>
         		<li class="dropdown">
         			<a href="#" class="dropdown-toggle" data-toggle="dropdown">
         				 {{ current_user.name }} 
         			</a>
         			<ul class="dropdown-menu pull-right">
-        				<li><a href="{{ url_for('client.profile') }}">Profile</li>
-        				<li><a href="{{ url_for('auth.change_password') }}">Change Password</li>
-        				<li><a href="{{ url_for('auth.logout') }}">Log Out</li>
+        				<li><a href="{{ url_for('client.profile') }}">Profile</a></li>
+        				<li><a href="{{ url_for('auth.change_password') }}">Change Password</a></li>
+        				<li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
         			</ul>
         		</li>
         		{% else %}

@@ -5,7 +5,7 @@ from .. import db
 from ..models import Dish
 from ..email import send_email
 from ..decorators import moderator_required, admin_required
-from .forms import CreateDishForm, EditDishForm
+from .forms import CreateDishForm, ChangeStockForm, EditDishForm
 from ..schedulerjobs import update_to_next_working_day
 
 import sys
@@ -53,15 +53,65 @@ def reset_available_days():
 def supply_dish(id):
 	dish = Dish.query.get(id)
 	if dish is not None:
-		dish.to_supply = True
+		dish.in_supply = True
 		db.session.add(dish)
 		flash("{} is available to be supplied ~".format(dish.name))
 	else:
 		flash('We do not have such dish, please add it to database first.')
 	return redirect(url_for('supply.dishes'))
 
+@supply.route('/stop_supply-dish/<int:id>')
+@login_required
+@moderator_required
+def stop_supply_dish(id):
+	dish = Dish.query.get(id)
+	if dish is not None:
+		dish.in_supply = False
+		dish.stock = 0
+		db.session.add(dish)
+		flash("Stop supplying {} ~".format(dish.name))
+	else:
+		flash('We do not have such dish, please add it to database first.')
+	return redirect(url_for('supply.dishes'))
 
-# TODO: increase-stock, decrease-stock
+@supply.route('/increase-stock/<int:id>', methods=['GET', 'POST'])
+@login_required
+@moderator_required
+def increase_stock(id):
+	dish = Dish.query.get(id)
+	if dish is not None:
+		form = ChangeStockForm()
+		if form.validate_on_submit():
+			dish.stock += form.amount.data
+			db.session.add(dish)
+			flash("Successfully increase stock of {} by {} ~".format(dish.name, form.amount.data))
+			return redirect(url_for('supply.dishes'))
+		return render_template('supply/dishes/change_stock.html', form=form)
+	else:
+		flash('We do not have such dish, please add it to database first.')
+	return redirect(url_for('supply.dishes'))
+
+@supply.route('/decrease-stock/<int:id>', methods=['GET', 'POST'])
+@login_required
+@moderator_required
+def decrease_stock(id):
+	dish = Dish.query.get(id)
+	if dish is not None:
+		form = ChangeStockForm()
+		if form.validate_on_submit():
+			if dish.stock < form.amount.data:
+				amount = dish.stock
+				dish.stock = 0
+			else:
+				amount = form.amount.data
+				dish.stock -= amount
+			db.session.add(dish)
+			flash("Successfully decrease stock of {} by {} ~".format(dish.name, amount))
+			return redirect(url_for('supply.dishes'))
+		return render_template('supply/dishes/change_stock.html', form=form)
+	else:
+		flash('We do not have such dish, please add it to database first.')
+	return redirect(url_for('supply.dishes'))
 
 
 @supply.route('/dishes/new', methods=['GET', 'POST'])

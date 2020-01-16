@@ -1,10 +1,52 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
 
-{% block title %}CDS{% endblock %}
+{% block title %}Weekly Menu | CDS{% endblock %}
 
 {% block content %}
 {{ super() }}
 <div class="page-header">
 	<h1>this is weekly_menu</h1>
+</div>
+<div>
+	<div>
+		<h4>Monday</h4>
+		<ul>
+			{% for dish in dishes[0] %}
+			<ul>{{ dish.name }}</ul>
+			{% endfor %}
+		</ul>
+	</div>
+	<div>
+		<h4>Tuesday</h4>
+		<ul>
+			{% for dish in dishes[1] %}
+			<ul>{{ dish.name }}</ul>
+			{% endfor %}
+		</ul>
+	</div>
+	<div>
+		<h4>Wednesday</h4>
+		<ul>
+			{% for dish in dishes[2] %}
+			<ul>{{ dish.name }}</ul>
+			{% endfor %}
+		</ul>
+	</div>
+	<div>
+		<h4>Thursday</h4>
+		<ul>
+			{% for dish in dishes[3] %}
+			<ul>{{ dish.name }}</ul>
+			{% endfor %}
+		</ul>
+	</div>
+	<div>
+		<h4>Friday</h4>
+		<ul>
+			{% for dish in dishes[4] %}
+			<ul>{{ dish.name }}</ul>
+			{% endfor %}
+		</ul>
+	</div>
 </div>
 {% endblock %}

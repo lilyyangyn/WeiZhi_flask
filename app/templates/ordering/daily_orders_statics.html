@@ -1,9 +1,21 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
 
 {% block title %}CDS{% endblock %}
 
 {% block content %}
 <div class="page-header">
 	<h1>this is order statistics</h1>
+</div>
+<div>
+	<ul>
+		{% for stat in statistics %}
+			{% if temp != None and temp != stat.restaurants_name %}
+				<br>
+				{% set temp=stat.restaurants_name %}
+			{% endif %}
+			<li>Restaurant: {{ stat.restaurant_name }}</li>
+			<li>Dish: {{ stat.dish_name }}</li>
+			<li>Count: {{ stat.amount }}</li>
+		{% endfor %}
 </div>
 {% endblock %}

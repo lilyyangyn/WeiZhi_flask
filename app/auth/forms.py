@@ -8,7 +8,7 @@ from ..models import User
 class LoginForm(FlaskForm):
 	email = StringField('Email', validators=[DataRequired(), Length(1, 48)], render_kw={'placeholder': 'e.g. u3502870'})
 	password = PasswordField('Password', validators=[DataRequired(), Length(8, 20)], render_kw={'placeholder': 'Password'})
-	remember_me = BooleanField('Remember me')
+	remember_me = BooleanField('Remember me', default=False)
 	submit = SubmitField('Login')
 
 def faculties():

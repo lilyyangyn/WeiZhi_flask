@@ -4,7 +4,16 @@
 
 {% block head %}
 {{ super() }}
-<meta name="google-site-varification" content="" />
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:400,100,700,900' type='text/css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Allura' type='text/css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Righteous' type='text/css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' type='text/css'>
+ <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Alex+Brush' type='text/css'>
+
+<link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename='assets/images/favicon.ico') }}" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/base_styles.css') }}">
+
 {% endblock %}
 
 {% block navbar %}

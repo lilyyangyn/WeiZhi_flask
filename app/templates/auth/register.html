@@ -5,10 +5,115 @@
 
 {% block content %}
 {{ super() }}
-<div class="page-header">
-	<h1>this is signup</h1>
-</div>
-<div class="col-md-4">
-    {{ wtf.quick_form(form) }}
+<div class="container">
+	<div id="registerbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+  	<div class="mypanel" >
+    	<div class="panel-heading text-center">
+        <img style="width:88px;" src="{{ url_for('static', filename='assets/images/logo_red.png') }}">
+        <div class="panel-title" style="font-size: 18px;margin-top: 20px;font-weight: bold;">Use HKU Email to Register</div>
+        </div>
+        <div style="padding-top:30px" class="panel-body" >
+	      	<form method="POST" action="{{ url_for('auth.signup') }}">
+	        	{{ form.hidden_tag() }}
+
+		       	<div class="my-form" style="margin-bottom: 25px;">
+		          <div class="input-group col-xs-12">
+								<div style="float: left;" class="col-xs-12 col-lg-12 input-group">
+		            	<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+		            	{{ form.name(class='form-control') }}
+		            </div>
+							</div>
+							{% if form.email.errors %}
+		       		<div class="form-validate_error">{{ form.email.errors.0 }}</div>
+		       		{% endif %}
+		       	</div>
+
+		       	<div class="my-form" style="margin-bottom: 25px;">
+							<div class="input-group col-xs-12">
+		          	<!--  <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span> -->
+		          	{{ form.phone(class='form-control') }}
+		         	</div>
+		         	{% if form.phone.errors %}
+		       		<div class="form-validate_error">{{ form.phone.errors.0 }}</div>
+		       		{% endif %}
+		       	</div>
+
+	          <div class="col-xs-12 col-lg-12" style="margin-bottom: 25px; padding: 0px">	
+	          	<div class="my-form">
+		          	<div style="float: left;padding-right: 5px;" class="input-group col-xs-6">
+		          		{{ form.gender(class='form-control') }}
+		            </div>
+		            {% if form.gender.errors %}
+			       		<div class="form-validate_error">{{ form.gender.errors.0 }}</div>
+			       		{% endif %}
+			       	</div>
+
+		       		<div class="my-form">
+								<div style="float: right;padding-left: 5px;" class="input-group col-xs-6">
+									{{ form.identity(class='form-control') }}
+								</div>
+								{% if form.identity.errors %}
+		       			<div class="form-validate_error">{{ form.identity.errors.0 }}</div>
+		       			{% endif %}
+		       		</div>
+						</div>
+
+						<div class="my-form" style="margin-bottom: 25px;">
+							<div class="input-group col-xs-12">
+								{{ form.faculty(class='form-control') }}
+							</div>
+							{% if form.faculty.errors %}
+		       		<div class="form-validate_error">{{ form.faculty.errors.0 }}</div>
+		       		{% endif %}
+		       	</div>
+						
+						
+		       	<div class="my-form" style="margin-bottom: 25px;">
+							<div class="input-group">
+		          	<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+		          	{{ form.email(class='form-control') }}
+								<span class="input-group-addon" id="email_postfix" style="padding-right:0.2em; padding-left:0.2em">@connect.hku.hk</span>
+		          </div>
+		          {% if form.email.errors %}
+		       		<div class="form-validate_error">{{ form.email.errors.0 }}</div>
+		       		{% endif %}
+		       	</div>
+	          <p style="font-size: 14px;opacity: 0.7;margin:-20px 0px 20px 3px;">* Only content before @ is needed. Please double check.</p>
+
+	          <div class="my-form" style="margin-bottom: 10px;">
+							<div class="input-group col-xs-12">
+			          	<div class="col-xs-6" style="padding: 0px 5px 0px 0px">
+			          		{{ form.password(class='form-control') }}
+			            </div>
+
+			            <div class="col-xs-6" style="padding: 0px 0px 0px 5px">
+			            	{{ form.password2(class='form-control') }}
+			            </div>
+		       		</div>
+		       		{% if form.password.errors %}
+				       		<div class="form-validate_error">{{ form.password.errors.0 }}</div>
+				      {% endif %}
+				      {% if form.password2.errors %}
+		       		<div class="form-validate_error">{{ form.password2.errors.0 }}</div>
+	       			{% endif %}
+	       		</div>
+
+						<div class="col-xs-12" style="padding:0px 0px 0px -15px;margin-bottom: 1em;">
+	          	<p style="font-size: 14px;opacity: 0.7;margin-left: -10px;">By click Register, you agree with our <a href="#modal-dialog" class="modal-toggle" data-toggle="modal" id="modalbtn"><i class="icon-trash"></i>Terms & Conditions</a></p>
+						</div>
+
+						<div class="col-xs-12">
+	          	{{ form.submit(class="btn btn-danger btn-block btn-my" ) }}
+	          </div>
+	        </form>
+				</div>
+
+        <div style="text-align: center;opacity: 0.7;font-size: 14px;margin-top:8px;border-top: 1px solid #dadada">
+
+        <p style="padding: 18px 0px">Already registered? <a href="{{ url_for('auth.login') }}">Login</a> now!</p>
+
+      </div>
+		</div>
+  </div>
 </div>
 {% endblock %}

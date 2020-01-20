@@ -1,0 +1,189 @@
+.icon-large.icon-male{ background-position: -184px -29px;  }
+.icon-large.icon-female{ background-position: -184px -61px;  }*/
+.help-block{
+color:red;
+}
+h1, h2, h3, h4{
+  font-size: bold;
+}
+
+.has-error .control-label,
+.has-error .help-block,
+.has-error .form-control-feedback {
+    color: #a94442;
+}
+
+.emphasis{
+  color: #FF5722;
+  font-weight:bold;
+}
+.mypanel{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius:8px;
+  background: #fff; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #fff , #F5F5F5); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #fff , #F5F5F5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.form-validate_error{
+  color:#E53935;
+  font-size:12px;
+}
+.btn-my{
+  padding:10px;font-size:16px;
+}
+
+
+
+
+
+/*html,body{height:100%;}
+.carousel,.item,.active{height:100%;}
+.carousel-inner{height:100%;}*/
+
+  html, body {
+font-family: 华文黑体, "Microsoft YaHei", 微软雅黑, STHei, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  height: 100%;
+  font-size: 16px;
+}
+
+a:hover,a:active{
+  text-decoration: none;
+}
+
+.deduction{
+  color: red;
+  font-size: 1.5em;
+}
+
+#bg {
+  position: fixed;
+  left: -50%;
+  width: 200%;
+  top: -50%;
+  height: 200%;
+}
+#bg img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  min-width: 50%;
+  min-height: 50%;
+}
+
+
+/*navbar*/
+/*ul.nav a:hover { opacity:100%; }*/
+
+.navbar-brand {
+    padding: 0 15px;
+}
+.navbar{
+  margin-bottom: 0px;
+
+}
+
+header.navbar{
+  height: 70px !important;
+  background: black;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.nav > li > a{
+  color: #FFFFFF !important;
+  opacity: 0.6;
+}
+
+.nav>li{
+  padding-top: 10px;
+}
+
+@media screen and (max-width: 750px){
+  .nav>li{
+  padding-top: 0px;
+}
+}
+
+.nav > li > a:hover, .nav > li > a:focus{
+  background-color: #000 !important;
+  opacity: 1;
+}
+
+div.navbar-header{
+  margin-top: 10px;
+}
+div.container-fluid{
+  background-color: #000;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 30px;
+  padding-top: 70px;
+}
+#footer {
+margin-top:50px;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 50px;
+/*  background-color: white;*/
+  z-index: 11;
+  vertical-align:middle;
+}
+
+
+
+.main-container{
+  height: 100%;
+  width: 100%;
+}
+
+/*feedback form*/
+
+.content {
+background: #f7f7f7;
+padding: 20px;
+border-radius: 10px;
+}
+
+.content-h2 {
+background: #f7f7f7;
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
+border-bottom: 1px solid #eee;
+margin: -20px -20px 20px -20px;
+padding: 20px;}
+
+/*order modal*/
+.logoModal{
+  width: 100%;
+}
+/*order confirmation*/
+.confirmation-container{
+  padding: 40px 0;
+  background: black;
+  height: 100%;
+}
+
+.confirmation-table{
+  background-image: url(confirmation.jpg);
+  background-repeat:no-repeat;
+}
+
+.comfirm-logo{
+  width: 100%;
+}
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

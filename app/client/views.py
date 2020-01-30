@@ -76,3 +76,8 @@ def create_deposit():
 		return redirect(url_for('.deposits'))
 	return render_template('client/create_deposit.html', form=form)
 
+@client.route('/in-debt')
+@login_required
+def in_debt():
+	return render_template('client/in_debt.html')
+

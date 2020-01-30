@@ -13,7 +13,7 @@ def before_request():
 						and request.blueprint != 'auth' \
 						and request.blueprint != 'main' \
 						and request.endpoint != 'static':
-				return redirect(url_for('.in_debt'))
+				return redirect(url_for('client.in_debt'))
 
 @main.route('/')
 def menu():
@@ -39,7 +39,3 @@ def weekly_menu():
 @main.route('/about')
 def about():
 	return render_template('about.html')
-
-@main.route('/in-debt')
-def in_debt():
-	return render_template('in_debt.html')

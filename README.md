@@ -9,21 +9,29 @@ Program should be run in a virtual environment.
 
 Created using the third-party utility `virtualenv`:
 
-`virtualenv venv`
+```sh
+virtualenv venv
+```
 
 The folder now has a subfolder called `venv` that holds a new virtual environment.
 
 __Linux and Mac OS X__ users can activate the virtual environment with the following commands:
 
-`source venv/bin/activate`
+```sh
+source venv/bin/activate
+```
 
 For __Windows__ users:
 
-`venv\Scripts\activate`
+```sh
+venv\Scripts\activate
+```
 
 When the work in the virtual environment is complete, you can return to the global Python interpreter:
 
-`deactivate`
+```sh
+deactivate
+```
 
 #### **2. Install Requirement Packages**
 Requirements can be checked in the file _**requirements.txt**_.
@@ -48,25 +56,35 @@ pip install -r requirements.txt
 #### **4. Start the Server**
 Go to the root of the project:
 
-`cd CDS`
+```sh
+cd CDS
+```
 
 Start the server: 
 
-`python manage.py runserver`
+```sh
+python manage.py runserver
+```
 
 ## Available Commands
 
 #### Start the Server
 
-`python manage.py runserver`
+```sh
+python manage.py runserver
+```
 
 #### Start the Shell
 
-`python manage.py shell`
+```sh
+python manage.py shell
+```
 
 #### Database Migration
 
-`python manage.py db <MigrateCommand>`
+```sh
+python manage.py db <MigrateCommand>
+```
 
 MigrateCommand:
 + `init`: Create a migration repository
@@ -77,7 +95,9 @@ MigrateCommand:
 
 #### Test
 
-`python manage.py test [--coverage]`
+```sh
+python manage.py test [--coverage]
+```
 
 ## Project Structure
 + app

@@ -1,6 +1,3 @@
-<p align="center">
-<img src="https://github.com/lilyyangyn/cds_flask/blob/master/app/static/assets/images/logo.png">
-</p>
 # CDS Ordering Website
 
 This is a python project of ordering website for CDS.

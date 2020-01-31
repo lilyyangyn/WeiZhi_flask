@@ -87,3 +87,30 @@ section.cds_info a{
 	font-size:18px;
 	font-weight: normal;
 }
+
+@media screen and (max-width: 768px){
+	section.cds_info .goat{
+		height:60px;
+
+	}
+	section.cds_info .fish{
+		height:50px;
+	}
+
+	section.cds_info .cds{
+		height:50px;
+		position:absolute;
+		left:10px;
+		top:10px;
+	}
+
+	section.cds_info h2{
+    font-size:30px;
+  }
+}
+
+@media screen and (max-width: 500px){
+	section.cds_info #explanation{
+    display:none!important;
+  }
+}

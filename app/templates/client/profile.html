@@ -1,10 +1,10 @@
 {% extends "layouts/base.html" %}
 
-{% block title %}CDS{% endblock %}
+{% block title %}Profile | CDS{% endblock %}
 
 {% block head %}
 {{ super() }}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/info_container_style.css') }}?ver=14">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/info_container_style.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,7 @@
 	<section class="cds_info" id="profile_sec">
 		<div style="text-align: center;display: table-cell;vertical-align: middle;">
 			<h2>{{ user.name }}</h2>
-			<hr style="width:250px;opacity: 0.4;padding:0px">
+			<hr style="width:80%;opacity: 0.4;padding:0px">
 			<p style="color: #ffeb3b;">Balance: {{ user.balance }} HKD</p>
 			<p style="font-size: 16px;">{{ user.email }} | {{ user.phone }}</p>
 

@@ -2,9 +2,43 @@
 
 {% block title %}In Debt | CDS{% endblock %}
 
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/info_container_style.css') }}">
+{% endblock %}
+
 {% block content %}
 {{ super() }}
-<div class="page-header">
-	<h1>Sorry, you are in debt</h1>
+<div class="container cds_info_container">
+	<section class="cds_info" id="to_be_activated_sec">
+		<div style="text-align:center;display:table-cell;vertical-align:middle;font-size:18px;font-family:sans-serif;">
+			<h2 style="padding-top:30px;">Sorry, you are in debt ┬＿┬</h2>
+
+			<hr style="width:80%;opacity: 0.4;padding:0px">
+
+			<div id="explanation">
+				<p>
+			        Before you can access this site, you need to pay off your debt.
+			  </p>
+			</div>
+
+		  <p>
+		       You can see the details in your 
+		        <a href="{{ url_for('client.profile') }}">profile</a>.
+		  </p>
+		</div>
+
+		<img class="cds_character" src="{{ url_for('static', filename='assets/images/logo_character.png') }}">
+		<img class="cds" src="{{ url_for('static', filename='assets/images/cds.png') }}">
+		<img class="goat" src="{{ url_for('static', filename='assets/images/goat.png') }}">
+		<img class="fish" src="{{ url_for('static', filename='assets/images/fish.png') }}">
+	</section>
 </div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+</script>
+<script type="text/javascript" src="{{ url_for('static', filename='assets/js/info_container.js') }}?ver=1"></script>
 {% endblock %}

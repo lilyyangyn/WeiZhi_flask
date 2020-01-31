@@ -1,14 +1,66 @@
 {% extends "layouts/base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}Login | CDS{% endblock %}
+{% block title %}Edit Profile | CDS{% endblock %}
 
 {% block content %}
 {{ super() }}
-<div class="page-header">
-	<h1>this is edit profile</h1>
-</div>
-<div class="col-md-4">
-    {{ wtf.quick_form(form) }}
+<div class="container" style="margin-bottom: 50px;">
+
+	<div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+  	<div class="mypanel" >
+      <div class="panel-heading text-center">
+      	<img style="width:88px;" src="{{ url_for('static', filename='assets/images/logo_red.png') }}">
+        <div class="panel-title" style="font-size: 18px;margin-top: 20px;font-weight: bold;">Edit Profile</div>
+      </div>
+      <div style="padding-top:30px;" class="panel-body" >
+      	<form method="POST" action="{{ url_for('client.edit_profile') }}">
+      		{{ form.hidden_tag() }}
+
+	       	<div class="my-form" style="margin-bottom: 25px;">
+						<div class="input-group col-xs-12">
+	          	<span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+	          	{{ form.phone(class='form-control') }}
+	         	</div>
+	         	{% if form.phone.errors %}
+	       		<div class="form-validate_error">{{ form.phone.errors.0 }}</div>
+	       		{% endif %}
+	       	</div>
+
+          <div class="col-xs-12 col-lg-12" style="margin-bottom: 25px; padding: 0px">	
+          	<div class="my-form">
+	          	<div style="float: left;padding-right: 5px;" class="input-group col-xs-6">
+	          		{{ form.gender(class='form-control') }}
+	            </div>
+	            {% if form.gender.errors %}
+		       		<div class="form-validate_error">{{ form.gender.errors.0 }}</div>
+		       		{% endif %}
+		       	</div>
+
+	       		<div class="my-form">
+							<div style="float: right;padding-left: 5px;" class="input-group col-xs-6">
+								{{ form.identity(class='form-control') }}
+							</div>
+							{% if form.identity.errors %}
+	       			<div class="form-validate_error">{{ form.identity.errors.0 }}</div>
+	       			{% endif %}
+	       		</div>
+					</div>
+
+					<div class="my-form" style="margin-bottom: 25px;">
+						<div class="input-group col-xs-12">
+							{{ form.faculty(class='form-control') }}
+						</div>
+						{% if form.faculty.errors %}
+	       		<div class="form-validate_error">{{ form.faculty.errors.0 }}</div>
+	       		{% endif %}
+	       	</div>
+
+					<div class="col-xs-12">
+          	{{ form.submit(class="btn btn-danger btn-block btn-my" ) }}
+          </div>
+	      </form>
+      </div>
+		</div>
+  </div>
 </div>
 {% endblock %}

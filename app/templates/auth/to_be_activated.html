@@ -14,8 +14,9 @@
 		<div style="text-align:center;display:table-cell;vertical-align:middle;font-size:18px;font-family:sans-serif;">
 			<h2 style="padding-top:30px;">You have not activated your account yet ┬＿┬</h2>
 
+			<hr style="width:80%;opacity: 0.4;padding:0px">
+
 			<div id="explanation">
-				<br>
 				<p>
 			        Before you can access this site, you need to confirm your account.
 			  </p>
@@ -48,9 +49,9 @@
 
 	function configIframe() {
 		if(document.body.scrollWidth < 500){
-	    document.getElementById('explanation').style.display = 'none';
+	    $('.explanation').css("display:none");
 	  } else {
-	  	document.getElementById('explanation').style.display = 'block';
+	  	$('.explanation').css("display:block");
 	  }
 	}
 </script>

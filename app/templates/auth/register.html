@@ -1,5 +1,4 @@
 {% extends "layouts/base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}Register | CDS{% endblock %}
 
@@ -12,7 +11,7 @@
         <img style="width:88px;" src="{{ url_for('static', filename='assets/images/logo_red.png') }}">
         <div class="panel-title" style="font-size: 18px;margin-top: 20px;font-weight: bold;">Use HKU Email to Register</div>
         </div>
-        <div style="padding-top:30px" class="panel-body" >
+        <div style="padding-top:30px;" class="panel-body" >
 	      	<form method="POST" action="{{ url_for('auth.signup') }}">
 	        	{{ form.hidden_tag() }}
 

@@ -62,7 +62,7 @@ class ChangePasswordForm(FlaskForm):
 	old_psw = PasswordField('Old password', validators=[DataRequired()], render_kw={'placeholder': 'Old password'})
 	new_psw = PasswordField('New password', validators=[DataRequired(), Length(8, 20)], render_kw={'placeholder': 'New password (8-20 digits/characters)'})
 	new_psw2 = PasswordField('Confirm new password', validators=[DataRequired(), EqualTo('new_psw', message='Passwords must match')], render_kw={'placeholder': 'Confirm new password'})
-	submit = SubmitField('Update Password')
+	submit = SubmitField('Update')
 
 class PasswordResetRequestForm(FlaskForm):
 	email = StringField('Email', validators=[DataRequired(), Length(1, 64), Email()], render_kw={'placeholder': 'Registered Email e.g. u3502870@(connect.)hku.hk'})
@@ -81,4 +81,4 @@ class PasswordResetRequestForm(FlaskForm):
 class PasswordResetForm(FlaskForm):
 	password = PasswordField('New Password', validators=[DataRequired(), Length(8, 20)], render_kw={'placeholder': 'New password (8-20 digits/characters)'})
 	password2 = PasswordField('Confirm new password', validators=[DataRequired(), EqualTo('password', message='Passwords must match')], render_kw={'placeholder': 'Confirm new password'})
-	submit = SubmitField('Reset Password')
+	submit = SubmitField('Reset')

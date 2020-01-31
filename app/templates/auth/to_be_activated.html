@@ -1,10 +1,57 @@
 {% extends "layouts/base.html" %}
 
-{% block title %}CDS{% endblock %}
+{% block title %}To Be Activate | CDS{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/info_container_style.css') }}?ver=8">
+{% endblock %}
 
 {% block content %}
 {{ super() }}
-<div class="page-header">
-	<h1>Please confirn you account First</h1>
+<div class="container cds_info_container">
+	<section class="cds_info" id="to_be_activated">
+		<div style="text-align:center;display:table-cell;vertical-align:middle;font-size:18px;font-family:sans-serif;">
+			<h2 style="padding-top:30px;">You have not activated your account yet ┬＿┬</h2>
+
+			<div id="explanation">
+				<br>
+				<p>
+			        Before you can access this site, you need to confirm your account.
+			  </p>
+			  <p>
+			        Check your inbox, you should have received an email with a confirmation link.
+			  </p>
+			</div>
+
+		  <p>
+		        Need another confirmation email? 
+		        <a href="{{ url_for('auth.resend_confirmation') }}">Click here</a>
+		  </p>
+
+		</div>
+
+		<img class="cds_character" src="{{ url_for('static', filename='assets/images/logo_character.png') }}">
+		<img class="cds" src="{{ url_for('static', filename='assets/images/cds.png') }}">
+		<img class="goat" src="{{ url_for('static', filename='assets/images/goat.png') }}">
+		<img class="fish" src="{{ url_for('static', filename='assets/images/fish.png') }}">
+	</section>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+	$(window).on("resize", function() {
+		configIframe();
+	}).resize();
+
+	function configIframe() {
+		if(document.body.scrollWidth < 500){
+	    document.getElementById('explanation').style.display = 'none';
+	  } else {
+	  	document.getElementById('explanation').style.display = 'block';
+	  }
+	}
+</script>
+<script type="text/javascript" src="{{ url_for('static', filename='assets/js/info_container.js') }}?ver=1"></script>
 {% endblock %}

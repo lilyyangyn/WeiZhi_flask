@@ -13,8 +13,6 @@
 <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/favicon.ico') }}" type="image/x-icon">
 <link rel="icon" href="{{ url_for('static', filename='assets/images/favicon.ico') }}" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/base_styles.css') }}">
-
-<script src="{{url_for('static', filename='assets/js/jquery.js')}}"></script>
 {% endblock %}
 
 {% block navbar %}
@@ -37,4 +35,6 @@
 {% endblock %}
 
 {% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='assets/js/jquery.js') }}"></script>
 {% endblock %}

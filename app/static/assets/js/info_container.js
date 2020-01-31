@@ -1,5 +1,5 @@
 $(function() {
-  $("#to_be_activated").mouseenter(function() {
+  $(".cds_info").mouseenter(function() {
     var thisPX = $(this).offset().left;
     var thisPY = $(this).offset().top;
     var boxWidth = $(this).outerWidth();
@@ -44,7 +44,7 @@ $(function() {
       // console.log(X + "," + Y);
     });
   });
-  $("#to_be_activated").mouseleave(function() {
+  $(".cds_info").mouseleave(function() {
     $(this).removeClass("threeD");
     $(this).css({
       "-webkit-transform": "rotateY(0deg) rotateX(0deg)"

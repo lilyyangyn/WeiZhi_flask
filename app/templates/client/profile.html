@@ -2,21 +2,37 @@
 
 {% block title %}CDS{% endblock %}
 
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/info_container_style.css') }}?ver=14">
+{% endblock %}
+
 {% block content %}
 {{ super() }}
-<div class="page-header">
-	<h1>this is profile</h1>
+<div class="container cds_info_container">
+	<section class="cds_info" id="profile_sec">
+		<div style="text-align: center;display: table-cell;vertical-align: middle;">
+			<h2>{{ user.name }}</h2>
+			<hr style="width:250px;opacity: 0.4;padding:0px">
+			<p style="color: #ffeb3b;">Balance: {{ user.balance }} HKD</p>
+			<p style="font-size: 16px;">{{ user.email }} | {{ user.phone }}</p>
+
+			<div id="other_info">
+				<p style="font-size: 16px;">{{ user.faculty }} | {{ user.identity }}</p>
+			</div>
+		</div>
+
+		<img class="cds_character" src="{{ url_for('static', filename='assets/images/logo_character.png') }}">
+		<img class="cds" src="{{ url_for('static', filename='assets/images/cds.png') }}">
+		<img class="goat" src="{{ url_for('static', filename='assets/images/goat.png') }}">
+		<img class="fish" src="{{ url_for('static', filename='assets/images/fish.png') }}">
+
+		<p style="position: absolute;bottom: 0px;right: 1em;opacity: 0.8;font-size: 16px; color: #ffeb3b;font-weight: bold;"><a href="{{ url_for('client.edit_profile') }}">Edit Profile</a></p>
+	</section>
 </div>
-<div>
-	<ul>Name: {{ user.name }}</ul>
-	<ul>Email: {{ user.email }}</ul>
-	<ul>Phone: {{ user.phone }}</ul>
-	<ul>Balance: {{ user.balance }}</ul>
-	<ul>Gender: {{ user.gender }}</ul>
-	<ul>Faculty: {{ user.faculty }}</ul>
-	<ul>Identity: {{ user.identity }}</ul>
-</div>
-<div>
-	<ul><a href="{{ url_for('client.edit_profile') }}">Edit Profile</a></ul>
-<div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript" src="{{ url_for('static', filename='assets/js/info_container.js') }}"></script>
 {% endblock %}

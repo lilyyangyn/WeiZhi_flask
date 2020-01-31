@@ -73,7 +73,7 @@ section.cds_info .fish{
 }
 
 section.cds_info h2{
-	color:yellow;
+	color:#ffeb3b;
 	font-size:38px;
 }
 
@@ -83,7 +83,7 @@ section.cds_info p{
 }
 
 section.cds_info a{
-	color:#FFD700;
+	color:#ffeb3b;
 	font-size:18px;
 	font-weight: normal;
 }

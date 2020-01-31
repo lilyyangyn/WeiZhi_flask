@@ -4,13 +4,13 @@
 
 {% block head %}
 {{ super() }}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/info_container_style.css') }}?ver=8">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/info_container_style.css') }}">
 {% endblock %}
 
 {% block content %}
 {{ super() }}
 <div class="container cds_info_container">
-	<section class="cds_info" id="to_be_activated">
+	<section class="cds_info" id="to_be_activated_sec">
 		<div style="text-align:center;display:table-cell;vertical-align:middle;font-size:18px;font-family:sans-serif;">
 			<h2 style="padding-top:30px;">You have not activated your account yet ┬＿┬</h2>
 
@@ -40,6 +40,7 @@
 {% endblock %}
 
 {% block scripts %}
+{{ super() }}
 <script type="text/javascript">
 	$(window).on("resize", function() {
 		configIframe();

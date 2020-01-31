@@ -37,11 +37,12 @@ def edit_profile():
 @admin_required
 def users():
 	# display users data, ordered by account balance
-	users = User.query.order_by(User.balance.desc()).all()
+	users_in_debt = User.query.filter(User.balance<0).order_by(User.balance.asc()).all()
+	other_users = User.query.filter(User.balance>=0).order_by(User.balance.desc()).all()
 	total_students = db.session.query(func.count(User.id)).filter(User.identity == 'student').scalar()
 	total_staffs = db.session.query(func.count(User.id)).filter(User.identity == 'staff').scalar()
 	total_balance = db.session.query(func.sum(User.balance)).scalar()
-	return render_template('client/users.html', users=users, total_students=total_students, total_staffs=total_staffs, total_balance=total_balance)
+	return render_template('client/users.html', users_in_debt=users_in_debt, other_users=other_users, total_students=total_students, total_staffs=total_staffs, total_balance=total_balance)
 
 @client.route('/deposits')
 @login_required

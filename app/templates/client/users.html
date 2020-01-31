@@ -27,7 +27,19 @@
 		</thead>
 
 		<tbody>
-			{% for user in users %}
+			{% for user in users_in_debt %}
+			<tr style="color:red">
+				<td style="font-weight: bold;">{{ user.balance }}</td>
+				<td>{{ user.name }}</td>
+				<td>{{ user.gender }}</td>
+				<td>{{ user.phone }}</td>
+				<td>{{ user.email }}</td>
+				<td>{{ user.faculty }}</td>
+				<td>{{ user.identity }}</td>
+				<td>{{ user.created_at.strftime('%Y-%m-%d') }}</td>
+			</tr>
+			{% endfor %}
+			{% for user in other_users %}
 			<tr>
 				<td>{{ user.balance }}</td>
 				<td>{{ user.name }}</td>

@@ -48,5 +48,5 @@ class CreateDepositForm(FlaskForm):
 			raise ValidationError("No such user.")
 
 	def validate_explanation(self, field):
-		if self.amount > 0 and not field.data:
+		if self.amount.data < 0 and not field.data:
 			raise ValidationError("Please explain the negative top up.")

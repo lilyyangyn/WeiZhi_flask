@@ -1,24 +1,46 @@
 {% extends "layouts/base.html" %}
 
-{% block title %}CDS{% endblock %}
+{% block title %}Deposits | CDS{% endblock %}
 
 {% block content %}
 {{ super() }}
-<div class="page-header">
-	<h1>this is deposits</h1>
+<div class="page-header col-xs-12 col-lg-12">
+	<h1>Deposits</h1>
 </div>
-<div>
-	<ul><a href="{{ url_for('client.create_deposit') }}">Create New Deposit</a></ul>
-</div>
-<div>
-	{% for deposit in deposits %}
-	<ul>
-		<ul>Balance: {{ deposit.amount }}</ul>
-		<ul>Created At: {{ deposit.user.created_at.strftime('%Y-%m-%d') }}</ul>
-		<ul>User: {{ deposit.user.name }}</ul>
-		<ul>Phone: {{ deposit.user.phone }}</ul>
-		<ul>Email: {{ deposit.user.email }}</ul>
-	</ul>
-	{% endfor %}
+<div class="col-xs-12 col-lg-12">
+	<a href="{{ url_for('client.create_deposit') }}"><button class="btn btn-info btn-internal">Create New Deposit</button></a>
+	<br><br>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Amount</th>
+				<th>Created At</th>
+				<th>User</th>
+				<th>Phone</th>
+				<th>Email</th>
+				<th>Explanation</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			{% for deposit in deposits %}
+			<tr>
+				<td
+					{% if deposit.amount < 0 %}
+						style="color:red;"
+					{% endif %}
+					>{{ deposit.amount }}</td>
+				<td>{{ deposit.created_at.strftime('%Y-%m-%d') }}</td>
+				<td>{{ deposit.user.name  }}</td>
+				<td>{{ deposit.user.phone  }}</td>
+				<td>{{ deposit.user.email }}</td>
+				<td>
+					{% if deposit.explanation %}
+						{{ deposit.explanation }}
+					{% endif %}
+				</td>
+			{% endfor %}
+		</tr>
+	</tbody>
 </div>
 {% endblock %}

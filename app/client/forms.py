@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, IntegerField, SubmitField
+from wtforms import StringField, SelectField, IntegerField, TextAreaField, SubmitField
 from wtforms.validators import DataRequired, Length, EqualTo, Email
 from wtforms import ValidationError
 from ..models import User
@@ -38,10 +38,15 @@ class EditProfileForm(FlaskForm):
 
 
 class CreateDepositForm(FlaskForm):
-	phone = StringField('Phone', validators=[DataRequired()])
-	amount = IntegerField('Top Up amount', validators=[DataRequired()])
+	phone = StringField('Phone', validators=[DataRequired()], render_kw={'placeholder': 'Phone number'})
+	amount = IntegerField('Amount', validators=[DataRequired()], render_kw={'placeholder': 'Top up amount'})
+	explanation = TextAreaField('Explanation', render_kw={'placeholder': 'Explanation for the top up'})
 	submit = SubmitField('Create Deposit')
 
 	def validate_phone(self, field):
 		if not User.query.filter_by(phone=field.data):
 			raise ValidationError("No such user.")
+
+	def validate_explanation(self, field):
+		if self.amount > 0 and not field.data:
+			raise ValidationError("Please explain the negative top up.")

@@ -349,6 +349,7 @@ class Deposit(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 	amount = db.Column(db.Integer, nullable=False)
 	created_at = db.Column(db.DateTime(), default=datetime.now())
+	explanation = db.Column(db.Text())
 
 
 

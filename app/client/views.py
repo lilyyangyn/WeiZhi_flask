@@ -50,7 +50,7 @@ def users():
 def deposits():
 	# display all deposits, ordered by id (created time)
 	# notice here deposists are query
-	deposits = Deposit.query.all()
+	deposits = Deposit.query.order_by(Deposit.created_at.desc()).all()
 	return render_template('client/deposits.html', deposits=deposits)
 
 @client.route('/deposits/new', methods=['GET', 'POST'])
@@ -67,7 +67,7 @@ def create_deposit():
 		user.balance += amount
 		db.session.add(user)
 		# create new deposit
-		deposit = Deposit(user_id=user.id, amount=amount)
+		deposit = Deposit(user_id=user.id, amount=amount, explanation=form.explanation.data)
 		db.session.add(deposit)
 		# must commit here to get created time
 		db.session.commit()

@@ -13,8 +13,8 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<th>Amount</th>
 				<th>Created At</th>
+				<th>Amount</th>
 				<th>User</th>
 				<th>Phone</th>
 				<th>Email</th>
@@ -25,12 +25,12 @@
 		<tbody>
 			{% for deposit in deposits %}
 			<tr>
+				<td>{{ deposit.created_at.strftime('%Y-%m-%d') }}</td>
 				<td
 					{% if deposit.amount < 0 %}
 						style="color:red;font-weight:bold"
 					{% endif %}
 					>{{ deposit.amount }}</td>
-				<td>{{ deposit.created_at.strftime('%Y-%m-%d') }}</td>
 				<td>{{ deposit.user.name  }}</td>
 				<td>{{ deposit.user.phone  }}</td>
 				<td>{{ deposit.user.email }}</td>
@@ -39,8 +39,9 @@
 						{{ deposit.explanation }}
 					{% endif %}
 				</td>
+			</tr>
 			{% endfor %}
-		</tr>
-	</tbody>
+		</tbody>
+	</table>
 </div>
 {% endblock %}

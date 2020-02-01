@@ -4,32 +4,137 @@
 
 {% block content %}
 {{ super() }}
-<div class="page-header">
-	<h1>this is dishes</h1>
+<div class="page-header col-xs-12 col-lg-12">
+	<h1>Dishes</h1>
 </div>
-<div>
-	{% for dish in dishes %}
-	<ul>Restaurant: {{ dish.restaurant.name }}</ul>
-	<ul>Dish: {{ dish.name }}</ul>
-	<ul>Price: {{ dish.price }}</ul>
-	<ul>Stock: {{ dish.stock }}
-		<a href="{{ url_for('supply.increase_stock', id=dish.id) }}">Increase</a>
-		<a href="{{ url_for('supply.decrease_stock', id=dish.id) }}">Decrease</a>
-	</ul>
-	<ul><a href="{{ url_for('supply.edit_dish', id=dish.id) }}">Edit</a></ul>
-	<ul>
-		{% if dish.in_supply %}
-		<a href="{{ url_for('supply.stop_supply_dish', id=dish.id) }}">Stop Supply</a>
-		{% else %}
-		<a href="{{ url_for('supply.supply_dish', id=dish.id) }}">Start Supply</a>
-		{% endif %}
-	</ul>
-	{% endfor %}
-</div>
-<br>
-<div>
-	<ul><a href="{{ url_for('supply.new_dish') }}">Create New Dish</a></ul>
-	<ul><a href="{{ url_for('supply.clear_all_stocks') }}">Clear All Stock</a></ul>
-	<ul><a href="{{ url_for('supply.reset_available_days') }}">Reset Weekly Menu</a></ul>
+<div class="col-sx-12 col-lg-12">
+	<a href="{{ url_for('supply.new_dish') }}"><button class="btn btn-info btn-internal">Create New Dish</button></a>
+	<a href="{{ url_for('supply.clear_all_stocks') }}"><button class="btn btn-info btn-internal  btn-not-click">Clear All Stock</button></a>
+	<a href="{{ url_for('supply.reset_available_days') }}"><button class="btn btn-info btn-internal btn-not-click">Reset Weekly Menu</button></a>
+	<br>
+	<table class="table" style="text-align:center">
+		<thead>
+			<tr >
+				<th style="text-align:center">Restaurant</th>
+				<th style="text-align:center">Dish</th>
+				<th style="text-align:center">Sold Price</th>
+				<th style="text-align:center">Original Price</th>
+				<th style="text-align:center">Stock</th>
+				<th style="text-align:center">Supply</th>
+				<th colspan=5 style="text-align:center">Available Days</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			{% for dish in dishes_in_supply %}
+			<tr>
+				<td>{{ dish.restaurant.name }}</td>
+				<td>{{ dish.name }}</td>
+				<td>{{ dish.original_price }}</td>
+				<td>{{ dish.price }}</td>
+				<td width="140">
+					<a href="{{ url_for('supply.increase_stock', id=dish.id) }}"><button class="btn btn-warning"><i class="glyphicon glyphicon-plus"></i></button></a>
+					<br class="break-for-sm" style="display:none">
+					&nbsp{{ dish.stock }}&nbsp
+					<br class="break-for-sm" style="display:none">
+					<a href="{{ url_for('supply.decrease_stock', id=dish.id) }}"><button class="btn btn-primary"><i class="glyphicon glyphicon-minus"></i></button></a>
+				</td>
+				<td>
+					<a href="{{ url_for('supply.stop_supply_dish', id=dish.id) }}"><button class="btn btn-danger">Stop</button></a>
+				</td> 
+				<td>
+					{% if dish.Monday %}
+					<a href="{{ url_for('supply.cancel_available', id=dish.id, day=1) }}">1<br><i class="glyphicon glyphicon-star"></i></a>
+					{% else %}
+					<a href="{{ url_for('supply.add_available', id=dish.id, day=1) }}">1<br><i class="glyphicon glyphicon-star-empty"></i></a>
+					{% endif %}
+				</td>
+				<td>
+					{% if dish.Tuesday %}
+					<a href="{{ url_for('supply.cancel_available', id=dish.id, day=2) }}">2<br><i class="glyphicon glyphicon-star"></i></a>
+					{% else %}
+					<a href="{{ url_for('supply.add_available', id=dish.id, day=2) }}">2<br><i class="glyphicon glyphicon-star-empty"></i></a>
+					{% endif %}
+				</td>
+				<td>
+					{% if dish.Wednesday %}
+					<a href="{{ url_for('supply.cancel_available', id=dish.id, day=3) }}">3<br><i class="glyphicon glyphicon-star"></i></a>
+					{% else %}
+					<a href="{{ url_for('supply.add_available', id=dish.id, day=3) }}">3<br><i class="glyphicon glyphicon-star-empty"></i></a>
+					{% endif %}
+				</td>
+				<td>
+					{% if dish.Thursday %}
+					<a href="{{ url_for('supply.cancel_available', id=dish.id, day=4) }}">4<br><i class="glyphicon glyphicon-star"></i></a>
+					{% else %}
+					<a href="{{ url_for('supply.add_available', id=dish.id, day=4) }}">4<br><i class="glyphicon glyphicon-star-empty"></i></a>
+					{% endif %}
+				</td>
+				<td>
+					{% if dish.Friday %}
+					<a href="{{ url_for('supply.cancel_available', id=dish.id, day=5) }}">5<br><i class="glyphicon glyphicon-star"></i></a>
+					{% else %}
+					<a href="{{ url_for('supply.add_available', id=dish.id, day=5) }}">5<br><i class="glyphicon glyphicon-star-empty"></i></a>
+					{% endif %}
+				</td>
+				<td>
+					<a href="{{ url_for('supply.edit_dish', id=dish.id) }}">Edit</a>
+				</td>
+			</tr>
+
+			{% endfor %}
+
+			{% for dish in dishes_not_in_supply %}
+			<tr>
+				<td>{{ dish.restaurant.name }}</td>
+				<td>{{ dish.name }}</td>
+				<td>{{ dish.original_price }}</td>
+				<td>{{ dish.price }}</td>
+				<td>{{ dish.stock }}</td>
+				<td>
+					<a href="{{ url_for('supply.supply_dish', id=dish.id) }}"><button class="btn btn-success">Start</button></a>
+				</td>
+				<td>
+					{% if dish.Monday %}
+					1<br><i class="glyphicon glyphicon-star"></i>
+					{% else %}
+					1<br><i class="glyphicon glyphicon-star-empty"></i>
+					{% endif %}
+				</td>
+				<td>
+					{% if dish.Tuesday %}
+					2<br><i class="glyphicon glyphicon-star"></i>
+					{% else %}
+					2<br><i class="glyphicon glyphicon-star-empty"></i>
+					{% endif %}
+				</td>
+				<td>
+					{% if dish.Wednesday %}
+					3<br><i class="glyphicon glyphicon-star"></i>
+					{% else %}
+					3<br><i class="glyphicon glyphicon-star-empty"></i>
+					{% endif %}
+				</td>
+				<td>
+					{% if dish.Thursday %}
+					4<br><i class="glyphicon glyphicon-star"></i>
+					{% else %}
+					4<br><i class="glyphicon glyphicon-star-empty"></i>
+					{% endif %}
+				</td>
+				<td>
+					{% if dish.Friday %}
+					5<br><i class="glyphicon glyphicon-star"></i>
+					{% else %}
+					5<br><i class="glyphicon glyphicon-star-empty"></i>
+					{% endif %}
+				</td>
+				<td style="text-align: center">
+					<a href="{{ url_for('supply.edit_dish', id=dish.id) }}">Edit</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 </div>
 {% endblock %}

@@ -219,34 +219,50 @@ class Dish(db.Model):
 	def add_available_day(self, day):
 		if day == 1:
 			self.Monday = True
+			return 'Monday'
 		elif day == 2:
 			self.Tuesday = True
+			return 'Tuesday'
 		elif day == 3:
 			self.Wednesday = True
+			return 'Wednesday'
 		elif day == 4:
 			self.Thursday = True
+			return 'Thursday'
 		elif day == 5:
 			self.Friday = True
+			return 'Friday'
 		elif day == 6:
 			self.Saturday = True
+			return 'Saturday'
 		elif day == 7:
 			self.Sunday = True
+			return 'Sunday'
+		return 'Not Know'
 
 	def cancel_available_day(self, day):
 		if day == 1:
 			self.Monday = False
+			return 'Monday'
 		elif day == 2:
 			self.Tuesday = False
+			return 'Tuesday'
 		elif day == 3:
 			self.Wednesday = False
+			return 'Wednesday'
 		elif day == 4:
 			self.Thursday = False
+			return 'Thursday'
 		elif day == 5:
 			self.Friday = False
+			return 'Friday'
 		elif day == 6:
 			self.Saturday = False
+			return 'Saturday'
 		elif day == 7:
 			self.Sunday = False
+			return 'Sunday'
+		return 'Not Know'
 
 	def stop_serving(self):
 		self.stock = 0

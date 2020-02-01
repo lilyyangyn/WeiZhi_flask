@@ -18,8 +18,9 @@ sys.setdefaultencoding('utf8')
 @moderator_required
 def dishes():
 	# show all the dishes CDS has, ordered by their stock
-	dishes = Dish.query.order_by(Dish.stock.desc()).order_by(Dish.in_supply).all()
-	return render_template('supply/dishes/dishes.html', dishes=dishes)
+	dishes_in_supply = Dish.query.filter_by(in_supply=True).order_by(Dish.stock.desc()).order_by(Dish.restaurant_id).all()
+	dishes_not_in_supply = Dish.query.filter_by(in_supply=False).order_by(Dish.stock.desc()).order_by(Dish.restaurant_id).all()
+	return render_template('supply/dishes/dishes.html', dishes_in_supply=dishes_in_supply, dishes_not_in_supply=dishes_not_in_supply)
 
 @supply.route('/dishes/clear-all-stocks')
 @login_required
@@ -80,13 +81,8 @@ def stop_supply_dish(id):
 def increase_stock(id):
 	dish = Dish.query.get(id)
 	if dish is not None:
-		form = ChangeStockForm()
-		if form.validate_on_submit():
-			dish.stock += form.amount.data
-			db.session.add(dish)
-			flash("Successfully increase stock of {} by {} ~".format(dish.name, form.amount.data))
-			return redirect(url_for('supply.dishes'))
-		return render_template('supply/dishes/change_stock.html', form=form)
+		dish.stock += 1
+		db.session.add(dish)
 	else:
 		flash('We do not have such dish, please add it to database first.')
 	return redirect(url_for('supply.dishes'))
@@ -97,18 +93,35 @@ def increase_stock(id):
 def decrease_stock(id):
 	dish = Dish.query.get(id)
 	if dish is not None:
-		form = ChangeStockForm()
-		if form.validate_on_submit():
-			if dish.stock < form.amount.data:
-				amount = dish.stock
-				dish.stock = 0
-			else:
-				amount = form.amount.data
-				dish.stock -= amount
-			db.session.add(dish)
-			flash("Successfully decrease stock of {} by {} ~".format(dish.name, amount))
-			return redirect(url_for('supply.dishes'))
-		return render_template('supply/dishes/change_stock.html', form=form)
+			if dish.stock > 0:
+				dish.stock -= 1
+				db.session.add(dish)
+	else:
+		flash('We do not have such dish, please add it to database first.')
+	return redirect(url_for('supply.dishes'))
+
+@supply.route('/add-available/<int:id>/<int:day>', methods=['GET', 'POST'])
+@login_required
+@moderator_required
+def add_available(id, day):
+	dish = Dish.query.get(id)
+	if dish is not None and day > 0 and day < 8:
+		weekday = dish.add_available_day(day)
+		db.session.add(dish)
+		flash("Successfully add the supply of {} in {}".format(dish.name, weekday))
+	else:
+		flash('We do not have such dish, please add it to database first.')
+	return redirect(url_for('supply.dishes'))
+
+@supply.route('/cancel-available/<int:id>/<int:day>', methods=['GET', 'POST'])
+@login_required
+@moderator_required
+def cancel_available(id, day):
+	dish = Dish.query.get(id)
+	if dish is not None and day > 0 and day < 8:
+		weekday = dish.cancel_available_day(day)
+		db.session.add(dish)
+		flash("Successfully cancel the supply of {} in {}".format(dish.name, weekday))
 	else:
 		flash('We do not have such dish, please add it to database first.')
 	return redirect(url_for('supply.dishes'))
@@ -152,7 +165,6 @@ def new_dish():
 		return redirect(url_for('supply.dishes'))
 	return render_template('supply/dishes/create_dish.html', form=form)
 
-# TODO: update dish info
 @supply.route('/edit-dish/<int:id>', methods=['GET', 'POST'])
 @login_required
 @moderator_required

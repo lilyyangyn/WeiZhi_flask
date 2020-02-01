@@ -425,7 +425,10 @@ class Order(db.Model):
 	@staticmethod 
 	def YesterdayMaxID():
 		last_order = Order.yesterday().order_by(Order.created_at.desc()).first()
-		return last_order.id
+		if last_order is not None:
+			return last_order.id
+		else:
+			return 0
 
 	def set_today_id(self, dish_name):
 		# set today id

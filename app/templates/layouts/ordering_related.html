@@ -1,0 +1,9 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+{{ super() }}
+<div class="balance">
+	<img alt="wallet" class="wallet" src="{{ url_for('static', filename='assets/images/wallet.svg')}}">
+	<span class="money">{{ current_user.balance }} HKD</span>
+</div>
+{% endblock %}

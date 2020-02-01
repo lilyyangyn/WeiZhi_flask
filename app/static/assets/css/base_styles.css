@@ -41,6 +41,28 @@ h1, h2, h3, h4{
   background-color:#8E8E8E;
 }
 
+.balance{
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 90;
+}
+
+.balance img.wallet{
+  width: 110px;
+}
+
+.balance .money{
+  position: absolute;
+  top:59px;
+  left:6px;
+  font-weight: bold;
+  font-size: 18px;
+  color: gold;
+  z-index: 100;
+}
+
+
 @media screen and (max-width: 720px){
   .break-for-sm{
     display:inline!important;

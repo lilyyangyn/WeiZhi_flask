@@ -149,7 +149,7 @@ class Dish(db.Model):
 	price = db.Column(db.Integer)
 	original_price=db.Column(db.Integer)
 	spiciness = db.Column(db.Integer)
-	large_img_url = db.Column(db.String(80))
+	large_img_url = db.Column(db.Text())
 	created_at = db.Column(db.DateTime(), default=datetime.now())
 	in_supply = db.Column(db.Boolean, default=False)
 	stock = db.Column(db.Integer, default=0, index=True)
@@ -325,7 +325,7 @@ class Restaurant(db.Model):
 	__tablename__ = 'restaurants'
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(64), nullable=False, unique=True)
-	img_url = db.Column(db.String(80))
+	img_url = db.Column(db.Text())
 	info = db.Column(db.Text())
 	in_cooperation = db.Column(db.Boolean, default=True)
 	dishes = db.relationship('Dish', backref='restaurant', lazy='dynamic')
@@ -336,7 +336,7 @@ class Spot(db.Model):
 	__tablename__ = 'spots'
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(64), nullable=False, unique=True)
-	img_url = db.Column(db.String(80))
+	img_url = db.Column(db.Text())
 	description = db.Column(db.Text())
 	in_use = db.Column(db.Boolean, default=True)
 	orders = db.relationship('Order', backref='spot', lazy='dynamic')

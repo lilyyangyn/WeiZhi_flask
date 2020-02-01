@@ -125,7 +125,6 @@ def new_dish():
 			# if dish is to be supplied immediately, should choose the days it is in supply
 			dish = Dish(restaurant_id=form.restaurant.data.id, 
 									name=form.name.data.encode('utf8'), 
-									english_name=form.english_name.data.encode('utf8'), 
 									spiciness=form.spiciness.data, 
 									price=form.price.data, 
 									original_price=form.original_price.data, 
@@ -142,11 +141,12 @@ def new_dish():
 			# if dishi is not to be in supply, set all days to False by default
 			dish = Dish(restaurant_id=form.restaurant.data.id, 
 									name=form.name.data.encode('utf8'), 
-									english_name=form.english_name.data.encode('utf8'), 
 									spiciness=form.spiciness.data, 
 									price=form.price.data, 
 									original_price=form.original_price.data, 
-									large_img_url=form.large_image_url.data.encode('utf8'))
+									large_img_url=form.large_img_url.data.encode('utf8'))
+		if form.english_name.data != '':
+			dish.english_name=form.english_name.data.encode('utf8')
 		db.session.add(dish)
 		flash("Successfully create new dish {} ^_^".format(dish.name))
 		return redirect(url_for('supply.dishes'))
@@ -160,13 +160,13 @@ def edit_dish(id):
 	dish = Dish.query.get_or_404(id)
 	form = EditDishForm(dish=dish)
 	if form.validate_on_submit():
-		current_user.restaurant_id = form.restaurant.data.id
-		current_user.name = form.name.data.encode('utf8')
-		current_user.english_name = form.english_name.data.encode('utf8')
-		current_user.spiciness = form.spiciness.data
-		current_user.price = form.price.data
-		current_user.original_price = form.original_price.data
-		current_user.large_img_url = form.large_img_url.data.encode('utf8')
+		dish.restaurant_id = form.restaurant.data.id
+		dish.name = form.name.data.encode('utf8')
+		dish.english_name = form.english_name.data.encode('utf8')
+		dish.spiciness = form.spiciness.data
+		dish.price = form.price.data
+		dish.original_price = form.original_price.data
+		dish.large_img_url = form.large_img_url.data.encode('utf8')
 		db.session.add(dish)
 		db.session.commit()
 		flash('Dish info has been updated ^_^')

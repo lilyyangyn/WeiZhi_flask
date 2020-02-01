@@ -11,7 +11,7 @@ class CreateDishForm(FlaskForm):
 
 	restaurant = QuerySelectField('Restaurant', query_factory=restaurant_query, get_label='name')
 	name = StringField('Chinese Name', validators=[DataRequired(), Length(1, 64)])
-	english_name = StringField('English Name', validators=[Length(0, 64)])
+	english_name = StringField('English Name', validators=[Length(0, 64), Optional()], default=None)
 	spiciness = SelectField('Spiciness', 
 		choices={(Spiciness.NotSpicy, 'Not Spicy'), 
 						(Spiciness.LittleSpicy, 'Little Spicy'), 
@@ -21,7 +21,7 @@ class CreateDishForm(FlaskForm):
 						(Spiciness.ExtraSpicy, 'Extra Spicy')}, coerce=int)
 	price = IntegerField ('Price', validators=[Optional()])
 	original_price = IntegerField ('Original Price', validators=[DataRequired()])
-	large_img_url = StringField('Image URL', validators=[Length(0, 80)])
+	large_img_url = TextAreaField('Image URL')
 	in_supply = BooleanField('Supply Now', default=False)
 	monday = BooleanField('Monday', default=False)
 	tuesday = BooleanField('Tuesday', default=False)
@@ -50,7 +50,7 @@ class EditDishForm(FlaskForm):
 
 	restaurant = QuerySelectField('Restaurant', query_factory=restaurant_query, get_label='name')
 	name = StringField('Chinese Name', validators=[DataRequired(), Length(1, 64)])
-	english_name = StringField('English Name', validators=[Length(1, 64)])
+	english_name = StringField('English Name', validators=[Length(0, 64), Optional()], default=None)
 	spiciness = SelectField('Spiciness', 
 		choices={(Spiciness.NotSpicy, 'Not Spicy'), 
 						(Spiciness.LittleSpicy, 'Little Spicy'), 
@@ -60,7 +60,7 @@ class EditDishForm(FlaskForm):
 						(Spiciness.ExtraSpicy, 'Extra Spicy')}, coerce=int)
 	price = IntegerField ('Price', validators=[Optional()])
 	original_price = IntegerField ('Original Price', validators=[DataRequired()])
-	large_img_url = StringField('Image URL', validators=[Length(0, 80)])
+	large_img_url = TextAreaField('Image URL')
 	submit = SubmitField('Edit Dish')
 
 	def __init__(self, dish, *args, **kwargs):
@@ -79,7 +79,7 @@ class EditDishForm(FlaskForm):
 
 class CreateRestaurantForm(FlaskForm):
 	name = StringField('Name', validators=[DataRequired(), Length(1, 64)])
-	img_url = StringField('Image URL', validators=[Length(0, 80)])
+	img_url = TextAreaField('Image URL')
 	info = TextAreaField('Information')
 	submit = SubmitField('Create Restaurant')
 
@@ -89,7 +89,7 @@ class CreateRestaurantForm(FlaskForm):
 
 class EditRestaurantForm(FlaskForm):
 	name = StringField('Name', validators=[DataRequired(), Length(1, 64)])
-	img_url = StringField('Image URL', validators=[Length(0, 80)])
+	img_url = TextAreaField('Image URL')
 	info = TextAreaField('Information')
 	submit = SubmitField('Edit Dish')
 
@@ -103,7 +103,7 @@ class EditRestaurantForm(FlaskForm):
 
 class CreateSpotForm(FlaskForm):
 	name = StringField('Name', validators=[DataRequired(), Length(1, 64)])
-	img_url = StringField('Image URL', validators=[Length(0, 80)])
+	img_url = TextAreaField('Image URL')
 	description = TextAreaField('Description')
 	submit = SubmitField('Create Spot')
 
@@ -113,7 +113,7 @@ class CreateSpotForm(FlaskForm):
 
 class EditSpotForm(FlaskForm):
 	name = StringField('Name', validators=[DataRequired(), Length(1, 64)])
-	img_url = StringField('Image URL', validators=[Length(0, 80)])
+	img_url = TextAreaField('Image URL')
 	description = TextAreaField('Description')
 	submit = SubmitField('Edit Spot')
 

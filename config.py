@@ -14,7 +14,8 @@ class Config:
 	CDS_MAIL_SUBJECT_PREFIX = 'CDS味致'
 	CDS_MAIL_SENDER = 'noreply <cds.hku@gmail.com>'
 
-	CDS_ADMIN = os.environ.get('CDS_ADMIN')
+	#CDS_ADMIN = os.environ.get('CDS_ADMIN')
+	CDS_ADMIN = 'lilyyang@connect.hku.hk'
 
 	SQLALCHEMY_COMMIT_ON_TEARDOWN = True
 	SQLALCHEMY_TRACK_MODIFICATIONS = False

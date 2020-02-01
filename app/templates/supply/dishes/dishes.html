@@ -78,7 +78,7 @@
 					{% endif %}
 				</td>
 				<td>
-					<a href="{{ url_for('supply.edit_dish', id=dish.id) }}">Edit</a>
+					<a href="{{ url_for('supply.edit_dish', id=dish.id) }}"><button class="btn btn-info">Edit</button></a>
 				</td>
 			</tr>
 
@@ -130,7 +130,7 @@
 					{% endif %}
 				</td>
 				<td style="text-align: center">
-					<a href="{{ url_for('supply.edit_dish', id=dish.id) }}">Edit</a>
+					<a href="{{ url_for('supply.edit_dish', id=dish.id) }}"><button class="btn btn-primary">Edit</button></a>
 				</td>
 			</tr>
 			{% endfor %}

@@ -5,10 +5,165 @@
 
 {% block content %}
 {{ super() }}
-<div class="page-header">
-	<h1>this is create dish</h1>
-</div>
-<div class="col-md-4">
-    {{ wtf.quick_form(form) }}
+<div class="container" style="margin-bottom:50px;">
+
+	<div id="newdishbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+  	<div class="mypanel" >
+      <div class="panel-heading text-center">
+      	<img style="width:88px;" src="{{ url_for('static', filename='assets/images/logo_blue.png') }}">
+        <div class="panel-title" style="font-size: 18px;margin-top: 20px;font-weight: bold;">Create Dish</div>
+      </div>
+      <div style="padding-top:30px;" class="panel-body" >
+      	<form method="POST" action="{{ url_for('supply.new_dish') }}">
+      		{{ form.hidden_tag() }}
+
+      		<div class="my-form" style="margin-bottom: 25px;">
+						<div class="input-group col-xs-12">
+	          	{{ form.restaurant(class='form-control') }}
+	         	</div>
+	         	{% if form.restaurant.errors %}
+	       		<div class="form-validate_error">{{ form.restaurant.errors.0 }}</div>
+	       		{% endif %}
+	       	</div>
+
+	       	<div class="col-xs-12 col-lg-12" style="margin-bottom: 25px; padding: 0px">	
+          	<div class="my-form">
+	          	<div style="float: left;padding-right: 5px;" class="input-group col-xs-6">
+	          		{{ form.name(class='form-control') }}
+	            </div>
+	            {% if form.name.errors %}
+		       		<div class="form-validate_error">{{ form.name.errors.0 }}</div>
+		       		{% endif %}
+		       	</div>
+
+	       		<div class="my-form">
+							<div style="float: right;padding-left: 5px;" class="input-group col-xs-6">
+								{{ form.english_name(class='form-control') }}
+							</div>
+							{% if form.english_name.errors %}
+	       			<div class="form-validate_error">{{ form.english_name.errors.0 }}</div>
+	       			{% endif %}
+	       		</div>
+					</div>
+
+	       	<div class="my-form" style="margin-bottom: 25px;">
+						<div class="input-group col-xs-12">
+	          	{{ form.spiciness(class='form-control') }}
+	         	</div>
+	         	{% if form.spiciness.errors %}
+	       		<div class="form-validate_error">{{ form.spiciness.errors.0 }}</div>
+	       		{% endif %}
+	       	</div>
+
+	       	<div class="col-xs-12 col-lg-12" style="margin-bottom: 25px; padding: 0px">	
+          	<div class="my-form">
+	          	<div style="float: left;padding-right: 5px;" class="input-group col-xs-6">
+	          		{{ form.price(class='form-control') }}
+	            </div>
+	            {% if form.price.errors %}
+		       		<div class="form-validate_error">{{ form.price.errors.0 }}</div>
+		       		{% endif %}
+		       	</div>
+
+	       		<div class="my-form">
+							<div style="float: right;padding-left: 5px;" class="input-group col-xs-6">
+								{{ form.original_price(class='form-control') }}
+							</div>
+							{% if form.original_price.errors %}
+	       			<div class="form-validate_error">{{ form.original_price.errors.0 }}</div>
+	       			{% endif %}
+	       		</div>
+					</div>
+
+					<div class="my-form" style="margin-bottom: 25px;">
+						<div class="input-group col-xs-12">
+	          	{{ form.large_img_url(class='form-control') }}
+	         	</div>
+	         	{% if form.large_img_url.errors %}
+	       		<div class="form-validate_error">{{ form.large_img_url.errors.0 }}</div>
+	       		{% endif %}
+	       	</div>
+
+					<div class="input-group col-xs-12 col-lg-12" style="margin-bottom: 25px;">
+          	<div  class="my-form col-xs-4" style="float:left;padding-top:15px;">
+          		{{ form.in_supply(id="set-supply") }}
+               <span style="font-size: 14px;font-weight: normal;">{{ form.in_supply.label }}</span>
+            </div>
+
+            <div sytle="float:right;border:1px solid #dadada;">	
+			       	<div class="my-form">
+		          	<div style="float: right;" class="input-group set-available-day col-xs-1">
+		          		<span style="font-size: 14px;font-weight: normal;">{{ form.sunday.label }}</span>
+		          		{{ form.sunday }}
+		            </div>
+			       	</div>
+			       	<div class="my-form">
+		          	<div style="float: right;" class="input-group set-available-day  col-xs-1">
+		          		<span style="font-size: 14px;font-weight: normal;">{{ form.saturday.label }}</span><br>
+		          		{{ form.saturday }}
+		            </div>
+			       	</div>
+			       	<div class="my-form">
+		          	<div style="float: right;" class="input-group set-available-day  col-xs-1">
+		          		<span style="font-size: 14px;font-weight: normal;">{{ form.friday.label }}</span><br>
+		          		{{ form.friday }}
+		            </div>
+			       	</div>
+			       	<div class="my-form">
+		          	<div style="float: right;" class="input-group set-available-day  col-xs-1">
+		          		<span style="font-size: 14px;font-weight: normal;">{{ form.thursday.label }}</span><br>
+		          		{{ form.thursday }}
+		            </div>
+			       	</div>
+			       	<div class="my-form">
+		          	<div style="float: right;" class="input-group set-available-day  col-xs-1">
+		          		<span style="font-size: 14px;font-weight: normal;">{{ form.wednesday.label }}</span><br>
+		          		{{ form.wednesday }}
+		            </div>
+			       	</div>
+			       	<div class="my-form">
+		          	<div style="float: right;" class="input-group set-available-day  col-xs-1">
+		          		<span style="font-size: 14px;font-weight: normal;">{{ form.tuesday.label }}</span><br>
+		          		{{ form.tuesday }}
+		            </div>
+			       	</div>
+			       	<div class="my-form">
+		          	<div style="float: right;" class="input-group set-available-day  col-xs-1">
+		          		<span style="font-size: 14px;font-weight: normal;">{{ form.monday.label }}</span><br>
+		          		{{ form.monday }}
+		            </div>
+			       	</div>
+						</div>
+          </div>
+	       	
+	       	<div class="col-xs-12">
+          	{{ form.submit(class="btn btn-info btn-block btn-my" ) }}
+          </div>
+	      </form>
+	    </div>
+
+	    <div style="padding-left:10px;opacity:0.7;font-size:14px;margin-top:8px;border-top:1px solid #dadada">
+	    	<p style="padding:18px 0px"><a href="{{ url_for('supply.dishes') }}">&lt;&lt; Back to dishes</a></p>
+      </div>
+		</div>
+  </div>
 </div>
 {% endblock %}
+
+<!--
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">
+$(function() {
+	$("#set-supply").click(function(){
+		console.log($("#set-supply").attr("checked") );
+		if ($("#set-supply").val()) {
+			$(".set-available-day").show();
+		} else {
+			$(".set-available-day").hide();
+		}
+	});
+});
+</script>
+{% endblock %}
+-->

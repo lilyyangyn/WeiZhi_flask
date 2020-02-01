@@ -10,26 +10,26 @@ class CreateDishForm(FlaskForm):
 		return Restaurant.query.filter_by(in_cooperation=True)
 
 	restaurant = QuerySelectField('Restaurant', query_factory=restaurant_query, get_label='name')
-	name = StringField('Chinese Name', validators=[DataRequired(), Length(1, 64)])
-	english_name = StringField('English Name', validators=[Length(0, 64), Optional()], default=None)
+	name = StringField('Chinese Name', validators=[DataRequired(), Length(1, 64)], render_kw={'placeholder': 'Chinese name'})
+	english_name = StringField('English Name', validators=[Length(0, 64), Optional()], default=None, render_kw={'placeholder': 'English name'})
 	spiciness = SelectField('Spiciness', 
 		choices={(Spiciness.NotSpicy, 'Not Spicy'), 
 						(Spiciness.LittleSpicy, 'Little Spicy'), 
 						(Spiciness.MediumSpicy, 'Medium Spicy'), 
 						(Spiciness.Spicy, 'Spicy'), 
 						(Spiciness.VerySpicy, 'Very Spicy'), 
-						(Spiciness.ExtraSpicy, 'Extra Spicy')}, coerce=int)
-	price = IntegerField ('Price', validators=[Optional()])
-	original_price = IntegerField ('Original Price', validators=[DataRequired()])
-	large_img_url = TextAreaField('Image URL')
+						(Spiciness.ExtraSpicy, 'Extra Spicy')}, coerce=int, default=Spiciness.NotSpicy)
+	price = IntegerField ('Price', validators=[Optional()], render_kw={'placeholder': 'Price sold'})
+	original_price = IntegerField ('Original Price', validators=[DataRequired()], render_kw={'placeholder': 'Original price'})
+	large_img_url = TextAreaField('Image URL', render_kw={'placeholder': 'Image URL'})
 	in_supply = BooleanField('Supply Now', default=False)
-	monday = BooleanField('Monday', default=False)
-	tuesday = BooleanField('Tuesday', default=False)
-	wednesday = BooleanField('Wednesday', default=False)
-	thursday = BooleanField('Thursday', default=False)
-	friday = BooleanField('Friday', default=False)
-	saturday = BooleanField('Saturday', default=False)
-	sunday = BooleanField('Sunday', default=False)
+	monday = BooleanField('Mon', default=False)
+	tuesday = BooleanField('Tue', default=False)
+	wednesday = BooleanField('Wed', default=False)
+	thursday = BooleanField('Thu', default=False)
+	friday = BooleanField('Fri', default=False)
+	saturday = BooleanField('Sat', default=False)
+	sunday = BooleanField('Sun', default=False)
 	submit = SubmitField('Create Dish')
 
 	def validate_name(self, field):
@@ -49,8 +49,8 @@ class EditDishForm(FlaskForm):
 		return Restaurant.query.filter_by(in_cooperation=True)
 
 	restaurant = QuerySelectField('Restaurant', query_factory=restaurant_query, get_label='name')
-	name = StringField('Chinese Name', validators=[DataRequired(), Length(1, 64)])
-	english_name = StringField('English Name', validators=[Length(0, 64), Optional()], default=None)
+	name = StringField('Chinese Name', validators=[DataRequired(), Length(1, 64)], render_kw={'placeholder': 'Chinese name'})
+	english_name = StringField('English Name', validators=[Length(0, 64), Optional()], default=None, render_kw={'placeholder': 'English name'})
 	spiciness = SelectField('Spiciness', 
 		choices={(Spiciness.NotSpicy, 'Not Spicy'), 
 						(Spiciness.LittleSpicy, 'Little Spicy'), 
@@ -58,9 +58,9 @@ class EditDishForm(FlaskForm):
 						(Spiciness.Spicy, 'Spicy'), 
 						(Spiciness.VerySpicy, 'Very Spicy'), 
 						(Spiciness.ExtraSpicy, 'Extra Spicy')}, coerce=int)
-	price = IntegerField ('Price', validators=[Optional()])
-	original_price = IntegerField ('Original Price', validators=[DataRequired()])
-	large_img_url = TextAreaField('Image URL')
+	price = IntegerField ('Price', validators=[Optional()], render_kw={'placeholder': 'Price sold'})
+	original_price = IntegerField ('Original Price', validators=[DataRequired()], render_kw={'placeholder': 'Original price'})
+	large_img_url = TextAreaField('Image URL', render_kw={'placeholder': 'Image URL'})
 	submit = SubmitField('Edit Dish')
 
 	def __init__(self, dish, *args, **kwargs):

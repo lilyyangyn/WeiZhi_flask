@@ -41,8 +41,12 @@
 			</tr>
 			{% endfor %}
 			{% for user in other_users %}
-			<tr>
-				<td>{{ user.balance }}</td>
+			<tr
+				{% if user.can_admin %}
+					style="color:#46A3FF"
+				{% endif %}
+			>
+				<td style="color:red">{{ user.balance }}</td>
 				<td>{{ user.name }}</td>
 				<td>{{ user.gender }}</td>
 				<td>{{ user.phone }}</td>

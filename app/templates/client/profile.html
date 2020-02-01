@@ -27,6 +27,7 @@
 		<img class="goat" src="{{ url_for('static', filename='assets/images/goat.png') }}">
 		<img class="fish" src="{{ url_for('static', filename='assets/images/fish.png') }}">
 
+		<p style="position: absolute;bottom: 22px;right: 1em;opacity: 0.8;font-size: 16px; color: #ffeb3b;font-weight: bold;"><a href="{{ url_for('auth.change_password') }}">Change Password</a></p>
 		<p style="position: absolute;bottom: 0px;right: 1em;opacity: 0.8;font-size: 16px; color: #ffeb3b;font-weight: bold;"><a href="{{ url_for('client.edit_profile') }}">Edit Profile</a></p>
 	</section>
 </div>

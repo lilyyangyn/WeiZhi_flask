@@ -1,9 +1,93 @@
-{% extends "layouts/base.html" %}
+{% extends "layouts/ordering_related.html" %}
 
-{% block title %}CDS{% endblock %}
+{% block title %}Invoice | CDS{% endblock %}
 
 {% block content %}
-<div class="page-header">
-	<h1>this is invoice</h1>
+{{ super() }}
+<div class="container" style="margin-bottom: 50px;">
+
+	<div style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+  	<div class="mypanel" style="background:transparent">
+  		<img class="stamp" src="{{ url_for('static', filename='assets/images/stamp.png') }}?ver=1">
+
+  		<div class="panel-heading text-center">
+        <div style="font-size: 25px;margin-top: 20px;font-weight: bold;">Use This Invoice To Get Your Takeout</div>
+      </div>
+
+      <table class="table text-center">
+      	<tbody>
+      		<tr>
+      			<td>Order No.</td>
+      			<td><h3 style="color:green;">{{ order.today_id }}</h3></td>
+      		</tr>
+      		<tr>
+      			<td>Pickup Time</td>
+      			<td>
+      				{% if order.created_at.hour >= 21 %}
+      				{{ order.created_at.replace(day=order.created_at.day+1).strftime('%Y-%m-%d') }}
+      				{% else %}
+      				{{ order.created_at.strftime('%Y-%m-%d') }}
+      				{% endif %}
+      				<br>12:20—12:40 p.m.
+      			</td>
+      		</tr>
+      		<tr>
+      			<td>Pickup Spot</td>
+      			<td>{{ order.spot.name }}</td>
+      		</tr>
+      		<tr>
+      			<td>Dish</td>
+      			<td>{{ order.dish.name }}</td>
+      		</tr>
+      		<tr>
+      			<td>Price</td>
+      			<td>{{ order.price_sold }}</td>
+      		</tr>
+      		<tr>
+      			<td>To Be Paid</td>
+      			<td>{{ order.to_be_paid }}</td>
+      		</tr>
+      		<tr>
+      			<td>Contact</td>
+      			<td>Rosheen: <a href="tel:66428675">6642867</a></td>
+      		</tr>
+      		{% if current_user.can_order_now %}
+      		<tr>
+      			<td colspan=2>
+      				<a href="{{ url_for('main.menu') }}"><button class="btn btn-danger btn-block btn-my">Order More😋</button></a>
+      			</td>
+      		</tr>
+      		{% endif %}
+      	</tbody>
+      </table>
+
+      <div style="padding-left:10px;opacity: 0.7;font-size: 14px;margin-top:2px;border-top: 1px solid #dadada">
+        <p style="padding: 8px 0px"><a href="{{ url_for('client.profile') }}">&lt;&lt; Back to order history</a></p>
+      </div>
+
+  	</div>
+  </div>
 </div>
+
+
+{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<style>
+.mypanel img.stamp {
+	position: absolute;
+	width:40%;
+	left:calc((100% - 200px)/2);
+	top:180px;
+}
+
+.table{
+	margin-bottom: 0;
+}
+.table tbody tr td{
+	vertical-align:middle;
+	font-weight:bold;
+}
+</style>
 {% endblock %}

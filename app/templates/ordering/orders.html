@@ -4,15 +4,71 @@
 
 {% block content %}
 {{ super() }}
-<div class="page-header col-xs-12 col-lg-12">
+<div class="my-page-header col-xs-12 col-lg-12">
+	<img class="title-fish" src="{{ url_for('static', filename='assets/images/title_bg_fish.png') }}">
+	<img class="title-goat" style="text-align:right" src="{{ url_for('static', filename='assets/images/title_bg_goat.png') }}">
 	<h1>{{ current_user.name }}'s Order History</h1>
 </div>
-<div>
-	{% for order in orders %}
-	<ul>
-		<ul>Resaurant: {{ order.dish.restaurant }}</ul>
-		<ul>Dish: {{ order.dish.name }}</ul>
-	</ul>
-	{% endfor %}
+<div class="container">
+	<div class="col-sm-12 col-lg-12">
+		<table class="table text-center borderless">
+			<thead>
+				<tr>
+					<th colspan=2>Dish</th>
+					<th>Price</th>
+	        <th>Cash To Pay</th>
+	        <th>Operation</th>
+	      </tr>
+	     </thead>
+
+	     <tbody>
+	     	{% for order in orders %}	
+		     	{% if order.status == 2 %}
+		     	<tr style="background-color: #e0e0e0">
+		     		<td colspan=5 style="text-align:left;">
+		     			{{ order.created_at.strftime('%Y-%m-%d') }} | <span>{{ order.today_id }}</span>
+		     		</td>
+		     	</tr>
+		     	{% else %}
+	     		<tr style="background-color: #d9edf7">
+	   				<td colspan=5 style="text-align:left;">
+	     				{{ order.created_at.strftime('%Y-%m-%d')}} | <span style="color:#FF5722">{{ order.today_id }}</span>
+	     			</td>
+	     		</tr>
+		     	{% endif %}
+	     	<tr>
+	     		<td colspan=2 style="vertical-align:middle;">{{ order.dish.name }}</td>
+	     		<td style="vertical-align:middle;">{{ order.price_sold }} HKD</td>
+	     		<td style="vertical-align:middle;">{{ order.to_be_paid }} HKD</td>
+	     		<td style="vertical-align:middle;">
+	     			{% if order.status == 2 %}
+	     				Order Cancelled
+	     			{% else %}
+		     			<a href="{{ url_for('ordering.invoice', order_id=order.id) }}")>Invoice</a>
+		     			{% if order.is_valid %}
+		     				<br><a href="{{ url_for('ordering.cancel_order', order_id=order.id) }}">Cancel Order</a>
+		     			{% endif %}
+		     		{% endif %}
+	     		</td>
+	     	</tr>
+	     	<tr>
+	     		<td colspan=5><br></td>
+	     	</tr>
+	     	{% endfor %}
+	  	</tbody>
+	  </table>
+	</div>
 </div>
+{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<style>
+.borderless thead tr th{
+	text-align:center;
+}
+.borderless tbody tr td{
+	border:none;
+}
+</style>
 {% endblock %}

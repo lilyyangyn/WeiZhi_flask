@@ -114,6 +114,30 @@ class User(UserMixin, db.Model):
 	def is_VIP(self):
 		return self.balance > 0
 
+	@property
+	def can_order_now(self):
+		if self.balance < 0:
+			return False
+
+		today = datetime.now().isoweekday()
+		hour = datetime.now().hour
+		if hour < 11:
+			# before 11am
+			if today == 6 or today == 7:
+				# day time on Sat & Sun
+				return False
+			else:
+				return True
+		elif hour > 20:
+			# after 9pm
+			if self.is_VIP:
+				# only vip can order at night
+				if today == 5 or today == 6:
+					# night on Fri & Sat
+					return False
+				else:
+					return True
+		return False			
 
 class AnonymousUser(AnonymousUserMixin):
 	@property
@@ -122,6 +146,14 @@ class AnonymousUser(AnonymousUserMixin):
 
 	@property
 	def can_moderate(self):
+		return False
+
+	@property
+	def is_VIP(self):
+		return False
+
+	@property
+	def can_order_now(self):
 		return False
 
 login_manager.anonymous_user = AnonymousUser
@@ -416,7 +448,7 @@ class Order(db.Model):
 		hour_boundary = time(21)
 		if hour_now < 21:
 			datetime_start = datetime.combine(today, hour_boundary) + timedelta(-2)
-			datetime_end = datetime.combine(today, hour_boundary) + + timedelta(-1)
+			datetime_end = datetime.combine(today, hour_boundary) + timedelta(-1)
 		else:
 			datetime_start = datetime.combine(today, hour_boundary) + + timedelta(-1)
 			datetime_end = datetime.combine(today, hour_boundary)
@@ -441,8 +473,8 @@ class Order(db.Model):
 		today = datetime.now().date()
 		hour_now = datetime.now().hour
 		hour_available = time(21)
-		if hour_now < 15:
-			# invoice available to collect meals before 15pm
+		if hour_now < 11:
+			# invoice available to be modified before 11 pm
 			datetime_available = datetime.combine(today, hour_available) + timedelta(-1)
 			return self.created_at >= datetime_available
 		elif hour_now > 20:

@@ -62,8 +62,41 @@ h1, h2, h3, h4{
   z-index: 100;
 }
 
+.my-page-header{
+  padding-bottom: 10px;
+  margin: 0 0 20px;
+  border-bottom: 2px dashed #FFD2D2;
+  min-height: 80px;
+}
+
+.my-page-header img.title-fish{
+  height: 60px;
+  position: absolute;
+  left:0px;
+  bottom:0px;
+}
+
+.my-page-header img.title-goat{
+  height: 70px;
+  position: absolute;
+  right:0px;
+  top:0px;
+}
+
+.my-page-header h1{
+  text-align: center;
+  color: #FF0000;
+  margin-top: 40px;
+}
+
 
 @media screen and (max-width: 720px){
+  .my-page-header img.title-fish{
+    height: 40px;
+  }
+  .my-page-header img.title-goat{
+    height: 50px;
+  }
   .break-for-sm{
     display:inline!important;
   }
@@ -82,6 +115,10 @@ h1, h2, h3, h4{
 font-family: 华文黑体, "Microsoft YaHei", 微软雅黑, STHei, "Helvetica Neue", Helvetica, Arial, sans-serif;
   height: 100%;
   font-size: 16px;
+}
+
+body {
+  background-image: url('/static/assets/images/background.png')
 }
 
 a:hover,a:active{

@@ -16,17 +16,18 @@ from ..email import send_email
 def create_order(dish_id):
 	# order a dish
 	dish = Dish.query.get_or_404(dish_id)
-	if dish.is_available(current_user.is_VIP):
+	#if dish.is_available(current_user.is_VIP):
+	if True:
 		form = CreateOrderForm(current_user.balance)
 		if request.method == 'POST':
 			# time check
 			if not dish.is_available(current_user.is_VIP):
 				flash("Sorry, reservation time ends today~ This dish is not available now ┬＿┬")
-				return redirect(url_for('main.menu'))
+				#return redirect(url_for('main.menu'))
 			# stock check
 			if dish.sold_out:
 				flash("Sold Out ┬＿┬")
-				return redirect(url_for('main.menu'))
+				#return redirect(url_for('main.menu'))
 
 			if form.balance_pay.data == 1:
 				# if user want to pay by balance

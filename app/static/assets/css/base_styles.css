@@ -65,8 +65,9 @@ h1, h2, h3, h4{
 .my-page-header{
   padding-bottom: 10px;
   margin: 0 0 20px;
-  border-bottom: 2px dashed #FFD2D2;
+  border-bottom: 2px dashed #000;
   min-height: 80px;
+  opacity: 0.7;
 }
 
 .my-page-header img.title-fish{
@@ -85,7 +86,7 @@ h1, h2, h3, h4{
 
 .my-page-header h1{
   text-align: center;
-  color: #FF0000;
+  color: #000;
   margin-top: 40px;
 }
 

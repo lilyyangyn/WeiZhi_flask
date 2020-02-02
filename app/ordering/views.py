@@ -73,7 +73,7 @@ def create_order(dish_id):
 @login_required
 def orders():
 	# show all orders of current user
-	orders = Order.query.order_by(Order.created_at.desc()).all()
+	orders = Order.query.filter_by(user_id=current_user.id).order_by(Order.created_at.desc()).all()
 	return render_template('ordering/order_history.html', orders=orders)
 
 @ordering.route('/order/<int:order_id>')

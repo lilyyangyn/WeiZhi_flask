@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from datetime import datetime
 from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_user, logout_user, login_required, current_user
@@ -47,6 +48,7 @@ def login():
 			next = request.args.get('next')
 			if next is None or not next.encode('utf8').startswith('/'):
 				next = url_for('main.menu')
+			flash('You have been logged in! ↖(^ω^)↗')
 			return redirect(next)
 		# Fail to log in, add flash info to notify user
 		flash('Invalid email or password.')
@@ -70,7 +72,7 @@ def signup():
 			db.session.commit()
 			token = user.generate_confirmation_token()
 			send_email(user.email, 'Activate Account', 'auth/email/activate', user=user, token=token)
-			flash('A activation email has been sent to your email address.')
+			flash('A activation email has been sent to your email address. (≧▽≦)')
 			return redirect(url_for('auth.login'))		
 	return render_template('auth/register.html', form=form)
 
@@ -102,7 +104,7 @@ def resend_confirmation():
 def logout():
 	# this route only for logged-in user
 	logout_user()
-	flash('You have been logged out.')
+	flash('You have been logged out. (*¯ ︶ ¯*)')
 	return redirect(url_for('main.menu'))
 
 @auth.route('/change-password', methods=['GET', 'POST'])

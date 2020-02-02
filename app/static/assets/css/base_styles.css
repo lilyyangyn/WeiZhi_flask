@@ -25,10 +25,13 @@ h1, h2, h3, h4{
   background: linear-gradient(to bottom, #fff , #F5F5F5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
+/* form */
 .form-validate_error{
   color:#E53935;
   font-size:12px;
 }
+
+/* button */
 .btn-my{
   padding:10px;font-size:16px;
 }
@@ -41,6 +44,15 @@ h1, h2, h3, h4{
   background-color:#8E8E8E;
 }
 
+/* table */
+.borderless thead tr th{
+  text-align:center;
+}
+.borderless tbody tr td{
+  border:none;
+}
+
+/* wallet */
 .balance{
   position: fixed;
   right: 18px;
@@ -62,6 +74,7 @@ h1, h2, h3, h4{
   z-index: 100;
 }
 
+/* page-header */
 .my-page-header{
   padding-bottom: 10px;
   margin: 0 0 20px;

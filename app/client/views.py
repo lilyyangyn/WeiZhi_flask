@@ -77,6 +77,17 @@ def create_deposit():
 		return redirect(url_for('.deposits'))
 	return render_template('client/create_deposit.html', form=form)
 
+@client.route('/recharge')
+@login_required
+def recharge():
+	return render_template('client/recharge_inst.html')
+
+@client.route('/recharge-info')
+@login_required
+def recharge_info():
+	deposits = Deposit.query.filter_by(user_id=current_user.id).order_by(Deposit.created_at.desc()).all()
+	return render_template('client/recharge_info.html', deposits=deposits)
+
 @client.route('/in-debt')
 @login_required
 def in_debt():

@@ -1,0 +1,12 @@
+{% extends "layouts/ordering_related.html" %}
+
+{% block title %}Order History | CDS{% endblock %}
+
+{% block content %}
+{{ super() }}
+<div class="my-page-header col-xs-12 col-lg-12">
+	<img class="title-fish" src="{{ url_for('static', filename='assets/images/title_fish.png') }}">
+	<img class="title-goat" style="text-align:right" src="{{ url_for('static', filename='assets/images/title_goat.png') }}">
+	<h1>Recharge Instruction</h1>
+</div>
+{% endblock %}

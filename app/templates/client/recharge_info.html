@@ -1,0 +1,44 @@
+{% extends "layouts/ordering_related.html" %}
+
+{% block title %}Order History | CDS{% endblock %}
+
+{% block content %}
+{{ super() }}
+<div class="my-page-header col-xs-12 col-lg-12">
+	<img class="title-fish" src="{{ url_for('static', filename='assets/images/title_fish.png') }}">
+	<img class="title-goat" style="text-align:right" src="{{ url_for('static', filename='assets/images/title_goat.png') }}">
+	<h1>{{ current_user.name }}'s Recharge Information</h1>
+</div>
+
+<div class="container">
+	{% if deposits %}
+	<div class="col-sm-12 col-lg-12">
+		<table class="table text-center">
+			<thead>
+				<tr>
+					<th></th>
+					<th style="text-align:center">Amount</th>
+					<th style="text-align:center">Explanation</th>
+	      </tr>
+	     </thead>
+
+	     <tbody>
+	     	{% for deposit in deposits %}
+	     	<tr
+	     		{% if deposit.amount < 0 %}
+	     		style="color:red;"
+	     		{% endif %}
+	     	>
+	     		<td>{{ deposit.created_at.strftime('%Y-%m-%d') }}</td>
+	     		<td>{{ deposit.amount }}</td>
+	     		<td>{{ deposit.explanation }}</td>
+	     	</tr>
+	     	{% endfor %}
+	     </tbody>
+	   </table>
+	 </div>
+	</div>
+	{% else %}
+	{% endif %}
+
+{% endblock %}

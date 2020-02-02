@@ -14,7 +14,8 @@
 		<div style="text-align: center;display: table-cell;vertical-align: middle;">
 			<h2>{{ user.name }}</h2>
 			<hr style="width:80%;opacity: 0.4;padding:0px">
-			<p style="color: #ffeb3b;">Balance: {{ user.balance }} HKD</p>
+			<p style="color: #ffeb3b;">
+				<a href="{{ url_for('client.recharge') }}">Balance: {{ user.balance }} HKD</a> | <a href="{{ url_for('client.recharge_info') }}">Recharge_Info</a></p>
 			<p style="font-size: 16px;">{{ user.email }} | {{ user.phone }}</p>
 
 			<div id="other_info">

@@ -10,9 +10,8 @@ def before_request():
 		# is user is not activated, he is only allow to visit sited under 'auth' and 'main', and also static sites
 		if current_user.balance < 0 \
 						and request.endpoint \
-						and request.blueprint != 'auth' \
-						and request.blueprint != 'main' \
-						and request.endpoint != 'static':
+						and request.blueprint == 'supply' \
+						or request.endpoint == 'ordering.create_order':
 				return redirect(url_for('client.in_debt'))
 
 @main.route('/')

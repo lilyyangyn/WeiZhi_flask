@@ -36,23 +36,38 @@
 <div class="container-fluid">
 	<div class="menu">
 		{% for dish in dishes %}
-		<div class="item col-xs-12 col-sm-6 col-md-6 col-lg-4">
-			<div class="image" style="background-image:url({{ dish.large_img_url }})">
-				<p class="food-price">{{ dish.price }} HKD</p>
-			</div>
-			<div class="food-description">
-				<p class="food-name">{{ dish.name }}
-					<span class="food-spiciness">
-						{% for s in range(0, dish.spiciness) %}🌶{% endfor %}
-					</span>
-				</p>
-				<p class="food-restaurant">{{ dish.restaurant.name }}</p>
+		<div class="item-container col-xs-12 col-sm-6 col-md-6 col-lg-4">
+			<div class="item">
+				<div class="food-image" style="background-image:url({{ dish.large_img_url }})">
+					<p class="food-price">{{ dish.price }} HKD</p>
+				</div>
+				<div class="food-description">
+					<p class="food-name">{{ dish.name }}
+						<span class="food-spiciness">
+							{% for s in range(0, dish.spiciness) %}🌶{% endfor %}
+						</span>
+					</p>
+					<p class="food-restaurant">{{ dish.restaurant.name }}</p>
+				</div>
 			</div>
 		</div>
 		{% endfor %}
 	</div>
 </div>
+{% endblock %}
 
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">
+$(function(){
+	$(".item").mouseenter(function(){
+		$(this).css({"box-shadow": "0 0 15px 6px white"});
+	});
+	$(".item").mouseleave(function(){
+		$(this).css({"box-shadow": "none"});
+	});
+});
+</script>
 {% endblock %}
 
 {% block styles %}
@@ -77,6 +92,10 @@ body{
 	vertical-align: bottom;
 	width:60px;
 	display: inline-block;
+	border-radius: 5px 5px 0 0;
+}
+.week-nav a:hover{
+	background-color: #000;
 }
 .week-nav .title{
 	color:#FF6712;
@@ -89,7 +108,10 @@ body{
 	color:#FF6712;
 	background-color: #000;
   margin-top: 5px;
-  border-radius: 5px 5px 0 0;
+}
+
+div.container-fluid {
+    margin-top: 10px;
 }
 
 .menu {
@@ -98,12 +120,15 @@ body{
   margin-right: 0px;
 }
 
-.menu .item{
+.menu .item-container{
 	margin-top: 20px;
   margin-bottom: 20px;
-  color: white;
 }
-.item .image{
+.menu .item{
+	color: white;
+	border-radius: 8px 8px 8px 8px;
+}
+.item .food-image{
 	height: 380px;
 	border-radius: 8px 8px 0px 0px;
 	position: relative;
@@ -139,10 +164,21 @@ body{
   color: rgba(255,103,18,0.7);
 }
 
+@media screen and (max-width: 550px){
+    .item .food-image{
+     height: 310px;
+  }
+}
 
 @media screen and (max-width: 991px){
-.item .image {
-    height: 500px;
+	.item .food-image {
+	    height: 500px;
+	}
+}
+@media screen and (min-width: 1358px){
+        .item .food-image{
+     height: 520px;
+  }
 }
 </style>
 {% endblock %}

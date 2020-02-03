@@ -143,13 +143,13 @@ def new_dish():
 									original_price=form.original_price.data, 
 									large_img_url=form.large_img_url.data.encode('utf8'),
 									in_supply=True, 
-									Monday=form.monday.data, 
-									Tuesday=form.tuesday.data, 
-									Wednesday=form.wednesday.data, 
-									Thursday=form.thursday.data, 
-									Friday=form.friday.data, 
-									Saturday=form.saturday.data, 
-									Sunday=form.sunday.data)
+									monday=form.monday.data, 
+									tuesday=form.tuesday.data, 
+									wednesday=form.wednesday.data, 
+									thursday=form.thursday.data, 
+									friday=form.friday.data, 
+									saturday=form.saturday.data, 
+									sunday=form.sunday.data)
 		else:
 			# if dishi is not to be in supply, set all days to False by default
 			dish = Dish(restaurant_id=form.restaurant.data.id, 

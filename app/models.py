@@ -185,13 +185,13 @@ class Dish(db.Model):
 	created_at = db.Column(db.DateTime(), default=datetime.now())
 	in_supply = db.Column(db.Boolean, default=False)
 	stock = db.Column(db.Integer, default=0, index=True)
-	Sunday = db.Column(db.Boolean, default=False)
-	Monday = db.Column(db.Boolean, default=False)
-	Tuesday = db.Column(db.Boolean, default=False)
-	Wednesday = db.Column(db.Boolean, default=False)
-	Thursday = db.Column(db.Boolean, default=False)
-	Friday = db.Column(db.Boolean, default=False)
-	Saturday = db.Column(db.Boolean, default=False)
+	sunday = db.Column(db.Boolean, default=False)
+	monday = db.Column(db.Boolean, default=False)
+	tuesday = db.Column(db.Boolean, default=False)
+	wednesday = db.Column(db.Boolean, default=False)
+	thursday = db.Column(db.Boolean, default=False)
+	friday = db.Column(db.Boolean, default=False)
+	saturday = db.Column(db.Boolean, default=False)
 	orders = db.relationship('Order', backref='dish', lazy='dynamic')
 
 	@property
@@ -212,37 +212,37 @@ class Dish(db.Model):
 		if hour < 11:
 			# before 11 am
 			if today == 1:
-				return self.Monday
+				return self.monday
 			elif today == 2:
-				return self.Tuesday
+				return self.tuesday
 			elif today == 3:
-				return self.Wednesday
+				return self.wednesday
 			elif today == 4:
-				return self.Thursday
+				return self.thursday
 			elif today == 5:
-				return self.Friday
+				return self.friday
 			elif today == 6:
-				return self.Saturday
+				return self.saturday
 			elif today == 7:
-				return self.Sunday
+				return self.sunday
 		elif hour > 20:
 			# after 9 pm
 			if is_vip:
 				# available only to vip
 				if today == 7:
-					return self.Monday
+					return self.monday
 				elif today == 1:
-					return self.Tuesday
+					return self.tuesday
 				elif today == 2:
-					return self.Wednesday
+					return self.wednesday
 				elif today == 3:
-					return self.Thursday
+					return self.thursday
 				elif today == 4:
-					return self.Friday
+					return self.friday
 				elif today == 5:
-					return self.Saturday
+					return self.saturday
 				elif today == 6:
-					return self.Sunday
+					return self.sunday
 			else:
 				return False
 		else:
@@ -250,49 +250,49 @@ class Dish(db.Model):
 
 	def add_available_day(self, day):
 		if day == 1:
-			self.Monday = True
+			self.monday = True
 			return 'Monday'
 		elif day == 2:
-			self.Tuesday = True
+			self.tuesday = True
 			return 'Tuesday'
 		elif day == 3:
-			self.Wednesday = True
+			self.wednesday = True
 			return 'Wednesday'
 		elif day == 4:
-			self.Thursday = True
+			self.thursday = True
 			return 'Thursday'
 		elif day == 5:
-			self.Friday = True
+			self.friday = True
 			return 'Friday'
 		elif day == 6:
-			self.Saturday = True
+			self.saturday = True
 			return 'Saturday'
 		elif day == 7:
-			self.Sunday = True
+			self.sunday = True
 			return 'Sunday'
 		return 'Not Know'
 
 	def cancel_available_day(self, day):
 		if day == 1:
-			self.Monday = False
+			self.monday = False
 			return 'Monday'
 		elif day == 2:
-			self.Tuesday = False
+			self.tuesday = False
 			return 'Tuesday'
 		elif day == 3:
-			self.Wednesday = False
+			self.wednesday = False
 			return 'Wednesday'
 		elif day == 4:
-			self.Thursday = False
+			self.thursday = False
 			return 'Thursday'
 		elif day == 5:
-			self.Friday = False
+			self.friday = False
 			return 'Friday'
 		elif day == 6:
-			self.Saturday = False
+			self.saturday = False
 			return 'Saturday'
 		elif day == 7:
-			self.Sunday = False
+			self.sunday = False
 			return 'Sunday'
 		return 'Not Know'
 
@@ -322,31 +322,31 @@ class Dish(db.Model):
 		hour = datetime.now().hour
 		if today == 6 or today == 7:
 			# weekend
-			return Dish.query.filter_by(Monday=True)
+			return Dish.query.filter_by(monday=True)
 		if hour < 11:
 			# before 11 am
 			if today == 1:
-				return Dish.query.filter_by(Monday=True)
+				return Dish.query.filter_by(monday=True)
 			elif today == 2:
-				return Dish.query.filter_by(Tuesday=True)
+				return Dish.query.filter_by(tuesday=True)
 			elif today == 3:
-				return Dish.query.filter_by(Wednesday=True)
+				return Dish.query.filter_by(wednesday=True)
 			elif today == 4:
-				return Dish.query.filter_by(Thursday=True)
+				return Dish.query.filter_by(thursday=True)
 			elif today == 5:
-				return Dish.query.filter_by(Friday=True)
+				return Dish.query.filter_by(friday=True)
 		else:
 			# after 11 am
 			if today == 1:
-				return Dish.query.filter_by(Tuesday=True)
+				return Dish.query.filter_by(tuesday=True)
 			elif today == 2:
-				return Dish.query.filter_by(Wednesday=True)
+				return Dish.query.filter_by(wednesday=True)
 			elif today == 3:
-				return Dish.query.filter_by(Thursday=True)
+				return Dish.query.filter_by(thursday=True)
 			elif today == 4:
-				return Dish.query.filter_by(Friday=True)
+				return Dish.query.filter_by(friday=True)
 			elif today == 5:
-				return Dish.query.filter_by(Monday=True)
+				return Dish.query.filter_by(monday=True)
 
 	@staticmethod
 	def update_to_next_day():
@@ -355,16 +355,16 @@ class Dish(db.Model):
 		Dish.clear_all_stocks()
 		today = datetime.now().isoweekday()
 		if today == 1:
-			dishes_next_day = Dish.query.filter_by(Tuesday=True)
+			dishes_next_day = Dish.query.filter_by(tuesday=True)
 		elif today == 2:
-			dishes_next_day = Dish.query.filter_by(Wednesday=True)
+			dishes_next_day = Dish.query.filter_by(wednesday=True)
 		elif today == 3:
-			dishes_next_day = Dish.query.filter_by(Thursday=True)
+			dishes_next_day = Dish.query.filter_by(thursday=True)
 		elif today == 4:
-			dishes_next_day = Dish.query.filter_by(Friday=True)
+			dishes_next_day = Dish.query.filter_by(friday=True)
 		else:
-			# for Friday to Sunday, the next menu is Monday's menu
-			dishes_next_day = Dish.query.filter_by(Monday=True)
+			# for friday to sunday, the next menu is monday's menu
+			dishes_next_day = Dish.query.filter_by(monday=True)
 		Dish.set_all_stock(dishes_next_day, 8)
 
 

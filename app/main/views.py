@@ -24,16 +24,21 @@ def menu():
 	dishes_today = Dish.today().all()
 	return render_template('menu_today.html', dishes_today=dishes_today)
 
-@main.route('/weekly_menu')
-def weekly_menu():
-	dishes_in_supply = Dish.query.filter_by(in_supply=True)
-	dishes = []
-	dishes.append(dishes_in_supply.filter_by(Monday=True).all())
-	dishes.append(dishes_in_supply.filter_by(Tuesday=True).all())
-	dishes.append(dishes_in_supply.filter_by(Wednesday=True).all())
-	dishes.append(dishes_in_supply.filter_by(Thursday=True).all())
-	dishes.append(dishes_in_supply.filter_by(Friday=True).all())
-	return render_template('weekly_menu.html', dishes=dishes)
+@main.route('/weekly_menu/<day>')
+def weekly_menu(day):
+	if day == 'Monday':
+		dishes = Dish.query.filter_by(monday=True).all()
+	elif day == 'Tuesday':
+		dishes = Dish.query.filter_by(tuesday=True).all()
+	elif day == 'Wednesday':
+		dishes = Dish.query.filter_by(wednesday=True).all()
+	elif day == 'Thursday':
+		dishes = Dish.query.filter_by(thursday=True).all()
+	elif day == 'Friday':
+		dishes = Dish.query.filter_by(friday=True).all()
+	else:
+		return redirect(url_for('.weekly_menu', day='Monday'))
+	return render_template('weekly_menu.html', dishes=dishes, day=day)
 
 @main.route('/about')
 def about():

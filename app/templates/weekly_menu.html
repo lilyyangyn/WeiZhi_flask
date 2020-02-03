@@ -4,49 +4,145 @@
 
 {% block content %}
 {{ super() }}
-<div class="page-header">
-	<h1>this is weekly_menu</h1>
+<div class="week-nav">
+	<b class='title'>Weekly Menu</b>
+	{% if day == 'Monday' %}
+	<b class='current_day'>Mon.</b>
+	{% else %}
+	<a href="{{ url_for('main.weekly_menu', day='Monday') }}">Mon.</a>
+	{% endif %}
+	{% if day == 'Tuesday' %}
+	<b class='current_day'>Tue.</b>
+	{% else %}
+	<a href="{{ url_for('main.weekly_menu', day='Tuesday') }}">Tue.</a>
+	{% endif %}
+	{% if day == 'Wednesday' %}
+	<b class='current_day'>Wed.</b>
+	{% else %}
+	<a href="{{ url_for('main.weekly_menu', day='Wednesday') }}">Wed.</a>
+	{% endif %}
+	{% if day == 'Thursday' %}
+	<b class='current_day'>Thu.</b>
+	{% else %}
+	<a href="{{ url_for('main.weekly_menu', day='Thursday') }}">Thu.</a>
+	{% endif %}
+	{% if day == 'Friday' %}
+	<b class='current_day'>Fri.</b>
+	{% else %}
+	<a href="{{ url_for('main.weekly_menu', day='Friday') }}">Fri.</a>
+	{% endif %}
 </div>
-<div>
-	<div>
-		<h4>Monday</h4>
-		<ul>
-			{% for dish in dishes[0] %}
-			<ul>{{ dish.name }}</ul>
-			{% endfor %}
-		</ul>
-	</div>
-	<div>
-		<h4>Tuesday</h4>
-		<ul>
-			{% for dish in dishes[1] %}
-			<ul>{{ dish.name }}</ul>
-			{% endfor %}
-		</ul>
-	</div>
-	<div>
-		<h4>Wednesday</h4>
-		<ul>
-			{% for dish in dishes[2] %}
-			<ul>{{ dish.name }}</ul>
-			{% endfor %}
-		</ul>
-	</div>
-	<div>
-		<h4>Thursday</h4>
-		<ul>
-			{% for dish in dishes[3] %}
-			<ul>{{ dish.name }}</ul>
-			{% endfor %}
-		</ul>
-	</div>
-	<div>
-		<h4>Friday</h4>
-		<ul>
-			{% for dish in dishes[4] %}
-			<ul>{{ dish.name }}</ul>
-			{% endfor %}
-		</ul>
+
+<div class="container-fluid">
+	<div class="menu">
+		{% for dish in dishes %}
+		<div class="item col-xs-12 col-sm-6 col-md-6 col-lg-4">
+			<div class="image" style="background-image:url({{ dish.large_img_url }})">
+				<p class="food-price">{{ dish.price }} HKD</p>
+			</div>
+			<div class="food-description">
+				<p class="food-name">{{ dish.name }}
+					<span class="food-spiciness">
+						{% for s in range(0, dish.spiciness) %}🌶{% endfor %}
+					</span>
+				</p>
+				<p class="food-restaurant">{{ dish.restaurant.name }}</p>
+			</div>
+		</div>
+		{% endfor %}
 	</div>
 </div>
+
+{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<style>
+body{
+	background-color: black;
+	background-image: none!important;
+}
+.week-nav{
+	background-color: #333;
+	line-height: 50px;
+	float:none;
+	zoom: 1;
+}
+.week-nav a,
+.week-nav b{
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	vertical-align: bottom;
+	width:60px;
+	display: inline-block;
+}
+.week-nav .title{
+	color:#FF6712;
+	font-weight: bold;
+	width: 130px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.week-nav .current_day{
+	color:#FF6712;
+	background-color: #000;
+  margin-top: 5px;
+  border-radius: 5px 5px 0 0;
+}
+
+.menu {
+  margin-bottom: 30px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.menu .item{
+	margin-top: 20px;
+  margin-bottom: 20px;
+  color: white;
+}
+.item .image{
+	height: 380px;
+	border-radius: 8px 8px 0px 0px;
+	position: relative;
+  font-size: 18px;
+  background-repeat: no-repeat;
+  background-position: center 0px;
+  background-size: cover;
+}
+.item .food-price{
+	font-size: 28px;
+  font-weight: bold;
+  display: inline;
+  position: absolute;
+  bottom: 3px;
+  left: 8px;
+  border-radius: 10px;
+  padding:10px 20px;
+  background-color: rgba(255,103,18,0.6);
+  font-family: 'Roboto Condensed', sans-serif;
+}
+.item .food-description{
+	background-color: #2B2E33;
+  width: 100%;
+  border-radius: 0px 0px 8px 8px;
+  padding: 15px 10px 5px 10px;
+}
+.food-description .food-name{
+  font-size: 16px;
+}
+.food-description .food-restaurant{
+	font-size: 14px;
+  font-weight: lighter;
+  color: rgba(255,103,18,0.7);
+}
+
+
+@media screen and (max-width: 991px){
+.item .image {
+    height: 500px;
+}
+</style>
 {% endblock %}

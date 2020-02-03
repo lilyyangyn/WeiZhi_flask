@@ -43,35 +43,35 @@
 					<a href="{{ url_for('supply.stop_supply_dish', id=dish.id) }}"><button class="btn btn-danger">Stop</button></a>
 				</td> 
 				<td>
-					{% if dish.Monday %}
+					{% if dish.monday %}
 					<a href="{{ url_for('supply.cancel_available', id=dish.id, day=1) }}">1<br><i class="glyphicon glyphicon-star"></i></a>
 					{% else %}
 					<a href="{{ url_for('supply.add_available', id=dish.id, day=1) }}">1<br><i class="glyphicon glyphicon-star-empty"></i></a>
 					{% endif %}
 				</td>
 				<td>
-					{% if dish.Tuesday %}
+					{% if dish.tuesday %}
 					<a href="{{ url_for('supply.cancel_available', id=dish.id, day=2) }}">2<br><i class="glyphicon glyphicon-star"></i></a>
 					{% else %}
 					<a href="{{ url_for('supply.add_available', id=dish.id, day=2) }}">2<br><i class="glyphicon glyphicon-star-empty"></i></a>
 					{% endif %}
 				</td>
 				<td>
-					{% if dish.Wednesday %}
+					{% if dish.wednesday %}
 					<a href="{{ url_for('supply.cancel_available', id=dish.id, day=3) }}">3<br><i class="glyphicon glyphicon-star"></i></a>
 					{% else %}
 					<a href="{{ url_for('supply.add_available', id=dish.id, day=3) }}">3<br><i class="glyphicon glyphicon-star-empty"></i></a>
 					{% endif %}
 				</td>
 				<td>
-					{% if dish.Thursday %}
+					{% if dish.thursday %}
 					<a href="{{ url_for('supply.cancel_available', id=dish.id, day=4) }}">4<br><i class="glyphicon glyphicon-star"></i></a>
 					{% else %}
 					<a href="{{ url_for('supply.add_available', id=dish.id, day=4) }}">4<br><i class="glyphicon glyphicon-star-empty"></i></a>
 					{% endif %}
 				</td>
 				<td>
-					{% if dish.Friday %}
+					{% if dish.friday %}
 					<a href="{{ url_for('supply.cancel_available', id=dish.id, day=5) }}">5<br><i class="glyphicon glyphicon-star"></i></a>
 					{% else %}
 					<a href="{{ url_for('supply.add_available', id=dish.id, day=5) }}">5<br><i class="glyphicon glyphicon-star-empty"></i></a>

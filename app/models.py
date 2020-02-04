@@ -375,6 +375,7 @@ class Restaurant(db.Model):
 	name = db.Column(db.String(64), nullable=False, unique=True)
 	img_url = db.Column(db.Text())
 	info = db.Column(db.Text())
+	restaurant_url = db.Column(db.Text())
 	in_cooperation = db.Column(db.Boolean, default=True)
 	dishes = db.relationship('Dish', backref='restaurant', lazy='dynamic')
 

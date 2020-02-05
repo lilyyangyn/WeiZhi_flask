@@ -3,6 +3,10 @@ body{
 	background-image: none!important;
 }
 
+.alert{
+	margin-bottom:0;
+}
+
 .titlebar{
 	background-color: #333;
 	line-height: 50px;

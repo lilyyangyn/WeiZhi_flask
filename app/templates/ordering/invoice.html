@@ -4,7 +4,7 @@
 
 {% block content %}
 {{ super() }}
-<div class="container" style="margin-bottom: 50px;">
+<div class="container" style="margin-bottom: 120px;">
 
 	<div style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
   	<div class="mypanel" style="background:transparent">
@@ -53,18 +53,16 @@
       		</tr>
       		{% if current_user.can_order_now %}
       		<tr>
-      			<td colspan=2>
-      				<a href="{{ url_for('main.menu') }}"><button class="btn btn-danger btn-block btn-my">Order More😋</button></a>
+            <td>
+              <a href="{{ url_for('ordering.orders') }}"><button class="btn btn-default btn-block btn-my">&lt;&lt; Back</button></a>
+            </td>
+      			<td>
+      				<a href="{{ url_for('main.menu') }}"><button class="btn btn-danger btn-block btn-my">Order More 😋</button></a>
       			</td>
       		</tr>
       		{% endif %}
       	</tbody>
       </table>
-
-      <div style="padding-left:10px;opacity: 0.7;font-size: 14px;margin-top:2px;border-top: 1px solid #dadada">
-        <p style="padding: 8px 0px"><a href="{{ url_for('ordering.orders') }}">&lt;&lt; Back to order history</a></p>
-      </div>
-
   	</div>
   </div>
 </div>

@@ -4,7 +4,7 @@
 color:red;
 }
 h1, h2, h3, h4{
-  font-size: bold;
+  font-weight: bold;
 }
 
 .has-error .control-label,
@@ -103,7 +103,6 @@ h1, h2, h3, h4{
   margin-top: 40px;
 }
 
-
 @media screen and (max-width: 720px){
   .my-page-header img.title-fish{
     height: 40px;
@@ -115,6 +114,65 @@ h1, h2, h3, h4{
     display:inline!important;
   }
 }
+
+/* round-flat-switch */
+.round-flat-switch label{
+  cursor: pointer;
+  display: inline;
+}
+.round-flat-switch .switch-input{
+  display: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  outline:none;
+}
+.round-flat-switch .switch-input + .input-label{
+  width: 120px;
+  height: 60px;
+  padding:2px;
+  background-color: transparent;
+  border: 5px solid rgb(255, 33, 33);
+  border-radius: 60px;
+  -webkit-border-radius: 60px;
+  -moz-border-radius: 60px;
+  -ms-border-radius: 60px;
+  -o-border-radius: 60px;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  position: absolute;
+}
+.round-flat-switch .switch-input + .input-label:before{
+  width: 46px;
+  height: 46px;
+  content: '';
+  background-color: rgb(255, 33, 33);
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  position: absolute;
+}
+.round-flat-switch .switch-input:checked + .input-label{
+  border-color: rgb(120, 200, 55);
+}
+.round-flat-switch .switch-input:checked + .input-label:before{
+  background-color: rgb(120, 200, 55);
+  margin-left: 60px;
+}
+
+
+
+
+
 
 
 

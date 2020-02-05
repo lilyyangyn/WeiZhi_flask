@@ -81,6 +81,7 @@ class CreateRestaurantForm(FlaskForm):
 	name = StringField('Name', validators=[DataRequired(), Length(1, 64)])
 	img_url = TextAreaField('Image URL')
 	info = TextAreaField('Information')
+	restaurant_url = TextAreaField('Restaurant URL')
 	submit = SubmitField('Create Restaurant')
 
 	def validate_name(self, field):
@@ -91,6 +92,7 @@ class EditRestaurantForm(FlaskForm):
 	name = StringField('Name', validators=[DataRequired(), Length(1, 64)])
 	img_url = TextAreaField('Image URL')
 	info = TextAreaField('Information')
+	restaurant_url = TextAreaField('Restaurant URL')
 	submit = SubmitField('Edit Dish')
 
 	def __init__(self, restaurant, *args, **kwargs):

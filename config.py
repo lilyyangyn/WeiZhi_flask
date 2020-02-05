@@ -29,7 +29,7 @@ class DevelopmentConfig(Config):
 	CDS_ADMIN = "lilyyang@connect.hku.hk"
 	SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
                 'postgresql://yuening:@localhost:5432/cds_development' 
-	SQLALCHEMY_ECHO = True
+	#SQLALCHEMY_ECHO = True
 
 class TestingConfig(Config):
 	TESTING = True

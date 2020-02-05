@@ -21,8 +21,11 @@ def menu():
 		 (datetime.now().isoweekday() == 7 and datetime.now().hour < 21):
 		 return render_template('weekend.html')
 	# if not weekend, show today's menu
-	dishes_today = Dish.today().all()
-	return render_template('menu_today.html', dishes_today=dishes_today)
+	dishes = []
+	dishes.append(Dish.today().filter(Dish.spiciness > 1).all())
+	dishes.append(Dish.today().filter(Dish.spiciness < 2).all())
+	dishNum = [len(dishes[0]), len(dishes[1])]
+	return render_template('menu_today.html', dishes=dishes, dishNum=dishNum)
 
 @main.route('/weekly_menu/<day>')
 def weekly_menu(day):

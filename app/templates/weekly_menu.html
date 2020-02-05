@@ -1,10 +1,10 @@
-{% extends "layouts/ordering_related.html" %}
+{% extends "layouts/main.html" %}
 
 {% block title %}Weekly Menu | CDS{% endblock %}
 
 {% block content %}
 {{ super() }}
-<div class="week-nav">
+<div class="week-nav titlebar">
 	<b class='title'>Weekly Menu</b>
 	{% if day == 'Monday' %}
 	<b class='current_day'>Mon.</b>
@@ -73,17 +73,6 @@ $(function(){
 {% block styles %}
 {{ super() }}
 <style>
-body{
-	background-color: black;
-	background-image: none!important;
-}
-.week-nav{
-	background-color: #333;
-	line-height: 50px;
-	float:none;
-	zoom: 1;
-	margin-bottom: 10px
-}
 .week-nav a,
 .week-nav b{
 	color: white;
@@ -97,13 +86,6 @@ body{
 }
 .week-nav a:hover{
 	background-color: #000;
-}
-.week-nav .title{
-	color:#FF6712;
-	font-weight: bold;
-	width: 130px;
-  padding-left: 10px;
-  padding-right: 10px;
 }
 .week-nav .current_day{
 	color:#FF6712;

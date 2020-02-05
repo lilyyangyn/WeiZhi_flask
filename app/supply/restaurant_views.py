@@ -25,7 +25,8 @@ def new_restaurant():
 		# set restaurant.in_cooperation True by default
 		restaurant = Restaurant(name=form.name.data.encode('utf8'), 
 														img_url=form.img_url.data.encode('utf8'), 
-														info=form.info.data.encode('utf8'))
+														info=form.info.data.encode('utf8'),
+														restaurant_url=form.restaurant_url.data.encode('utf8'))
 		db.session.add(restaurant)
 		flash("Successfully create new restaurant {} ^_^".format(restaurant.name))
 		return redirect(url_for('supply.restaurants'))
@@ -80,6 +81,7 @@ def edit_restaurant(id):
 		restaurant.name = form.name.data.encode('utf8')
 		restaurant.img_url = form.img_url.data.encode('utf8')
 		restaurant.info = form.info.data.encode('utf8')
+		restaurant.restaurant_url = form.restaurant_url.data.encode('utf8')
 		db.session.add(restaurant)
 		db.session.commit()
 		flash('Restaurant info has been updated ^_^')
@@ -87,6 +89,7 @@ def edit_restaurant(id):
 	form.name.data = restaurant.name
 	form.img_url.data = restaurant.img_url
 	form.info.data = restaurant.info
+	form.restaurant_url.data = restaurant.restaurant_url
 	return render_template('supply/restaurants/edit_restaurant.html', form=form)
 
 

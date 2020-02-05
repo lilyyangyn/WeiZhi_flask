@@ -1,24 +1,228 @@
-{% extends "layouts/ordering_related.html" %}
+{% extends "layouts/main.html" %}
 
 {% block title %}Menu Today | CDS{% endblock %}
 
 {% block content %}
 {{ super() }}
-<div class="page-header">
-	<h1>this is menu today</h1>
+<div class="titlebar">
+	<b class="title">Menu Today</b>
 </div>
-<p>
-	{% if current_user.is_authenticated %}
-		{% for dish in dishes_today %}
-		<ul>
-			{% if dish.is_available(current_user.is_VIP) %}
-			<a href="{{ url_for('ordering.create_order', dish_id=dish.id) }}">Order {{dish.name}}</a>
+
+<div class="container-fluid">
+  <div class="spiciness-filter round-flat-switch">
+    <label for="spiciness-switch" class="left-label"><img src="{{ url_for('static', filename='assets/images/spicy.png') }}"></label>
+    <input id="spiciness-switch" type="checkbox" class="switch-input">
+    <label for="spiciness-switch" style="position: absolute;left: 64px;" class="input-label"></label>
+    <label for="spiciness-switch" class="right-label"><img src="{{ url_for('static', filename='assets/images/nospicy.png') }}"></label>
+  </div>
+
+	{% for i in range(0, 2) %}
+	<!-- 0 for 'spicy' and 1 for 'nospicy' -->
+	<div id="dish-carousel-{{ i }}" class="carousel slide" data-ride="carousel" data-interval=false>
+
+		<ol class="carousel-indicators">
+			<li data-target="#dish-carousel-{{ i }}" data-slide-to="0" class="active">
+			{% for k in range(1, dishNum[i]) %}
+			<li data-target="#dish-carousel-{{ i }}" data-slide-to="{{ k }}"></li>
+			{% endfor %}
+		</ol>
+
+		<div class="carousel-inner">
+			{% if not dishes[i] %}
+			<!-- no this kind of dishes -->
+			<div class="item active empty-dish">
+        <div class="dish-image text-center">
+				  <img src="{{ url_for('static', filename='assets/images/empty_dish.png') }}">
+        </div>
+        <div class="container">
+          <div class="carousel-caption">
+            <div class="col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10 col-sm-offset-1 col-sm-10">
+              <table class="table borderless">
+                <tbody>
+                  <tr class="dish-info">
+                    <td>
+                      <h3>Sorry, {% if i == 0 %}No{% else %}Only{% endif %} Spicy Dishes Today</h3>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <b class="applogy-suggestion">Try {% if i == 0 %}No-{% endif %}Spicy Dish Please ~</b>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="button-container">
+                <button type="button" class="btn btn-danger btn-block btn-lg disabled">┬＿┬</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 			{% else %}
-			Order {{dish.name}}
-			{% endif %}
-		</ul>
-		{% endfor %}
-	{% else %}
-	<a href="{{ url_for('auth.login') }}">Login To Order</a>
-	{% endif %}
+				{% for dish in dishes[i] %}
+				<div class="item {% if dish.id == dishes[i][0].id %}active{% endif %}"
+				>
+          <div class="dish-image text-center">
+					 <img src="{{ dish.large_img_url }}">
+          </div>
+					<div class="container">
+						<div class="carousel-caption">
+							<div class="col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10 col-sm-offset-1 col-sm-10">
+	              <table class="table borderless">
+	              	<tbody>
+	              		<tr class="dish-info">
+	              			<td>
+	              				<h3>{{ dish.name }}</h3>
+	              				<b class="dish-restaurant"><a href="{{ dish.restaurant.restaurant_url }}">{{ dish.restaurant.name }}</a>
+	              				<span>{% for j in range(0, dish.spiciness) %}🌶{% endfor %}</span></b>
+	              			</td>
+	              		</tr>
+	              		<tr>
+	              			<td>
+	              				<h3>{{ dish.price }} HKD</h3>
+	              				{% if not dish.sold_out and dish.stock < 4 %}
+	              				<span class="remaining-dish">Only {{ dish.stock }} Left</span>
+	              				{% endif %}
+	              			</td>
+	              		</tr>
+	              	</tbody>
+	              </table>
+
+	              <div class="button-container">
+                	{% if current_user.is_authenticated %}
+                		{% if current_user.can_order_now %}
+                      {% if dish.sold_out %}
+                      <button type="button" class="btn btn-danger btn-block btn-lg disabled">Sold Out</button>
+                      {% else %}
+                			<a href="{{ url_for('ordering.create_order', dish_id=dish.id) }}"><button type="button" class="btn btn-danger btn-block btn-lg">Order</button></a>
+                      {% endif %}
+                		{% else %}
+                			{% if current_user.is_VIP %}
+                			<button type="button" class="btn btn-danger btn-block btn-lg disabled">VIP Start at 9 p.m.</button>
+                			{% else %}
+                			<button type="button" class="btn btn-danger btn-block btn-lg disabled">Non-VIP Start at 12 a.m.</button>
+                			{% endif %}
+                		{% endif %}
+                	{% else %}
+                		<a href="{{ url_for('auth.login') }}"><button type="button" class="btn btn-danger btn-block btn-lg">Login to Order</button></a>
+                	{% endif %}
+	              </div>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	      {% endfor %}
+      {% endif %}
+    </div>
+
+    <a class="left carousel-control" href="#dish-carousel-{{ i }}" data-slide="prev"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span><span class="sr-only">Previous</a>
+    <a class="right carousel-control" href="#dish-carousel-{{ i }}" data-slide="next"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span><span class="sr-only">Next</a>
+  </div>
+  {% endfor %}
+</div>
+
+{% include "layouts/_howto.html" %}
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">
+$("#spiciness-switch").change(function() {
+  if (this.checked) {
+    $("#dish-carousel-0").fadeOut("400", function() {
+      $("#dish-carousel-1").fadeIn("400")
+    });
+  } else {
+    $("#dish-carousel-1").fadeOut("400", function() {
+      $("#dish-carousel-0").fadeIn("400")
+    });
+  }
+});
+</script>
+{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<style>
+#dish-carousel-1{
+  display: none;
+}
+
+.empty-dish .applogy-suggestion{
+  font-size: 15px;
+  color: #424242;
+  opacity: 0.9;
+}
+
+.dish-image img{
+  width:80%;
+  border-radius: 15px;
+}
+.carousel-caption table{
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  color:black;
+  text-shadow:none;
+}
+.carousel-caption table .dish-info{
+  border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+}
+.carousel-caption table .dish-restaurant{
+  font-size: 15px;
+}
+.carousel-caption table .dish-restaurant a{
+  color: #424242;
+  opacity: 0.9;
+}
+.carousel-caption table .remaining-dish{
+  color: #F44336;
+  font-size: 14px;
+}
+.carousel-caption .button-container{
+  margin-bottom: 20px;
+}
+
+.spiciness-filter{
+  display: block; 
+  margin: 10px auto 22px auto;
+  width: 240px;
+  height:60px; 
+  font-size: 20px; 
+  position: relative;
+}
+.spiciness-filter img{
+  width:43px;
+}
+.spiciness-filter .left-label,
+.spiciness-filter .right-label{
+  position: absolute; 
+  top:8px; 
+  width:43px;
+}
+.spiciness-filter .left-label{
+  left: 16px;
+}
+.spiciness-filter .right-label{
+  right: 4px;
+}
+
+@media screen and (max-width: 766px) {
+  .dish-image img{
+    width:100%;
+  }
+  .carousel-caption table h3{
+    font-size: 16px;
+    margin: 5px;
+  }
+  .carousel-caption table .dish-restaurant{
+    font-size: 13px;
+  }
+  .carousel-caption table .remaining-dish{
+    font-size: 12px;
+  }
+}
+
+</style>
 {% endblock %}

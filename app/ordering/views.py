@@ -45,6 +45,8 @@ def create_order(dish_id):
 				to_be_paid = dish.price
 				pay_status = 2
 			# today_id and status will be automatically determined when constructor runs
+			dish.set_stock(-1)
+			db.session.add(dish)
 			order = Order(dish_id=dish_id, user_id=current_user.id, 
 										spot_id=form.spot.data.id, 
 										to_be_paid=to_be_paid, 

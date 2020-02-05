@@ -85,9 +85,9 @@
 	       	</div>
 
 					<div class="input-group col-xs-12 col-lg-12" style="margin-bottom: 25px;">
-          	<div  class="my-form col-xs-4" style="float:left;padding-top:15px;">
-          		{{ form.in_supply(id="set-supply") }}
+          	<div  class="my-form col-xs-3" style="float:left;">
                <span style="font-size: 14px;font-weight: normal;">{{ form.in_supply.label }}</span>
+               {{ form.in_supply(id="set-supply") }}
             </div>
 
             <div sytle="float:right;border:1px solid #dadada;">	
@@ -150,20 +150,28 @@
 </div>
 {% endblock %}
 
-<!--
+{% block styles %}
+{{ super() }}
+<style>
+.set-available-day{
+	margin-right: 5px;
+	display: none;
+}
+</style>
+{% endblock %}
+
+
 {% block scripts %}
 {{ super() }}
 <script type="text/javascript">
-$(function() {
-	$("#set-supply").click(function(){
-		console.log($("#set-supply").attr("checked") );
-		if ($("#set-supply").val()) {
-			$(".set-available-day").show();
-		} else {
-			$(".set-available-day").hide();
-		}
-	});
+
+$("#set-supply").change(function(){
+	console.log(this.checked);
+	if (this.checked) {
+		$(".set-available-day").fadeIn("300");
+	} else {
+		$(".set-available-day").fadeOut("300");
+	}
 });
 </script>
 {% endblock %}
--->

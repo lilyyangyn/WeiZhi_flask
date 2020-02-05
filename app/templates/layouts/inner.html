@@ -1,0 +1,24 @@
+{% extends "layouts/ordering_related.html" %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/inner_page_styles.css') }}?ver=2">
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">
+$(".change-switch").change(function() {
+	if (this.checked){
+		$(".group0").fadeOut("200", function() {
+			$(".group1").fadeIn("200");
+		});
+	} else {
+		$(".group1").fadeOut("200", function() {
+			$(".group0").fadeIn("200");
+		});
+	}
+	
+});
+</script>
+{% endblock %}

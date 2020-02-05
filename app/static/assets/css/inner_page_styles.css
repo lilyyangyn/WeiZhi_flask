@@ -1,0 +1,39 @@
+.table th{
+	text-align:center;
+}
+
+.btn-internal{
+  padding:10px;font-size:16px;
+  margin: 4px 2px 4px 2px;
+}
+
+.change-group{
+	display: none;
+}
+
+@media screen and (max-width: 414px) {
+	.table{
+		margin-bottom: 80px;
+	}
+	.change-group{
+		display: table-cell;
+		text-align: left;
+	}
+	.change-group input{
+		-webkit-appearance:none;
+		width: 13px;
+		height: 13px;
+		border: 2px solid #bbb;
+		border-radius: 50%;
+		transform: background 0.2s;
+	}
+	.change-group input:focus{
+		outline: none;
+	}
+	.change-group input:checked{
+		background-color: #bbb;
+	}
+	.group1{
+		display: none;
+	}
+}

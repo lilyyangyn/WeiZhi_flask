@@ -1,4 +1,4 @@
-{% extends "layouts/base.html" %}
+{% extends "layouts/inner.html" %}
 
 {% block title %}Users | CDS{% endblock %}
 
@@ -13,31 +13,32 @@
 	<h3>Total Staffs: {{ total_staffs }}</h3>
 	<br>
 
-	<table class="table" style="text-align:center">
+	<table class="table text-center">
 		<thead>
 			<tr>
-				<th style="text-align:center">Balance</th>
-				<th style="text-align:center">Name</th>
-				<th style="text-align:center">Gender</th>
-				<th style="text-align:center">Phone</th>
-				<th style="text-align:center">Email</th>
-				<th style="text-align:center">Faculty</th>
-				<th style="text-align:center">Identity</th>
-				<th style="text-align:center">Register At</th>
+				<th class="group0">Name</th>
+				<th class="group0">Balance</th>
+				<th class="group0">Phone</th>
+				<th class="group0">Email</th>
+				<th class="group1">Gender</th>
+				<th class="group1">Faculty</th>
+				<th class="group1">Identity</th>
+				<th class="group1">Register At</th>
 			</tr>
 		</thead>
 
 		<tbody>
 			{% for user in users_in_debt %}
 			<tr style="color:red">
-				<td style="font-weight: bold;">{{ user.balance }}</td>
-				<td>{{ user.name }}</td>
-				<td>{{ user.gender }}</td>
-				<td>{{ user.phone }}</td>
-				<td>{{ user.email }}</td>
-				<td>{{ user.faculty }}</td>
-				<td>{{ user.identity }}</td>
-				<td>{{ user.created_at.strftime('%Y-%m-%d') }}</td>
+				<td class="group0">{{ user.name }}</td>
+				<td class="group0" style="font-weight: bold;">{{ user.balance }}</td>
+				<td class="group0">{{ user.phone }}</td>
+				<td class="group0">{{ user.email }}</td>
+				<td class="group1">{{ user.gender }}</td>
+				<td class="group1">{{ user.faculty }}</td>
+				<td class="group1">{{ user.identity }}</td>
+				<td class="group1">{{ user.created_at.strftime('%Y-%m-%d') }}</td>
+				<td class="change-group"><input type="checkbox" class="change-switch"></td>
 			</tr>
 			{% endfor %}
 			{% for user in other_users %}
@@ -46,14 +47,15 @@
 					style="color:#46A3FF"
 				{% endif %}
 			>
-				<td style="color:red">{{ user.balance }}</td>
-				<td>{{ user.name }}</td>
-				<td>{{ user.gender }}</td>
-				<td>{{ user.phone }}</td>
-				<td>{{ user.email }}</td>
-				<td>{{ user.faculty }}</td>
-				<td>{{ user.identity }}</td>
-				<td>{{ user.created_at.strftime('%Y-%m-%d') }}</td>
+				<td class="group0">{{ user.name }}</td>
+				<td class="group0" style="color:red">{{ user.balance }}</td>
+				<td class="group0">{{ user.phone }}</td>
+				<td class="group0">{{ user.email }}</td>
+				<td class="group1">{{ user.gender }}</td>
+				<td class="group1">{{ user.faculty }}</td>
+				<td class="group1">{{ user.identity }}</td>
+				<td class="group1">{{ user.created_at.strftime('%Y-%m-%d') }}</td>
+				<td class="change-group"><input type="checkbox" class="change-switch"></td>
 			</tr>
 			{% endfor %}
 		</tbody>

@@ -1,6 +1,6 @@
-{% extends "layouts/base.html" %}
+{% extends "layouts/inner.html" %}
 
-{% block title %}CDS{% endblock %}
+{% block title %}Dishes | CDS{% endblock %}
 
 {% block content %}
 {{ super() }}
@@ -12,126 +12,129 @@
 	<a href="{{ url_for('supply.clear_all_stocks') }}"><button class="btn btn-info btn-internal  btn-not-click">Clear All Stock</button></a>
 	<a href="{{ url_for('supply.reset_available_days') }}"><button class="btn btn-info btn-internal btn-not-click">Reset Weekly Menu</button></a>
 	<br>
-	<table class="table" style="text-align:center">
+	<table class="table text-center">
 		<thead>
-			<tr >
-				<th style="text-align:center">Restaurant</th>
-				<th style="text-align:center">Dish</th>
-				<th style="text-align:center">Sold Price</th>
-				<th style="text-align:center">Original Price</th>
-				<th style="text-align:center">Stock</th>
-				<th style="text-align:center">Supply</th>
-				<th colspan=5 style="text-align:center">Available Days</th>
+			<tr>
+				<th>Dish</th>
+				<th class="group0">Restaurant</th>
+				<th class="group0">Sold Price</th>
+				<th class="group0">Original Price</th>
+				<th class="group0">Stock</th>
+				<th colspan=5 class="group1">Available Days</th>
+				<th></th>
+				<th class="group1">Supply</th>
 			</tr>
 		</thead>
 
 		<tbody>
 			{% for dish in dishes_in_supply %}
 			<tr>
-				<td>{{ dish.restaurant.name }}</td>
 				<td>{{ dish.name }}</td>
-				<td>{{ dish.original_price }}</td>
-				<td>{{ dish.price }}</td>
-				<td width="140">
+				<td class="group0">{{ dish.restaurant.name }}</td>
+				<td class="group0">{{ dish.original_price }}</td>
+				<td class="group0">{{ dish.price }}</td>
+				<td class="group0" width="140">
 					<a href="{{ url_for('supply.increase_stock', id=dish.id) }}"><button class="btn btn-warning"><i class="glyphicon glyphicon-plus"></i></button></a>
 					<br class="break-for-sm" style="display:none">
 					&nbsp{{ dish.stock }}&nbsp
 					<br class="break-for-sm" style="display:none">
 					<a href="{{ url_for('supply.decrease_stock', id=dish.id) }}"><button class="btn btn-primary"><i class="glyphicon glyphicon-minus"></i></button></a>
 				</td>
-				<td>
-					<a href="{{ url_for('supply.stop_supply_dish', id=dish.id) }}"><button class="btn btn-danger">Stop</button></a>
-				</td> 
-				<td>
+				<td class="group1">
 					{% if dish.monday %}
 					<a href="{{ url_for('supply.cancel_available', id=dish.id, day=1) }}">1<br><i class="glyphicon glyphicon-star"></i></a>
 					{% else %}
 					<a href="{{ url_for('supply.add_available', id=dish.id, day=1) }}">1<br><i class="glyphicon glyphicon-star-empty"></i></a>
 					{% endif %}
 				</td>
-				<td>
+				<td class="group1">
 					{% if dish.tuesday %}
 					<a href="{{ url_for('supply.cancel_available', id=dish.id, day=2) }}">2<br><i class="glyphicon glyphicon-star"></i></a>
 					{% else %}
 					<a href="{{ url_for('supply.add_available', id=dish.id, day=2) }}">2<br><i class="glyphicon glyphicon-star-empty"></i></a>
 					{% endif %}
 				</td>
-				<td>
+				<td class="group1">
 					{% if dish.wednesday %}
 					<a href="{{ url_for('supply.cancel_available', id=dish.id, day=3) }}">3<br><i class="glyphicon glyphicon-star"></i></a>
 					{% else %}
 					<a href="{{ url_for('supply.add_available', id=dish.id, day=3) }}">3<br><i class="glyphicon glyphicon-star-empty"></i></a>
 					{% endif %}
 				</td>
-				<td>
+				<td class="group1">
 					{% if dish.thursday %}
 					<a href="{{ url_for('supply.cancel_available', id=dish.id, day=4) }}">4<br><i class="glyphicon glyphicon-star"></i></a>
 					{% else %}
 					<a href="{{ url_for('supply.add_available', id=dish.id, day=4) }}">4<br><i class="glyphicon glyphicon-star-empty"></i></a>
 					{% endif %}
 				</td>
-				<td>
+				<td class="group1">
 					{% if dish.friday %}
 					<a href="{{ url_for('supply.cancel_available', id=dish.id, day=5) }}">5<br><i class="glyphicon glyphicon-star"></i></a>
 					{% else %}
 					<a href="{{ url_for('supply.add_available', id=dish.id, day=5) }}">5<br><i class="glyphicon glyphicon-star-empty"></i></a>
 					{% endif %}
 				</td>
-				<td>
+				<td class="group1">
 					<a href="{{ url_for('supply.edit_dish', id=dish.id) }}"><button class="btn btn-info">Edit</button></a>
 				</td>
+				<td class="group1">
+					<a href="{{ url_for('supply.stop_supply_dish', id=dish.id) }}"><button class="btn btn-danger">Stop</button></a>
+				</td>
+				<td class="change-group"><input type="checkbox" class="change-switch"></td> 
 			</tr>
 
 			{% endfor %}
 
 			{% for dish in dishes_not_in_supply %}
 			<tr>
-				<td>{{ dish.restaurant.name }}</td>
 				<td>{{ dish.name }}</td>
-				<td>{{ dish.original_price }}</td>
-				<td>{{ dish.price }}</td>
-				<td>{{ dish.stock }}</td>
-				<td>
-					<a href="{{ url_for('supply.supply_dish', id=dish.id) }}"><button class="btn btn-success">Start</button></a>
-				</td>
-				<td>
+				<td class="group0">{{ dish.restaurant.name }}</td>
+				<td class="group0">{{ dish.original_price }}</td>
+				<td class="group0">{{ dish.price }}</td>
+				<td class="group0">{{ dish.stock }}</td>
+				<td class="group1">
 					{% if dish.Monday %}
 					1<br><i class="glyphicon glyphicon-star"></i>
 					{% else %}
 					1<br><i class="glyphicon glyphicon-star-empty"></i>
 					{% endif %}
 				</td>
-				<td>
+				<td class="group1">
 					{% if dish.Tuesday %}
 					2<br><i class="glyphicon glyphicon-star"></i>
 					{% else %}
 					2<br><i class="glyphicon glyphicon-star-empty"></i>
 					{% endif %}
 				</td>
-				<td>
+				<td class="group1">
 					{% if dish.Wednesday %}
 					3<br><i class="glyphicon glyphicon-star"></i>
 					{% else %}
 					3<br><i class="glyphicon glyphicon-star-empty"></i>
 					{% endif %}
 				</td>
-				<td>
+				<td class="group1">
 					{% if dish.Thursday %}
 					4<br><i class="glyphicon glyphicon-star"></i>
 					{% else %}
 					4<br><i class="glyphicon glyphicon-star-empty"></i>
 					{% endif %}
 				</td>
-				<td>
+				<td class="group1">
 					{% if dish.Friday %}
 					5<br><i class="glyphicon glyphicon-star"></i>
 					{% else %}
 					5<br><i class="glyphicon glyphicon-star-empty"></i>
 					{% endif %}
 				</td>
-				<td style="text-align: center">
+				<td class="group1">
 					<a href="{{ url_for('supply.edit_dish', id=dish.id) }}"><button class="btn btn-info">Edit</button></a>
 				</td>
+				<td class="group1">
+					<a href="{{ url_for('supply.supply_dish', id=dish.id) }}"><button class="btn btn-success">Start</button></a>
+				</td>
+				<td class="change-group"><input type="checkbox" class="change-switch"></td>
 			</tr>
 			{% endfor %}
 		</tbody>

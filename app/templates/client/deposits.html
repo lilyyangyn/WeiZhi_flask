@@ -1,4 +1,4 @@
-{% extends "layouts/base.html" %}
+{% extends "layouts/inner.html" %}
 
 {% block title %}Deposits | CDS{% endblock %}
 
@@ -10,35 +10,36 @@
 <div class="col-xs-12 col-lg-12">
 	<a href="{{ url_for('client.create_deposit') }}"><button class="btn btn-info btn-internal">Create New Deposit</button></a>
 	<br><br>
-	<table class="table" style="text-align:center">
+	<table class="table text-center">
 		<thead>
 			<tr>
-				<th style="text-align:center">Created At</th>
-				<th style="text-align:center">Amount</th>
-				<th style="text-align:center">User</th>
-				<th style="text-align:center">Phone</th>
-				<th style="text-align:center">Email</th>
-				<th style="text-align:center">Explanation</th>
+				<th class="group0">Created At</th>
+				<th class="group0">Amount</th>
+				<th class="group0">User</th>
+				<th class="group0">Phone</th>
+				<th class="group1">Email</th>
+				<th class="group1">Explanation</th>
 			</tr>
 		</thead>
 
 		<tbody>
 			{% for deposit in deposits %}
 			<tr>
-				<td>{{ deposit.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
-				<td
+				<td class="group0">{{ deposit.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+				<td class="group0" 
 					{% if deposit.amount < 0 %}
 						style="color:red;font-weight:bold"
 					{% endif %}
 					>{{ deposit.amount }}</td>
-				<td>{{ deposit.user.name  }}</td>
-				<td>{{ deposit.user.phone  }}</td>
-				<td>{{ deposit.user.email }}</td>
-				<td>
+				<td class="group0">{{ deposit.user.name  }}</td>
+				<td class="group0">{{ deposit.user.phone  }}</td>
+				<td class="group1">{{ deposit.user.email }}</td>
+				<td class="group1">
 					{% if deposit.explanation %}
 						{{ deposit.explanation }}
 					{% endif %}
 				</td>
+				<td class="change-group"><input type="checkbox" class="change-switch"></td>
 			</tr>
 			{% endfor %}
 		</tbody>

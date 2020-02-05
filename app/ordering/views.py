@@ -63,7 +63,8 @@ def create_order(dish_id):
 			else:
 				flash("Order successful! Please pay cash when you get the takeout.")
 			return redirect(url_for('main.menu'))
-		return render_template('ordering/create_order.html', form=form)
+		time_now = datetime.now()
+		return render_template('ordering/create_order.html', form=form, dish=dish, time_now=time_now)
 	else:
 		# if dish is not avaiable today, redirect to root page
 		flash("Sorry~This dish is not available today ┬＿┬")

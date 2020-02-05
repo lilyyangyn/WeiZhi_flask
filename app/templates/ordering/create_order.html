@@ -1,14 +1,106 @@
 {% extends "layouts/ordering_related.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}Login | CDS{% endblock %}
+{% block title %}Order | CDS{% endblock %}
 
 {% block content %}
 {{ super() }}
-<div class="page-header">
-	<h1>this is create order</h1>
+<div id="bg">
+	<img class="img_blur" src="{{ dish.large_img_url }}">
 </div>
-<div class="col-md-4">
-    {{ wtf.quick_form(form) }}
+
+<div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6 col-sm-offset-1 col-sm-10 col-xs-12" style="margin-top: 40px;">
+	<form method="POST" action="{{ url_for('ordering.create_order', dish_id=dish.id) }}">
+		{{ form.hidden_tag() }}
+
+		<table class="table transparent borderless text-center nav-table" style="border-radius: 6px 6px 0px 0px;">
+			<tbody>
+				<tr>
+					<td class="col-md-3 col-sm-3 col-xs-2" style="opacity:0.3;"><img src="https://cdn2.iconfinder.com/data/icons/integers/60/number-one-48.png" height="30" width="30"><p>Select</p>
+					</td>
+					<td><img src="{{ url_for('static', filename='assets/images/number_two.svg') }}" width="50"><h2 style="color:#F44336;">Confirm</h2>
+					</td>
+					<td class="col-md-3 col-sm-3 col-xs-2" style="opacity:0.3;"><img src="https://cdn2.iconfinder.com/data/icons/integers/60/number-three-48.png" height="30" width="30"><p>Finish</p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<table class="table transparent borderless text-center" style="border-radius: 0px 0px 6px 6px;">
+			<tbody>
+				<tr class="inner-row">
+					<td><h3>Pickup Time<h3></td>
+					<td colspan=2><h3>{% if time_now.hour >= 21 %}
+    				{{ time_now.replace(day=time_now.day+1).strftime('%Y-%m-%d') }}
+    				{% else %}
+    				{{ time_now.strftime('%Y-%m-%d') }}
+    				{% endif %}
+    				<br>12:20—12:40 p.m.<h3>
+    			</td>
+    		</tr>
+    		<tr class="inner-row">
+    			<td><h3>Pickup Spot<h3></td>
+    			<td><h3>{{ form.spot(class='transparent my-select') }}<h3></td>
+    		</td>
+    		<tr class="inner-row">
+    			<td><h3>Dish<h3></td>
+    			<td><h3>{{ dish.name }}<h3></td>
+    		</td>
+    		<tr class="inner-row">
+    			<td><h3>Price<h3></td>
+    			<td><h3>{{ dish.price }} HKD<h3></td>
+    		</td>
+    		<tr>
+    			<td><h3>Payment<h3></td>
+    			<td>
+    				<h3>{{ form.balance_pay(class='my-radio') }}</h3>
+    				<span style="color: #EF5350;font-size: 16px;">If your account balance is not enough you can pay cash when you get your takeout.</span>
+    			</td>
+    		</tr>
+			</tbody>
+		</table>
+
+		<div class="my-button">
+			<div class="col-md-6 col-lg-6 col-sm-6 col-xs-12 my-button-back" >
+				<a href="{{ url_for('main.menu') }}"><button class="btn btn-default btn-block btn-lg">Back</button></a>
+			</div>
+			<div class="col-md-6 col-lg-6 col-sm-6 col-xs-12 my-button-confirm">
+				<a href="{{ url_for('main.menu') }}"><button class="btn btn-success btn-block btn-lg">Confirm</button></a>
+			</div>
+		</div>
+	</form>
 </div>
+{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<style>
+.img_blur {
+	-webkit-filter: blur(5px) brightness(0.5);
+}
+.table td {
+	vertical-align:middle!important;
+}
+.nav-table {
+	margin-bottom: 0;
+}
+.my-select {
+	border:none;
+	cursor:pointer;
+	outline: none;
+	background-color: transparent!important;
+}
+.my-radio {
+	padding: 0;
+	margin: 0;
+}
+.my-radio li{
+	list-style: none;
+}
+.my-button .my-button-back{
+	margin-bottom: 10px;
+}
+.my-button .my-button-confirm{
+	margin-bottom: 30px;
+}
+</style>
 {% endblock %}

@@ -25,6 +25,10 @@ h1, h2, h3, h4{
   background: linear-gradient(to bottom, #fff , #F5F5F5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
+.img_blur {
+  -webkit-filter: blur(5px) brightness(0.5);
+}
+
 /* form */
 .form-validate_error{
   color:#E53935;
@@ -81,6 +85,17 @@ h1, h2, h3, h4{
   z-index: 100;
 }
 
+@media screen and (max-width: 766px){
+  .balance img.wallet{
+    width: 80px;
+  }
+
+  .balance .money{
+    top:43px;
+    font-size: 12px;
+
+  }
+}
 /* page-header */
 .my-page-header{
   padding-bottom: 10px;

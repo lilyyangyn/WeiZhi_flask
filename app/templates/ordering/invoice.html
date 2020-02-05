@@ -4,17 +4,21 @@
 
 {% block content %}
 {{ super() }}
-<div class="container" style="margin-bottom: 120px;">
+<div id="bg">
+  <img class="img_blur" src="{{ order.dish.large_img_url }}">
+</div>
+
+<div class="container" style="margin-bottom: 50px;">
 
 	<div style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
   	<div class="mypanel" style="background:transparent">
   		<img class="stamp" src="{{ url_for('static', filename='assets/images/stamp.png') }}?ver=1">
 
-  		<div class="panel-heading text-center">
+  		<div class="panel-heading text-center transparent" style="border-radius: 6px 6px 0px 0px;">
         <div style="font-size: 25px;margin-top: 20px;font-weight: bold;">Use This Invoice To Get Your Takeout</div>
       </div>
 
-      <table class="table text-center">
+      <table class="table text-center transparent" style="border-radius: 0px 0px 6px 6px;">
       	<tbody>
       		<tr>
       			<td>Order No.</td>
@@ -102,6 +106,12 @@
 .table tbody tr td{
 	vertical-align:middle;
 	font-weight:bold;
+}
+
+@media screen and (max-width: 766px){
+  .container{
+    margin-bottom: 80px!important;
+  }
 }
 </style>
 {% endblock %}

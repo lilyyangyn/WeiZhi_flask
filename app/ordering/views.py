@@ -64,7 +64,7 @@ def create_order(dish_id):
 				flash("Order successful! Paid by account balance.")
 			else:
 				flash("Order successful! Please pay cash when you get the takeout.")
-			return redirect(url_for('main.menu'))
+			return redirect(url_for('.invoice', order_id=order.id))
 		time_now = datetime.now()
 		return render_template('ordering/create_order.html', form=form, dish=dish, time_now=time_now)
 	else:

@@ -192,6 +192,14 @@ def edit_dish(id):
 	form.large_img_url.data = dish.large_img_url
 	return render_template('supply/dishes/edit_dish.html', form=form)
 
+@supply.route('/dish-details/<int:id>')
+@login_required
+def dish_details(id):
+	dish = Dish.query.filter_by(id=id).first()
+	if dish is None:
+		redirect(url_for('main.menu'))
+	render_template('supply/dishes/dish_details.html', dish=dish)
+
 @supply.route('/update-to-next-working-day')
 @login_required
 @moderator_required

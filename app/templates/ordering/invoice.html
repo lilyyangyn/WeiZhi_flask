@@ -1,4 +1,4 @@
-{% extends "layouts/ordering_related.html" %}
+{% extends "layouts/base.html" %}
 
 {% block title %}Invoice | CDS{% endblock %}
 
@@ -55,16 +55,18 @@
       			<td>Contact</td>
       			<td>Rosheen: <a href="tel:66428675">6642867</a></td>
       		</tr>
-      		{% if current_user.can_order_now %}
       		<tr>
             <td>
               <a href="{{ url_for('ordering.orders') }}"><button class="btn btn-default btn-block btn-my">&lt;&lt; Back</button></a>
             </td>
       			<td>
+              {% if current_user.can_order_now %}
       				<a href="{{ url_for('main.menu') }}"><button class="btn btn-danger btn-block btn-my">Order More 😋</button></a>
+              {% else %}
+              <button class="btn btn-danger btn-block btn-my disabled">Order More 😋</button>
+              {% endif %}
       			</td>
       		</tr>
-      		{% endif %}
       	</tbody>
       </table>
   	</div>
@@ -106,12 +108,6 @@
 .table tbody tr td{
 	vertical-align:middle;
 	font-weight:bold;
-}
-
-@media screen and (max-width: 766px){
-  .container{
-    margin-bottom: 80px!important;
-  }
 }
 </style>
 {% endblock %}

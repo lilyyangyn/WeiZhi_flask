@@ -44,7 +44,7 @@
         			<a href="{{ url_for('main.weekly_menu', day='Monday') }}">Weekly Menu</a>
         		</li>
         		<li class="navList">
-        			<a href="{{ url_for('main.about') }}">About Us</a>
+        			<a href="{{ url_for('main.about', section='us') }}">About Us</a>
         		</li>
         		{% if current_user.is_authenticated %}
         		<li class="navList">

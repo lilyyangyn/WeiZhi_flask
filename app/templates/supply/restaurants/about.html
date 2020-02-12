@@ -1,0 +1,48 @@
+{% extends "layouts/main.html" %}
+
+{% block title %}About Us | CDS{% endblock %}
+
+{% block content %}
+{{ super() }}
+<div class="titlebar">
+	<b class="title">About Us</b>
+	{% if section == 'us' %}
+	<b class='current'>CDS</b>
+	{% else %}
+	<a href="{{ url_for('main.about', section='us') }}">CDS</a>
+	{% endif %}
+	{% if section == 'restaurants' %}
+	<b class='current' style="width:120px">Restaurants</b>
+	{% else %}
+	<a href="{{ url_for('main.about', section='restaurants') }}" style="width:120px">Restuarants</a>
+	{% endif %}
+</div>
+
+<div class="container-fluid">
+	<div class="menu">
+		{% for restaurant in restaurants %}
+		<div class="item-container col-xs-12 col-sm-6 col-md-6 col-lg-4">
+			<a class="item-link" href="{{ restaurant.restaurant_url }}"><div class="item">
+				<div class="item-image" style="background-image:url({{ restaurant.img_url }})">
+				</div>
+				<div class="item-description">
+					<p class="item-name">{{ restaurant.name }}</p>
+				</div>
+			</div></a>
+		</div>
+		{% endfor %}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">
+$(function(){
+	$(".item").mouseenter(function(){
+		$(this).css({"box-shadow": "0 0 15px 6px white"});
+	});
+	$(".item").mouseleave(function(){
+		$(this).css({"box-shadow": "none"});
+	});
+});
+</script>
+{% endblock %}

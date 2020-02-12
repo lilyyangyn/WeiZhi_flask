@@ -1,10 +1,20 @@
-{% extends "layouts/ordering_related.html" %}
+{% extends "layouts/main.html" %}
 
 {% block title %}About Us | CDS{% endblock %}
 
 {% block content %}
 {{ super() }}
-<div class="page-header">
-	<h1>this is about</h1>
+<div class="titlebar">
+	<b class="title">About Us</b>
+	{% if section == 'us' %}
+	<b class='current'>CDS</b>
+	{% else %}
+	<a href="{{ url_for('main.about', section='us') }}">CDS</a>
+	{% endif %}
+	{% if section == 'restaurants' %}
+	<b class='current' style="width:120px">Restaurants</b>
+	{% else %}
+	<a href="{{ url_for('main.about', section='restaurants') }}" style="width:120px">Restuarants</a>
+	{% endif %}
 </div>
 {% endblock %}

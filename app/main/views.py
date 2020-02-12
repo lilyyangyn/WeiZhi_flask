@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import render_template, redirect, url_for, request
 from flask_login import current_user
 from . import main 
-from ..models import Dish
+from ..models import Dish, Restaurant
 
 @main.before_app_request
 def before_request():
@@ -43,6 +43,12 @@ def weekly_menu(day):
 		return redirect(url_for('.weekly_menu', day='Monday'))
 	return render_template('weekly_menu.html', dishes=dishes, day=day)
 
-@main.route('/about')
-def about():
-	return render_template('about.html')
+@main.route('/about/<section>')
+def about(section):
+	if section == 'us':
+		return render_template('about.html', section=section)
+	elif section == 'restaurants':
+		restaurants = Restaurant.query.filter_by(in_cooperation=True).all()
+		return render_template('supply/restaurants/about.html', section=section, restaurants=restaurants)
+	else:
+		return redirect(url_for('.about', section='us'))

@@ -7,6 +7,7 @@ body{
 	margin-bottom:0;
 }
 
+/* titlebar */
 .titlebar{
 	background-color: #333;
 	line-height: 50px;
@@ -24,4 +25,93 @@ body{
 	display: inline-block;
   padding-left: 10px;
   padding-right: 10px;
+}
+.titlebar a,
+.titlebar b{
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	vertical-align: bottom;
+	width:60px;
+	display: inline-block;
+	border-radius: 5px 5px 0 0;
+}
+.titlebar a:hover{
+	background-color: #000;
+}
+.titlebar .current{
+	color:#FF6712;
+	background-color: #000;
+  margin-top: 5px;
+}
+
+/* item menu */
+.menu {
+  margin-bottom: 30px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.menu .item-container{
+	margin-top: 20px;
+  margin-bottom: 20px;
+}
+.menu .item-link{
+	color: white;
+}
+.menu .item{
+	border-radius: 8px 8px 8px 8px;
+}
+.item .item-image{
+	height: 380px;
+	border-radius: 8px 8px 0px 0px;
+	position: relative;
+  font-size: 18px;
+  background-repeat: no-repeat;
+  background-position: center 0px;
+  background-size: cover;
+}
+.item .item-price{
+	font-size: 28px;
+  font-weight: bold;
+  display: inline;
+  position: absolute;
+  bottom: 3px;
+  left: 8px;
+  border-radius: 10px;
+  padding:10px 20px;
+  background-color: rgba(255,103,18,0.6);
+  font-family: 'Roboto Condensed', sans-serif;
+}
+.item .item-description{
+	background-color: #2B2E33;
+  width: 100%;
+  border-radius: 0px 0px 8px 8px;
+  padding: 15px 10px 5px 10px;
+}
+.item-description .item-name{
+  font-size: 16px;
+}
+.item-description .item-subinfo{
+	font-size: 14px;
+  font-weight: lighter;
+  color: rgba(255,103,18,0.7);
+}
+
+@media screen and (max-width: 550px){
+    .item .item-image{
+     height: 310px;
+  }
+}
+
+@media screen and (max-width: 991px){
+	.item .item-image {
+	    height: 500px;
+	}
+}
+@media screen and (min-width: 1358px){
+        .item .item-image{
+     height: 520px;
+  }
 }

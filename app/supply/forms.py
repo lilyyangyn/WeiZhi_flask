@@ -93,7 +93,7 @@ class EditRestaurantForm(FlaskForm):
 	img_url = TextAreaField('Image URL', render_kw={'placeholder': 'Image URL'})
 	info = TextAreaField('Information', render_kw={'placeholder': 'Information'})
 	restaurant_url = TextAreaField('Restaurant URL', render_kw={'placeholder': 'Restaurant URL'})
-	submit = SubmitField('Edit Dish')
+	submit = SubmitField('Edit Restaurant')
 
 	def __init__(self, restaurant, *args, **kwargs):
 		super(EditRestaurantForm, self).__init__(*args, **kwargs)
@@ -104,9 +104,9 @@ class EditRestaurantForm(FlaskForm):
 			raise ValidationError('Restaurant already exists.')
 
 class CreateSpotForm(FlaskForm):
-	name = StringField('Name', validators=[DataRequired(), Length(1, 64)])
-	img_url = TextAreaField('Image URL')
-	description = TextAreaField('Description')
+	name = StringField('Name', validators=[DataRequired(), Length(1, 64)], render_kw={'placeholder': 'Name'})
+	img_url = TextAreaField('Image URL', render_kw={'placeholder': 'Image URL'})
+	description = TextAreaField('Description', render_kw={'placeholder': 'Description'})
 	submit = SubmitField('Create Spot')
 
 	def validate_name(self, field):
@@ -114,9 +114,9 @@ class CreateSpotForm(FlaskForm):
 			raise ValidationError('Spot already exists.')
 
 class EditSpotForm(FlaskForm):
-	name = StringField('Name', validators=[DataRequired(), Length(1, 64)])
-	img_url = TextAreaField('Image URL')
-	description = TextAreaField('Description')
+	name = StringField('Name', validators=[DataRequired(), Length(1, 64)], render_kw={'placeholder': 'Name'})
+	img_url = TextAreaField('Image URL', render_kw={'placeholder': 'Image URL'})
+	description = TextAreaField('Description', render_kw={'placeholder': 'Description'})
 	submit = SubmitField('Edit Spot')
 
 	def __init__(self, spot, *args, **kwargs):

@@ -12,8 +12,9 @@ from .forms import CreateSpotForm, EditSpotForm
 @moderator_required
 def spots():
 	# show all spots
-	spots = Spot.query.order_by(Spot.name.desc()).all()
-	return render_template('supply/spots/spots.html', spots=spots)
+	spots_in_use = Spot.query.filter_by(in_use=True).order_by(Spot.name.desc()).all()
+	spots_not_in_use = Spot.query.filter_by(in_use=False).order_by(Spot.name.desc()).all()
+	return render_template('supply/spots/spots.html', spots_in_use=spots_in_use, spots_not_in_use=spots_not_in_use)
 
 @supply.route('/spots/new', methods=['GET', 'POST'])
 @login_required

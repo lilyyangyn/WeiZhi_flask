@@ -197,8 +197,8 @@ def edit_dish(id):
 def dish_details(id):
 	dish = Dish.query.filter_by(id=id).first()
 	if dish is None:
-		redirect(url_for('main.menu'))
-	render_template('supply/dishes/dish_details.html', dish=dish)
+		return redirect(url_for('main.menu'))
+	return render_template('supply/dishes/dish_details.html', dish=dish)
 
 @supply.route('/update-to-next-working-day')
 @login_required

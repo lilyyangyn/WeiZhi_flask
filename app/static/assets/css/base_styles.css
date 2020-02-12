@@ -227,6 +227,7 @@ a:hover,a:active{
   width: 200%;
   top: -50%;
   height: 200%;
+  z-index: -1;
 }
 #bg img {
   position: absolute;

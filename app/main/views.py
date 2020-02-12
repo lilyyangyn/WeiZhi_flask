@@ -27,7 +27,7 @@ def menu():
 	dishNum = [len(dishes[0]), len(dishes[1])]
 	return render_template('menu_today.html', dishes=dishes, dishNum=dishNum)
 
-@main.route('/weekly_menu/<day>')
+@main.route('/weekly-menu/<day>')
 def weekly_menu(day):
 	if day == 'Monday':
 		dishes = Dish.query.filter_by(monday=True).all()

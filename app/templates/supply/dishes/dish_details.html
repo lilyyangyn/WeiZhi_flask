@@ -1,0 +1,112 @@
+{% extends "layouts/ordering_related.html" %}
+
+{% block title %}Dish Details | CDS{% endblock %}
+
+{% block content %}
+{{ super() }}
+<div id="bg">
+  <img src="{{ dish.large_img_url }}">
+</div>
+<div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6 col-sm-offset-1 col-sm-10 col-xs-12" style="margin-top: 50px;">
+	<table class="table borderless transparent text-center" style="border-radius: 10px;">
+		<tbody>
+			<tr class="inner-row">
+				<td><h3>Name</h3></td>
+				<td colspan=5><h3>{{ dish.name }}</h3>
+					{% if dish.english_name %}
+					<span>{{ dish.english_name }}</span>
+					{% endif %}
+				</td>
+			</tr>
+			<tr class="inner-row">
+				<td><h3>Restaurant</h3></td>
+				<td colspan=5><a href="{{ dish.restaurant.restaurant_url }}"><h3>{{ dish.restaurant.name }}</h3></a></td>
+			</tr>
+			<tr class="inner-row">
+				<td><h3>Spiciness</h3></td>
+				<td colspan=5>
+					<h3>
+						{% if dish.spiciness == 0 %}Not Spicy
+						{% elif dish.spiciness == 1 %}Little Spicy
+						{% elif dish.spiciness == 1 %}Spicy
+						{% elif dish.spiciness == 1 %}Very Spicy
+						{% elif dish.spiciness == 1 %}Extra Spicy{% endif %}
+					</h3>
+					<span>{% for i in range(0, dish.spiciness) %}🌶{% endfor %}</span>
+				</td>
+			</tr>
+			<tr class="inner-row">
+				<td><h3>Price</h3></td>
+				<td colspan=5><h3>{{ dish.price }}</h3></td>
+			</tr>
+			<tr class="inner-row">
+				<td><h3>Avaialble Day(s)</h3></td>
+				<td class="available-day"><h3>
+						{% if dish.monday %}
+						Mon.<br><i class="glyphicon glyphicon-star"></i>
+						{% else %}
+						Mon.<br><i class="glyphicon glyphicon-star-empty"></i>
+						{% endif %}
+				</h3></td>
+				<td class="available-day"><h3>
+						{% if dish.tuesday %}
+						Tue.<br><i class="glyphicon glyphicon-star"></i>
+						{% else %}
+						Tue.<br><i class="glyphicon glyphicon-star-empty"></i>
+						{% endif %}
+				</h3></td>
+				<td class="available-day"><h3>
+						{% if dish.wednesday %}
+						Wed.<br><i class="glyphicon glyphicon-star"></i>
+						{% else %}
+						Wed.<br><i class="glyphicon glyphicon-star-empty"></i>
+						{% endif %}
+				</h3></td>
+				<td class="available-day"><h3>
+						{% if dish.thursday %}
+						Thu.<br><i class="glyphicon glyphicon-star"></i>
+						{% else %}
+						Thu.<br><i class="glyphicon glyphicon-star-empty"></i>
+						{% endif %}
+				</h3></td>
+				<td class="available-day"><h3>
+						{% if dish.firday %}
+						Fri.<br><i class="glyphicon glyphicon-star"></i>
+						{% else %}
+						Fri.<br><i class="glyphicon glyphicon-star-empty"></i>
+						{% endif %}
+				</h3></td>
+			</tr>
+			<tr>
+				<td><h3>Price</h3></td>
+				<td colspan=5><h3>{{ dish.price }}</h3></td>
+			</tr>
+		</tboday>
+	</table>
+
+	<div class="my-button">
+		<div class="col-md-6 col-lg-6 col-sm-6 col-xs-12" style="margin-bottom: 10px;">
+			<a href="{{ url_for('main.menu') }}"><button type="button" class="btn btn-danger btn-block btn-lg">Go To Order</button></a>
+		</div>
+		<div class="col-md-6 col-lg-6 col-sm-6 col-xs-12" style="margin-bottom: 30px;">
+			<a href="{{ url_for('main.weekly_menu', day='Monday') }}"><button type="button" class="btn btn-default btn-block btn-lg">Weekly Menu</button></a>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<style>
+.available-day h3{
+	font-size: 20px;
+}
+
+@media screen and (max-width: 480px){
+	.available-day h3{
+		font-size: 14px;
+		margin-top: 25px;
+	}
+}
+</style>
+{% endblock %}

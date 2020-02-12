@@ -37,7 +37,7 @@
 	<div class="menu">
 		{% for dish in dishes %}
 		<div class="item-container col-xs-12 col-sm-6 col-md-6 col-lg-4">
-			<div class="item">
+			<a class="item-link" href="{{ url_for('supply.dish_details', id=dish.id) }}"><div class="item">
 				<div class="food-image" style="background-image:url({{ dish.large_img_url }})">
 					<p class="food-price">{{ dish.price }} HKD</p>
 				</div>
@@ -47,9 +47,9 @@
 							{% for s in range(0, dish.spiciness) %}🌶{% endfor %}
 						</span>
 					</p>
-					<p class="food-restaurant">{{ dish.restaurant.name }}</p>
+					<a href="{{ dish.restaurant.restaurant_url }}"><p class="food-restaurant">{{ dish.restaurant.name }}</p></a>
 				</div>
-			</div>
+			</div></a>
 		</div>
 		{% endfor %}
 	</div>
@@ -103,8 +103,10 @@ $(function(){
 	margin-top: 20px;
   margin-bottom: 20px;
 }
-.menu .item{
+.menu .item-link{
 	color: white;
+}
+.menu .item{
 	border-radius: 8px 8px 8px 8px;
 }
 .item .food-image{

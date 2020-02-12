@@ -1,28 +1,39 @@
-{% extends "layouts/base.html" %}
+{% extends "layouts/inner.html" %}
 
 {% block title %}CDS{% endblock %}
 
 {% block content %}
 {{ super() }}
-<div class="page-header">
-	<h1>this is restaurants</h1>
+<div class="page-header col-xs-12 col-lg-12">
+	<h1>Restaurants</h1>
 </div>
-<div>
-	{% for restaurant in restaurants %}
-	<ul>Name: {{ restaurant.name }}</ul>
-	<ul>Image: <img src="{{ restaurant.img_url }}"></ul>
-	<ul>Info: {{ restaurant.info }}</ul>
-	<ul>
-		{% if restaurant.in_cooperation %}
-		<a href="{{ url_for('supply.stop_cooperation', id=restaurant.id) }}">Stop Cooperation</a>
-		{% else %}
-		<a href="{{ url_for('supply.start_cooperation', id=restaurant.id) }}">Start Cooperation</a>
-		{% endif %}
-	</ul>
-	<ul><a href="{{ url_for('supply.edit_restaurant', id=restaurant.id) }}">Edit</a></ul>
-	{% endfor %}
-<br>
-<div>
-	<ul><a href="{{ url_for('supply.new_restaurant') }}">Create New Restaurant</a></ul>
+<div class="col-sx-12 col-lg-12">
+	<a href="{{ url_for('supply.new_restaurant') }}"><button class="btn btn-info btn-internal">Create New Restaurant</button></a>
+
+	<table class="table text-center">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th></th>
+				<th>Cooperation</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for restaurant in restaurants_co %}
+			<tr>
+				<td>{{ restaurant.name }}</td>
+				<td><a href="{{ url_for('supply.edit_restaurant', id=restaurant.id) }}"><button class="btn btn-info">Edit</button></a></td>
+				<td><a href="{{ url_for('supply.stop_cooperation', id=restaurant.id) }}"><button class="btn btn-danger">Stop</button></a></td>
+			</tr>
+			{% endfor %}
+			{% for restaurant in restaurants_not_co %}
+			<tr>
+				<td>{{ restaurant.name }}</td>
+				<td><a href="{{ url_for('supply.edit_restaurant', id=restaurant.id) }}"><button class="btn btn-info">Edit</button></a></td>
+				<td><a href="{{ url_for('supply.start_cooperation', id=restaurant.id) }}"><button class="btn btn-success">Start</button></a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 </div>
 {% endblock %}

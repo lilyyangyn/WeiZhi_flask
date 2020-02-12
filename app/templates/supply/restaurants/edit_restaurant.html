@@ -1,14 +1,67 @@
-{% extends "layouts/base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
+{% extends "layouts/inner.html" %}
 
-{% block title %}New Dish | CDS{% endblock %}
+{% block title %}Edit Restaurant | CDS{% endblock %}
 
 {% block content %}
 {{ super() }}
-<div class="page-header">
-	<h1>this is edit restaurant</h1>
-</div>
-<div class="col-md-4">
-    {{ wtf.quick_form(form) }}
+<div class="container" style="margin-bottom: 50px;">
+
+	<div id="editresbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+  	<div class="mypanel" >
+      <div class="panel-heading text-center">
+      	<img style="width:88px;" src="{{ url_for('static', filename='assets/images/logo_blue.png') }}">
+        <div class="panel-title" style="font-size: 18px;margin-top: 20px;font-weight: bold;">Create Restaurant</div>
+      </div>
+      <div style="padding-top:30px;" class="panel-body" >
+      	<form method="POST" action="{{ url_for('client.edit_profile') }}">
+      		{{ form.hidden_tag() }}
+
+      		<div class="my-form" style="margin-bottom: 25px;">
+						<div class="input-group col-xs-12">
+	          	{{ form.name(class='form-control') }}
+	         	</div>
+	         	{% if form.name.errors %}
+	       		<div class="form-validate_error">{{ form.name.errors.0 }}</div>
+	       		{% endif %}
+	       	</div>
+
+	       	<div class="my-form" style="margin-bottom: 25px;">
+						<div class="input-group col-xs-12">
+	          	{{ form.img_url(class='form-control') }}
+	         	</div>
+	         	{% if form.img_url.errors %}
+	       		<div class="form-validate_error">{{ form.img_url.errors.0 }}</div>
+	       		{% endif %}
+	       	</div>
+
+					<div class="my-form" style="margin-bottom: 25px;">
+						<div class="input-group col-xs-12">
+	          	{{ form.info(class='form-control') }}
+	         	</div>
+	         	{% if form.info.errors %}
+	       		<div class="form-validate_error">{{ form.info.errors.0 }}</div>
+	       		{% endif %}
+	       	</div>
+
+	       	<div class="my-form" style="margin-bottom: 25px;">
+						<div class="input-group col-xs-12">
+	          	{{ form.restaurant_url(class='form-control') }}
+	         	</div>
+	         	{% if form.restaurant_url.errors %}
+	       		<div class="form-validate_error">{{ form.restaurant_url.errors.0 }}</div>
+	       		{% endif %}
+	       	</div>
+
+	       	<div class="col-xs-12">
+          	{{ form.submit(class="btn btn-info btn-block btn-my" ) }}
+          </div>
+	      </form>
+	    </div>
+
+	    <div style="padding-left:10px;opacity:0.7;font-size:14px;margin-top:8px;border-top:1px solid #dadada">
+	    	<p style="padding:18px 0px"><a href="{{ url_for('supply.restaurants') }}">&lt;&lt; Back to restaurants</a></p>
+      </div>
+		</div>
+  </div>
 </div>
 {% endblock %}

@@ -12,8 +12,9 @@ from .forms import CreateRestaurantForm, EditRestaurantForm
 @moderator_required
 def restaurants():
 	# show all restaurants CDS coorperate with
-	restaurants = Restaurant.query.order_by(Restaurant.name.desc()).all()
-	return render_template('supply/restaurants/restaurants.html', restaurants=restaurants)
+	restaurants_co = Restaurant.query.filter_by(in_cooperation=True).order_by(Restaurant.name.desc()).all()
+	restaurants_not_co = Restaurant.query.filter_by(in_cooperation=False).order_by(Restaurant.name.desc()).all()
+	return render_template('supply/restaurants/restaurants.html', restaurants_co=restaurants_co, restaurants_not_co=restaurants_not_co)
 
 @supply.route('/restaurants/new', methods=['GET', 'POST'])
 @login_required

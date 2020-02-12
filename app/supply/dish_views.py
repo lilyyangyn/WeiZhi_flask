@@ -54,9 +54,12 @@ def reset_available_days():
 def supply_dish(id):
 	dish = Dish.query.get(id)
 	if dish is not None:
-		dish.in_supply = True
-		db.session.add(dish)
-		flash("{} is available to be supplied ~".format(dish.name))
+		if dish.restaurant.in_cooperation:
+			dish.in_supply = True
+			db.session.add(dish)
+			flash("{} is available to be supplied ~".format(dish.name))
+		else:
+			flash("Please cooperate with the dish restaurant {} first.".format(dish.restaurant.name))
 	else:
 		flash('We do not have such dish, please add it to database first.')
 	return redirect(url_for('supply.dishes'))

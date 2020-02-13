@@ -1,21 +1,41 @@
-{% extends "layouts/base.html" %}
+{% extends "layouts/inner.html" %}
 
-{% block title %}CDS{% endblock %}
+{% block title %}Order Statistics | CDS{% endblock %}
 
 {% block content %}
-<div class="page-header">
-	<h1>this is order statistics</h1>
+<div class="page-header col-xs-12 col-lg-12">
+	<h1>Daily order statistics</h1>
 </div>
-<div>
-	<ul>
-		{% for stat in statistics %}
-			{% if temp != None and temp != stat.restaurants_name %}
-				<br>
-				{% set temp=stat.restaurants_name %}
-			{% endif %}
-			<li>Restaurant: {{ stat.restaurant_name }}</li>
-			<li>Dish: {{ stat.dish_name }}</li>
-			<li>Count: {{ stat.amount }}</li>
-		{% endfor %}
+<div class="col-sx-12 col-lg-12">
+	<table class="table text-center">
+		<thead>
+			<tr>
+				<th>Restaurant</th>
+				<th>Dish</th>
+				<th>Amount</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for i in range(0, n) %}
+			<tr>
+				<td>{{ statistics[i].restaurant_name }}</td>
+				<td>{{ statistics[i].dish_name }}</td>
+				<td>{{ statistics[i].amount }}</td>
+			</tr>
+			{% if i != n-1 and statistics[i].restaurant_name != statistics[i+1].restaurant_name %}
+				<tr><td colspan=3><br></td></tr>
+				{% endif %}
+			{% endfor %}
+			<tr><td colspan=3><br></td></tr>
+		</tbody>
+
+		<tfoot>
+			<tr>
+				<td style="font-weight: bold;color: #FF9800;font-size: 28px;">Sum:</td>
+				<td></td>
+				<td style="font-weight: bold;color: #FF9800;font-size: 28px;">{{ sum }}</td>
+			</tr>
+		</tfoot>
+	</table>
 </div>
 {% endblock %}

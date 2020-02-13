@@ -1,20 +1,33 @@
-{% extends "layouts/base.html" %}
+{% extends "layouts/inner.html" %}
 
-{% block title %}CDS{% endblock %}
+{% block title %}Today's Orders | CDS{% endblock %}
 
 {% block content %}
-<div class="page-header">
-	<h1>this is order printing</h1>
+<div class="page-header col-xs-12 col-lg-12">
+	<h1>Daily Order Printing</h1>
 </div>
-<div>
-	{% for order in orders %}
-	<ul>
-		<ul>Order#: {{ order.today_id }}</ul>
-		<ul>CashToBePaid: {{ order.to_be_paid }}</ul>
-		<ul>Dish: {{ order.dish.name }}</ul>
-		<ul>Username: {{ order.user.name }}</ul>
-		<ul>Phone: {{ order.user.phone }}</ul>
-	</ul>
-	{% endfor %}
+<div class="col-sx-12 col-lg-12">
+	<table class="table text-center">
+		<thead>
+			<tr>
+				<th>Order#</th>
+				<th>Cash To Be Paid</th>
+				<th>Dish</th>
+				<th>Phone</th>
+				<th>UserName</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for order in orders %}
+			<tr>
+				<td>{{ order.today_id }}</td>
+				<td>{{ order.to_be_paid }}</td>
+				<td>{{ order.dish.name }}</td>
+				<td>{{ order.user.phone }}</td>
+				<td>{{ order.user.name }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 </div>
 {% endblock %}

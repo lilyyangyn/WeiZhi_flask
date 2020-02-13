@@ -16,18 +16,17 @@ from ..email import send_email
 def create_order(dish_id):
 	# order a dish
 	dish = Dish.query.get_or_404(dish_id)
-	#if dish.is_available(current_user.is_VIP):
-	if True:
+	if dish.is_available(current_user.is_VIP):
 		form = CreateOrderForm(current_user.balance)
 		if request.method == 'POST':
 			# time check
 			if not dish.is_available(current_user.is_VIP):
 				flash("Sorry, reservation time ends today~ This dish is not available now ┬＿┬")
-				#return redirect(url_for('main.menu'))
+				return redirect(url_for('main.menu'))
 			# stock check
 			if dish.sold_out:
 				flash("Sold Out ┬＿┬")
-				#return redirect(url_for('main.menu'))
+				return redirect(url_for('main.menu'))
 
 			if form.balance_pay.data == 1:
 				# if user want to pay by balance
@@ -131,11 +130,12 @@ def daily_orders_statistics():
 		datetime_end = datetime.combine(today, hour_boundary) + timedelta(1)
 	# may need some improvement for the way to make query
 	statistics=db.session.query(Restaurant.name.label("restaurant_name"), Dish.name.label("dish_name"), db.func.count(Dish.id).label("amount")).join(Order, Order.dish_id == Dish.id).join(Restaurant, Restaurant.id == Dish.restaurant_id).filter(and_(Order.created_at >= datetime_start, Order.created_at < datetime_end)).order_by(Restaurant.name.desc()).group_by(Dish.name, Restaurant.name).all()
-	return render_template('ordering/daily_orders_statics.html', statistics=statistics, temp=None)
+	sum = db.session.query(func.count()).filter(and_(Order.created_at >= datetime_start, Order.created_at < datetime_end)).scalar()
+	return render_template('ordering/daily_orders_statics.html', statistics=statistics, n =len(statistics), sum=sum)
 
 @ordering.route('/daily-orders-printing')
 @login_required
 @moderator_required
 def daily_orders_printing():
-	orders = Order.today().all()
+	orders = Order.today().order_by(Order.id).all()
 	return render_template('ordering/daily_orders_printing.html', orders=orders)

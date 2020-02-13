@@ -86,10 +86,10 @@
 
 	<div class="my-button">
 		<div class="col-md-6 col-lg-6 col-sm-6 col-xs-12" style="margin-bottom: 10px;">
-			<a href="{{ url_for('main.menu') }}"><button type="button" class="btn btn-danger btn-block btn-lg">Go To Order</button></a>
+			<a href="{{ url_for('main.weekly_menu', day='Monday') }}"><button type="button" class="btn btn-default btn-block btn-lg">Weekly Menu</button></a>
 		</div>
 		<div class="col-md-6 col-lg-6 col-sm-6 col-xs-12" style="margin-bottom: 30px;">
-			<a href="{{ url_for('main.weekly_menu', day='Monday') }}"><button type="button" class="btn btn-default btn-block btn-lg">Weekly Menu</button></a>
+			<a href="{{ url_for('main.menu') }}"><button type="button" class="btn btn-danger btn-block btn-lg">Go To Order 😋</button></a>
 		</div>
 	</div>
 </div>

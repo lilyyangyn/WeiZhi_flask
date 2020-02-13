@@ -22,8 +22,8 @@ def menu():
 		 return render_template('weekend.html')
 	# if not weekend, show today's menu
 	dishes = []
-	dishes.append(Dish.today().filter(Dish.spiciness > 1).all())
-	dishes.append(Dish.today().filter(Dish.spiciness < 2).all())
+	dishes.append(Dish.today().filter_by(in_supply=True).filter(Dish.spiciness > 1).all())
+	dishes.append(Dish.today().filter_by(in_supply=True).filter(Dish.spiciness < 2).all())
 	dishNum = [len(dishes[0]), len(dishes[1])]
 	return render_template('menu_today.html', dishes=dishes, dishNum=dishNum)
 

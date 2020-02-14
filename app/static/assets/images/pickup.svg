@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="58px" height="58px" viewBox="0 0 58 58" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>placeholder</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="placeholder">
+            <ellipse id="Oval" fill="#23A24D" cx="29" cy="50" rx="29" ry="8"></ellipse>
+            <path d="M41.676,5.324 L41.676,5.324 C34.578,-1.774 23.069,-1.774 15.97,5.324 L15.97,5.324 C9.574,11.72 8.855,23.763 14.282,31 L28.823,52 L43.364,31 C48.792,23.763 48.072,11.72 41.676,5.324 Z M29,24 C25.686,24 23,21.314 23,18 C23,14.686 25.686,12 29,12 C32.314,12 35,14.686 35,18 C35,21.314 32.314,24 29,24 Z" id="Shape" fill="#EBBA16"></path>
+        </g>
+    </g>
+</svg>

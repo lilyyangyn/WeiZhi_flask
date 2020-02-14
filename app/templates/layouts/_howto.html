@@ -1,0 +1,113 @@
+<section id="how-to">
+  <div class="container">
+    <div style="text-align: center; margin: 50px auto 10px auto;">
+      <h2>How To Order</h2>
+      <hr style="width: 250px;">
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-4 segment">
+        <div class=" col-xs-4 col-sm-12">
+          <img src="{{ url_for('static', filename='assets/images/user.svg') }}">
+        </div>
+        <div class=" col-xs-7 col-sm-12">
+          <h3>1. Register</h3>
+          <p>Go to <a href="/signup">Register</a> page. Use your HKU email to register and activate.</p>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-4 segment">
+        <div class=" col-xs-4 col-sm-12">
+          <img src="{{ url_for('static', filename='assets/images/menu.svg') }}">
+        </div>
+        <div class=" col-xs-7 col-sm-12">
+          <h3>2. Order</h3>
+          <p><a href="/login">Login</a> and order from <span class="emphasis"> 9:00—11:00 a.m. </span> <a href="#modal-vip" class="modal-toggle" data-toggle="modal" id="modalvipbtn">Become VIP</a> to order 12 hours earlier, i.e. <span class="emphasis">9:00 p.m.—11:00 a.m.</span></p>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-4 segment">
+        <div class=" col-xs-4 col-sm-12">
+          <img src="{{ url_for('static', filename='assets/images/pickup.svg') }}">
+        </div>
+
+        <div class=" col-xs-7 col-sm-12">
+          <h3>3. Pickup</h3>
+          <p>Get your takeout from <span class="emphasis"> 12:20—12:40 </span><a href="#modal-map" class="modal-toggle" data-toggle="modal" id="modalmapbtn">near the pillar outside SU canteen</a>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-map" class="modal fade centered-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header" style="border:none;">
+              <a href="#" data-dismiss="modal" aria-hidden="true" class="close">×</a>
+              <h1>Pickup Spot</h1>
+          </div>
+          <div class="modal-body text-center">
+              <img style="width:100%;" src="https://c1.staticflickr.com/1/345/31556166353_d625fbd2e1_c.jpg">
+          </div>
+
+          <div class="modal-footer" style="border:none;">
+            <a href="#" data-dismiss="modal" aria-hidden="true" class="btn btn-lg btn-danger btn-block">Back</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="modal-vip" class="modal fade centered-modal">
+      <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="border:none;">
+                <a href="#" data-dismiss="modal" aria-hidden="true" class="close">×</a>
+            </div>
+            <div class="modal-body text-center">
+              <h3>VIP Benefits</h3>
+              <p>Order 12 hours earlier without limitation.</p>
+              <h3>How To Become VIP</h3>
+              <p>You become VIP if you have balance in your account.</p>
+              <h3>How To Top Up</h3>
+              <p>You can give cash to our attendant at pickup time (12:20—12:40) near the pillar outside SU canteen. A confirmation email will be sent to you once the cash is saved to your account.<p>
+            </div>
+
+            <div class="modal-footer" style="border:none;">
+              <a href="#" data-dismiss="modal" aria-hidden="true" class="btn btn-lg btn-danger btn-block">Back</a>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</section>
+
+<style>
+section#how-to{
+  text-align: center;
+  margin-top: 20px;
+}
+h2{
+  color:#FF6712;
+  opacity: 0.9;
+}
+hr{
+  border-top: 1px solid #FF6712;
+  opacity: 0.8;
+}
+
+.row{
+  color:#FF6712;
+  opacity: 0.9;
+}
+.row img{
+  height: 80px;
+}
+.row a{
+  color: #EA384D;
+  text-decoration:underline
+}
+.emphasis{
+  color: #ffeb3b;
+  font-weight:bold;
+}
+</style>

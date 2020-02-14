@@ -1,4 +1,4 @@
-{% extends "layouts/ordering_related.html" %}
+{% extends "layouts/main.html" %}
 
 {% block title %}Weekend | CDS{% endblock %}
 
@@ -9,6 +9,9 @@
 
 {% block content %}
 {{ super() }}
+<div class="titlebar">
+	<b class="title">Menu Today</b>
+</div>
 <div class="container cds_info_container">
 	<section class="cds_info" id="profile_sec">
 		<div style="text-align: center;display: table-cell;vertical-align: middle;">

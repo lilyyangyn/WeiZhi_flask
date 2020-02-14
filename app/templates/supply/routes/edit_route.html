@@ -1,19 +1,19 @@
 {% extends "layouts/inner.html" %}
 
-{% block title %}New Spot | CDS{% endblock %}
+{% block title %}Edit Route | CDS{% endblock %}
 
 {% block content %}
 {{ super() }}
 <div class="container" style="margin-bottom: 50px;">
 
-	<div id="newspotbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+	<div id="editroutebox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
   	<div class="mypanel" >
       <div class="panel-heading text-center">
       	<img style="width:88px;" src="{{ url_for('static', filename='assets/images/logo_blue.png') }}">
-        <div class="panel-title" style="font-size: 18px;margin-top: 20px;font-weight: bold;">Create Restaurant</div>
+        <div class="panel-title" style="font-size: 18px;margin-top: 20px;font-weight: bold;">Edit Route</div>
       </div>
       <div style="padding-top:30px;" class="panel-body" >
-      	<form method="POST" action="{{ url_for('supply.new_spot') }}">
+      	<form method="POST">
       		{{ form.hidden_tag() }}
 
       		<div class="my-form" style="margin-bottom: 25px;">
@@ -27,19 +27,10 @@
 
 	       	<div class="my-form" style="margin-bottom: 25px;">
 						<div class="input-group col-xs-12">
-	          	{{ form.img_url(class='form-control') }}
+	          	{{ form.maxload(class='form-control') }}
 	         	</div>
-	         	{% if form.img_url.errors %}
-	       		<div class="form-validate_error">{{ form.img_url.errors.0 }}</div>
-	       		{% endif %}
-	       	</div>
-
-					<div class="my-form" style="margin-bottom: 25px;">
-						<div class="input-group col-xs-12">
-	          	{{ form.description(class='form-control') }}
-	         	</div>
-	         	{% if form.description.errors %}
-	       		<div class="form-validate_error">{{ form.description.errors.0 }}</div>
+	         	{% if form.maxload.errors %}
+	       		<div class="form-validate_error">{{ form.maxload.errors.0 }}</div>
 	       		{% endif %}
 	       	</div>
 
@@ -50,7 +41,7 @@
 	    </div>
 
 	    <div style="padding-left:10px;opacity:0.7;font-size:14px;margin-top:8px;border-top:1px solid #dadada">
-	    	<p style="padding:18px 0px"><a href="{{ url_for('supply.spots') }}">&lt;&lt; Back to spots</a></p>
+	    	<p style="padding:18px 0px"><a href="{{ url_for('supply.routes') }}">&lt;&lt; Back to routes</a></p>
       </div>
 		</div>
   </div>

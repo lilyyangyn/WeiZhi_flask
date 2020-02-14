@@ -1,0 +1,61 @@
+{% extends "layouts/inner.html" %}
+
+{% block title %}Routes | CDS{% endblock %}
+
+{% block content %}
+{{ super() }}
+<div class="page-header col-xs-12 col-lg-12">
+	<h1>Routes</h1>
+</div>
+<div class="col-sx-12 col-lg-12">
+	<a href="{{ url_for('supply.new_route') }}"><button class="btn btn-info btn-internal">Create New Route</button></a>
+	<br>
+	<table class="table text-center">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Today dishes</th>
+				<th>Maxload</th>
+				<th></th>
+				<th>In Use</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			{% for route in routes_in_use %}
+			<tr>
+				<td>{{ route.name }}</td>
+				<td>{{ route.today_load }}</td>
+				<td width="140">
+					<a href="{{ url_for('supply.increase_maxload', id=route.id) }}"><button class="btn btn-warning"><i class="glyphicon glyphicon-plus"></i></button></a>
+					<br class="break-for-sm" style="display:none">
+					&nbsp{{ route.maxload }}&nbsp
+					<br class="break-for-sm" style="display:none">
+					<a href="{{ url_for('supply.decrease_maxload', id=route.id) }}"><button class="btn btn-primary"><i class="glyphicon glyphicon-minus"></i></button></a>
+				</td>
+				<td>
+					<a href="{{ url_for('supply.edit_route', id=route.id) }}"><button class="btn btn-info">Edit</button></a>
+				</td>
+				<td>
+					<a href="{{ url_for('supply.stop_route', id=route.id) }}"><button class="btn btn-danger">Stop</button></a>
+				</td>
+			</tr>
+			{% endfor %}
+
+			{% for route in routes_not_in_use %}
+			<tr>
+				<td>{{ route.name }}</td>
+				<td>{{ route.today_load }}</td>
+				<td>{{ route.maxload }}</td>
+				<td>
+					<a href="{{ url_for('supply.edit_route', id=route.id) }}"><button class="btn btn-info">Edit</button></a>
+				</td>
+				<td>
+					<a href="{{ url_for('supply.start_route', id=route.id) }}"><button class="btn btn-success">Start</button></a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}

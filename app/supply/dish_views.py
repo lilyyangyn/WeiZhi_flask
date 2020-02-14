@@ -78,7 +78,7 @@ def stop_supply_dish(id):
 		flash('We do not have such dish, please add it to database first.')
 	return redirect(url_for('supply.dishes'))
 
-@supply.route('/increase-stock/<int:id>', methods=['GET', 'POST'])
+@supply.route('/increase-stock/<int:id>')
 @login_required
 @moderator_required
 def increase_stock(id):
@@ -90,7 +90,7 @@ def increase_stock(id):
 		flash('We do not have such dish, please add it to database first.')
 	return redirect(url_for('supply.dishes'))
 
-@supply.route('/decrease-stock/<int:id>', methods=['GET', 'POST'])
+@supply.route('/decrease-stock/<int:id>')
 @login_required
 @moderator_required
 def decrease_stock(id):
@@ -103,7 +103,7 @@ def decrease_stock(id):
 		flash('We do not have such dish, please add it to database first.')
 	return redirect(url_for('supply.dishes'))
 
-@supply.route('/add-available/<int:id>/<int:day>', methods=['GET', 'POST'])
+@supply.route('/add-available/<int:id>/<int:day>')
 @login_required
 @moderator_required
 def add_available(id, day):
@@ -116,7 +116,7 @@ def add_available(id, day):
 		flash('We do not have such dish, please add it to database first.')
 	return redirect(url_for('supply.dishes'))
 
-@supply.route('/cancel-available/<int:id>/<int:day>', methods=['GET', 'POST'])
+@supply.route('/cancel-available/<int:id>/<int:day>')
 @login_required
 @moderator_required
 def cancel_available(id, day):

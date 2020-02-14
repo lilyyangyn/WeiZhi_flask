@@ -369,6 +369,17 @@ class Dish(db.Model):
 
 
 
+class Route(db.Model):
+	__tablename__ = 'routes'
+	id = db.Column(db.Integer, primary_key=True)
+	name = db.Column(db.String(64), nullable=False, unique=True)
+	maxload = db.Column(db.Integer, default=0)
+	in_use = db.Column(db.Boolean, default=True)
+	today_load = db.Column(db.Integer, default=0)
+	restaurants = db.relationship('Restaurant', backref='route', lazy='dynamic')
+
+
+
 class Restaurant(db.Model):
 	__tablename__ = 'restaurants'
 	id = db.Column(db.Integer, primary_key=True)
@@ -377,6 +388,7 @@ class Restaurant(db.Model):
 	info = db.Column(db.Text())
 	restaurant_url = db.Column(db.Text())
 	in_cooperation = db.Column(db.Boolean, default=True)
+	route_id = db.Column(db.Integer, db.ForeignKey('routes.id'), nullable=False)
 	dishes = db.relationship('Dish', backref='restaurant', lazy='dynamic')
 
 

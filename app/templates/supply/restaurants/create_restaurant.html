@@ -13,7 +13,7 @@
         <div class="panel-title" style="font-size: 18px;margin-top: 20px;font-weight: bold;">Create Restaurant</div>
       </div>
       <div style="padding-top:30px;" class="panel-body" >
-      	<form method="POST" action="{{ url_for('supply.new_restaurant') }}>
+      	<form method="POST" action="{{ url_for('supply.new_restaurant') }}">
       		{{ form.hidden_tag() }}
 
       		<div class="my-form" style="margin-bottom: 25px;">
@@ -22,6 +22,15 @@
 	         	</div>
 	         	{% if form.name.errors %}
 	       		<div class="form-validate_error">{{ form.name.errors.0 }}</div>
+	       		{% endif %}
+	       	</div>
+
+	       	<div class="my-form" style="margin-bottom: 25px;">
+						<div class="input-group col-xs-12">
+	          	{{ form.route(class='form-control') }}
+	         	</div>
+	         	{% if form.route.errors %}
+	       		<div class="form-validate_error">{{ form.route.errors.0 }}</div>
 	       		{% endif %}
 	       	</div>
 

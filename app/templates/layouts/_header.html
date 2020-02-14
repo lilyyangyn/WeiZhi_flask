@@ -25,6 +25,7 @@
         			<ul class="dropdown-menu" role="menu">
         				<li><a href="{{ url_for('supply.dishes') }}">Dishes</a></li>
                         <li><a href="{{ url_for('supply.restaurants') }}">Restaurants</a></li>
+                        <li><a href="{{ url_for('supply.routes') }}">Routes</a></li>
         				<li><a href="{{ url_for('supply.spots') }}">Spots</a></li>
         				{% if current_user.can_admin %}
         				<li><a href="{{ url_for('client.users') }}">Users</a></li>

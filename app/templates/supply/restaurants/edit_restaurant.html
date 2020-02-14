@@ -27,6 +27,15 @@
 
 	       	<div class="my-form" style="margin-bottom: 25px;">
 						<div class="input-group col-xs-12">
+	          	{{ form.route(class='form-control') }}
+	         	</div>
+	         	{% if form.route.errors %}
+	       		<div class="form-validate_error">{{ form.route.errors.0 }}</div>
+	       		{% endif %}
+	       	</div>
+
+	       	<div class="my-form" style="margin-bottom: 25px;">
+						<div class="input-group col-xs-12">
 	          	{{ form.img_url(class='form-control') }}
 	         	</div>
 	         	{% if form.img_url.errors %}

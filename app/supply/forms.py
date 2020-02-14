@@ -3,7 +3,7 @@ from wtforms import StringField, SelectField, IntegerField, BooleanField, TextAr
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import DataRequired, Length, Optional, NumberRange 
 from wtforms import ValidationError
-from ..models import Dish, Restaurant, Spiciness, Spot
+from ..models import Dish, Restaurant, Spiciness, Route, Spot
 
 class CreateDishForm(FlaskForm):
 	def restaurant_query():
@@ -78,7 +78,11 @@ class EditDishForm(FlaskForm):
 
 
 class CreateRestaurantForm(FlaskForm):
+	def route_query():
+		return Route.query.filter_by(in_use=True)
+
 	name = StringField('Name', validators=[DataRequired(), Length(1, 64)], render_kw={'placeholder': 'Name'})
+	route = QuerySelectField('Route', query_factory=route_query, get_label='name')
 	img_url = TextAreaField('Image URL', render_kw={'placeholder': 'Image URL'})
 	info = TextAreaField('Information', render_kw={'placeholder': 'Information'})
 	restaurant_url = TextAreaField('Restaurant URL', render_kw={'placeholder': 'Restaurant URL'})
@@ -89,7 +93,11 @@ class CreateRestaurantForm(FlaskForm):
 			raise ValidationError('Restaurant already exists.')
 
 class EditRestaurantForm(FlaskForm):
+	def route_query():
+		return Route.query.filter_by(in_use=True)
+
 	name = StringField('Name', validators=[DataRequired(), Length(1, 64)], render_kw={'placeholder': 'Name'})
+	route = QuerySelectField('Route', query_factory=route_query, get_label='name')
 	img_url = TextAreaField('Image URL', render_kw={'placeholder': 'Image URL'})
 	info = TextAreaField('Information', render_kw={'placeholder': 'Information'})
 	restaurant_url = TextAreaField('Restaurant URL', render_kw={'placeholder': 'Restaurant URL'})
@@ -102,6 +110,28 @@ class EditRestaurantForm(FlaskForm):
 	def validate_name(self, field):
 		if field.data != self.restaurant.name and Restaurant.query.filter_by(name=field.data).first():
 			raise ValidationError('Restaurant already exists.')
+
+class CreateRouteForm(FlaskForm):
+	name = StringField('Name', validators=[DataRequired(), Length(1, 64)], render_kw={'placeholder': 'Name'})
+	maxload = IntegerField('Maxload', render_kw={'placeholder': 'Max Load'})
+	submit = SubmitField('Create Route')
+
+	def validate_name(self, field):
+		if Route.query.filter_by(name=field.data).first():
+			raise ValidationError('Route already exists.')
+
+class EditRouteForm(FlaskForm):
+	name = StringField('Name', validators=[DataRequired(), Length(1, 64)], render_kw={'placeholder': 'Name'})
+	maxload = IntegerField('Maxload', render_kw={'placeholder': 'Max Load'})
+	submit = SubmitField('Edit Route')
+
+	def __init__(self, route, *args, **kwargs):
+		super(EditRouteForm, self).__init__(*args, **kwargs)
+		self.route = route
+
+	def validate_name(self, field):
+		if field.data != self.route.name and Spot.query.filter_by(name=field.data).first():
+			raise ValidationError('Spot already exists.')
 
 class CreateSpotForm(FlaskForm):
 	name = StringField('Name', validators=[DataRequired(), Length(1, 64)], render_kw={'placeholder': 'Name'})

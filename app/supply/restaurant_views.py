@@ -27,7 +27,8 @@ def new_restaurant():
 		restaurant = Restaurant(name=form.name.data.encode('utf8'), 
 														img_url=form.img_url.data.encode('utf8'), 
 														info=form.info.data.encode('utf8'),
-														restaurant_url=form.restaurant_url.data.encode('utf8'))
+														restaurant_url=form.restaurant_url.data.encode('utf8'), 
+														route_id=form.route.data.id)
 		db.session.add(restaurant)
 		flash("Successfully create new restaurant {} ^_^".format(restaurant.name))
 		return redirect(url_for('supply.restaurants'))
@@ -48,7 +49,7 @@ def stop_cooperation(id):
 		# stop coorperate with the restaurant
 		restaurant.in_cooperation = False
 		db.session.add(restaurant)
-		flash("Stop coorperating with {} ┬＿┬".format(restaurant.name))
+		flash("Stop coorperating with {} and all related dishes become unavailable ┬＿┬".format(restaurant.name))
 	else:
 		flash("No such restaurant, hope to coorperate with it one day.")
 	return redirect(url_for('supply.restaurants'))
@@ -83,6 +84,7 @@ def edit_restaurant(id):
 		restaurant.img_url = form.img_url.data.encode('utf8')
 		restaurant.info = form.info.data.encode('utf8')
 		restaurant.restaurant_url = form.restaurant_url.data.encode('utf8')
+		restaurant.route_id = form.route.data.id
 		db.session.add(restaurant)
 		db.session.commit()
 		flash('Restaurant info has been updated ^_^')
@@ -91,6 +93,7 @@ def edit_restaurant(id):
 	form.img_url.data = restaurant.img_url
 	form.info.data = restaurant.info
 	form.restaurant_url.data = restaurant.restaurant_url
+	form.route.data = restaurant.route.id
 	return render_template('supply/restaurants/edit_restaurant.html', form=form)
 
 

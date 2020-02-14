@@ -92,7 +92,7 @@
 	              <div class="button-container">
                 	{% if current_user.is_authenticated %}
                 		{% if current_user.can_order_now %}
-                      {% if dish.sold_out %}
+                      {% if dish.sold_out or dish.restaurant.route.reach_limit %}
                       <button type="button" class="btn btn-danger btn-block btn-lg disabled">Sold Out</button>
                       {% else %}
                 			<a href="{{ url_for('ordering.create_order', dish_id=dish.id) }}"><button type="button" class="btn btn-danger btn-block btn-lg">Order</button></a>

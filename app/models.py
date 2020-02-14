@@ -378,6 +378,10 @@ class Route(db.Model):
 	today_load = db.Column(db.Integer, default=0)
 	restaurants = db.relationship('Restaurant', backref='route', lazy='dynamic')
 
+	@property
+	def reach_limit(self):
+		return not self.today_load < self.maxload
+
 	@staticmethod
 	def clear_today_load():
 		# clear today load to 0

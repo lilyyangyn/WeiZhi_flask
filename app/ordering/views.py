@@ -28,6 +28,10 @@ def create_order(dish_id):
 			if dish.sold_out:
 				flash("Sold Out ┬＿┬")
 				return redirect(url_for('main.menu'))
+			# load check of the route
+			if route.reach_limit:
+				flash("Sold Out ┬＿┬")
+				return redirect(url_for('main.menu'))
 
 			if form.balance_pay.data == 1:
 				# if user want to pay by balance

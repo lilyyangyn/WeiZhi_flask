@@ -23,7 +23,7 @@ class Config:
 
 	REMEMBER_COOKIE_DURATION = datetime.timedelta(days=1)
 
-	PERMANENT_SESSION_LIFETIME = datetime.timedelta(minutes=1)
+	PERMANENT_SESSION_LIFETIME = datetime.timedelta(minutes=10)
 	SESSION_REFRESH_EACH_REQUEST= True
 
 	@staticmethod

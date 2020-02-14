@@ -305,7 +305,9 @@ margin-top:50px;
   z-index: 11;
   vertical-align:middle;
 }
-
+#footer a{
+  text-decoration: none;
+}
 
 
 .main-container{

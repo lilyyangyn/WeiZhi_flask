@@ -7,6 +7,17 @@ body{
 	margin-bottom:0;
 }
 
+/* footer */
+#footer a{
+	color: rgba(255,103,18,0.7);
+}
+#footer span{
+	color: rgb(255,203,118);
+}
+#footer .cds-title{
+	color: rgba(255,103,18,0.5)!important;
+}
+
 /* titlebar */
 .titlebar{
 	background-color: #333;

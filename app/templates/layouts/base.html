@@ -10,12 +10,14 @@
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Allura' type='text/css'>
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Righteous' type='text/css'>
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' type='text/css'>
- <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Alex+Brush' type='text/css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Alex+Brush' type='text/css'>
 
 <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/favicon.ico') }}" type="image/x-icon">
 <link rel="icon" href="{{ url_for('static', filename='assets/images/favicon.ico') }}" type="image/x-icon">
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/base_styles.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/base_styles.css') }}?ver=1">
 {% endblock %}
+
+{% block body %}
 
 {% block navbar %}
 {% include 'layouts/_header.html' %} 
@@ -35,6 +37,20 @@
 {% endblock %}
 
 {% block scripts %}
-{{ super() }}
 <script src="{{ url_for('static', filename='assets/js/jquery.js') }}"></script>
+{{ super() }}
+<script type="text/javascript">
+$(function() {
+    $("[data-toggle='popover']").popover({
+        'trigger': 'click hover', 
+        'placement': 'auto left',
+        'html': true,
+        'content': function(){
+            return "<img src='" + $(this).data('imageUrl') + "'>";
+        }
+    });
+});
+</script>
+{% endblock %}
+
 {% endblock %}

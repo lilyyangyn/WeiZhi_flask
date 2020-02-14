@@ -1,7 +1,8 @@
 # -*- coding: UTF-8 -*-
 from datetime import datetime
-from flask import render_template, redirect, url_for, request, flash
+from flask import app, render_template, redirect, url_for, request, flash, session
 from flask_login import login_user, logout_user, login_required, current_user
+from datetime import timedelta
 from . import auth
 from .. import db
 from .forms import LoginForm, SignupFrom, ChangePasswordForm, PasswordResetRequestForm, PasswordResetForm
@@ -42,7 +43,11 @@ def login():
 			user = User.query.filter_by(email=usr_email).first()
 		if user is not None and user.varify_password(form.password.data):
 			# if user exists and the password is correct, log him in
+			print(form.remember_me.data)
+			print(form.email.data)
 			login_user(user, form.remember_me.data)
+			# enable session timeout
+			session.permanent = True
 			# redirect him to his original target url, if have one. 
 			# Otherwise, homepage
 			next = request.args.get('next')

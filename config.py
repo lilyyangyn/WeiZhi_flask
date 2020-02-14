@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+import datetime
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -19,6 +20,11 @@ class Config:
 
 	SQLALCHEMY_COMMIT_ON_TEARDOWN = True
 	SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+	REMEMBER_COOKIE_DURATION = datetime.timedelta(days=1)
+
+	PERMANENT_SESSION_LIFETIME = datetime.timedelta(minutes=1)
+	SESSION_REFRESH_EACH_REQUEST= True
 
 	@staticmethod
 	def init_app(app):

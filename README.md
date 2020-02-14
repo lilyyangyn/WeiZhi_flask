@@ -147,6 +147,14 @@ python manage.py test [--coverage]
 				restaurants,
 				new_restaurant, edit_restaurant,
 				stop_cooperation, start_cooperation```
+
+			- routes routes:
+			
+				```
+				routes,
+				new_route, edit_route,
+				stop_route, start_route,
+				increase_maxload, decrease_maxload```
 			
 			- spot routes:
 			

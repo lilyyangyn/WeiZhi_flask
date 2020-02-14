@@ -16,6 +16,7 @@ from ..email import send_email
 def create_order(dish_id):
 	# order a dish
 	dish = Dish.query.get_or_404(dish_id)
+	route = dish.restaurant.route
 	if dish.is_available(current_user.is_VIP):
 		form = CreateOrderForm(current_user.balance)
 		if request.method == 'POST':
@@ -43,9 +44,13 @@ def create_order(dish_id):
 				# if user want to pay by cash
 				to_be_paid = dish.price
 				pay_status = 2
-			# today_id and status will be automatically determined when constructor runs
+			# decrease stock by one
 			dish.set_stock(-1)
 			db.session.add(dish)
+			# increase today's dish of route by one 
+			route.today_load += 1
+			db.session.add(route)
+			# today_id and status will be automatically determined when constructor runs
 			order = Order(dish_id=dish_id, user_id=current_user.id, 
 										spot_id=form.spot.data.id, 
 										to_be_paid=to_be_paid, 

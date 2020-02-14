@@ -378,6 +378,13 @@ class Route(db.Model):
 	today_load = db.Column(db.Integer, default=0)
 	restaurants = db.relationship('Restaurant', backref='route', lazy='dynamic')
 
+	@staticmethod
+	def clear_today_load():
+		# clear today load to 0
+		routes = Route.query.filter(Route.today_load>0).all()
+		for route in routes:
+			route.today_load = 0
+			db.session.add(route)
 
 
 class Restaurant(db.Model):

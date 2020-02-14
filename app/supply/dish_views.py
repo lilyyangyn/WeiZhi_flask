@@ -206,7 +206,7 @@ def dish_details(id):
 @supply.route('/update-to-next-working-day')
 @login_required
 @moderator_required
-def next_day_dishes():
+def next_day():
 	# update menu to next (working) day
 	update_to_next_working_day()
 	flash("Successfully update to tomorrow's dishes!")

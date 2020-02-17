@@ -42,7 +42,8 @@ def create_app(config_name):
 	from .schedulerjobs import update_to_next_working_day
 	scheduler.add_job(func=update_to_next_working_day, 
 										id='to_next_working_day', 
-										trigger='cron', day_of_week="1-5", hour=11, minute=0, second=0)
+										misfire_grace_time=3600,
+										trigger='cron', day_of_week="0-4", hour=11, minute=0, second=0)
 	scheduler.start()
 
 	from .main import main as main_blueprint

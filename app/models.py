@@ -355,16 +355,16 @@ class Dish(db.Model):
 		Dish.clear_all_stocks()
 		today = datetime.now().isoweekday()
 		if today == 1:
-			dishes_next_day = Dish.query.filter_by(tuesday=True)
+			dishes_next_day = Dish.query.filter_by(in_supply=True, tuesday=True)
 		elif today == 2:
-			dishes_next_day = Dish.query.filter_by(wednesday=True)
+			dishes_next_day = Dish.query.filter_by(in_supply=True, wednesday=True)
 		elif today == 3:
-			dishes_next_day = Dish.query.filter_by(thursday=True)
+			dishes_next_day = Dish.query.filter_by(in_supply=True, thursday=True)
 		elif today == 4:
-			dishes_next_day = Dish.query.filter_by(friday=True)
+			dishes_next_day = Dish.query.filter_by(in_supply=True, friday=True)
 		else:
 			# for friday to sunday, the next menu is monday's menu
-			dishes_next_day = Dish.query.filter_by(monday=True)
+			dishes_next_day = Dish.query.filter_by(in_supply=True, monday=True)
 		Dish.set_all_stock(dishes_next_day, 8)
 
 

@@ -18,8 +18,8 @@ sys.setdefaultencoding('utf8')
 @moderator_required
 def dishes():
 	# show all the dishes CDS has, ordered by their stock
-	dishes_in_supply = Dish.query.filter_by(in_supply=True).order_by(Dish.restaurant_id).order_by(Dish.stock.desc()).all()
-	dishes_not_in_supply = Dish.query.filter_by(in_supply=False).order_by(Dish.restaurant_id).order_by(Dish.stock.desc()).all()
+	dishes_in_supply = Dish.query.filter_by(in_supply=True).order_by(Dish.restaurant_id).order_by(Dish.name).all()
+	dishes_not_in_supply = Dish.query.filter_by(in_supply=False).order_by(Dish.restaurant_id).order_by(Dish.name).all()
 	return render_template('supply/dishes/dishes.html', dishes_in_supply=dishes_in_supply, dishes_not_in_supply=dishes_not_in_supply)
 
 @supply.route('/dishes/clear-all-stocks')

@@ -4,6 +4,7 @@ from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_apscheduler import APScheduler
+from flask_redis import FlaskRedis
 from config import config
 
 
@@ -15,6 +16,8 @@ login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 
 scheduler = APScheduler()
+
+redis_store = FlaskRedis()
 
 def create_app(config_name):
 	app = Flask(__name__)
@@ -46,6 +49,8 @@ def create_app(config_name):
 										trigger='cron', day_of_week="0-4", hour=11, minute=0, second=0)
 	scheduler.start()
 
+	redis_store.init_app(app)
+
 	from .main import main as main_blueprint
 	app.register_blueprint(main_blueprint)
 
@@ -60,5 +65,8 @@ def create_app(config_name):
 
 	from .client import client as client_blueprint
 	app.register_blueprint(client_blueprint)
+
+	from .shopping_cart import shopping_cart as shopping_cart_blueprint
+	app.register_blueprint(shopping_cart_blueprint, url_prefix='/shopping-cart')
 
 	return app

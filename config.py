@@ -21,6 +21,9 @@ class Config:
 	SQLALCHEMY_COMMIT_ON_TEARDOWN = True
 	SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+	#REDIS_URL = "redis://:password@localhost:6379/0"
+	REDIS_URL = "redis://localhost:6379/0"
+
 	REMEMBER_COOKIE_DURATION = datetime.timedelta(days=1)
 
 	PERMANENT_SESSION_LIFETIME = datetime.timedelta(minutes=10)
